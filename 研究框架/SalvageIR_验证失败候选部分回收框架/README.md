@@ -25,11 +25,12 @@ SalvageIR 不把一个被 Alive2 明确证伪的 LLM 优化结果整体丢弃，
 4. [`DATA_AND_FAIRNESS_PROTOCOL.md`](DATA_AND_FAIRNESS_PROTOCOL.md)：候选来源、多模型公平性和数据冻结协议。
 5. [`PILOT_PROTOCOL.md`](PILOT_PROTOCOL.md)：测试集、顺序扩样、oracle、资源预算和红黄绿门控的可预注册规格。
 6. [`GATE_CARD.md`](GATE_CARD.md)：执行时唯一使用的 F/I/S 单页裁决卡。
-7. [`EXPERIMENT_PLAN.md`](EXPERIMENT_PLAN.md)：正式基线、消融、统计和 RISC-V 验证。
-8. [`EVIDENCE_MATRIX.md`](EVIDENCE_MATRIX.md)：语料库证据、2024—2026 近邻和创新碰撞。
-9. [`THREATS_AND_REVIEW.md`](THREATS_AND_REVIEW.md)：反方审查、风险、降级与可证伪条件。
-10. [`REVIEW_ROUND_1.md`](REVIEW_ROUND_1.md)：以 CGO/PLDI 标准给出的独立强拒稿意见。
-11. [`REVISION_ROUND_1.md`](REVISION_ROUND_1.md)：每条拒稿意见对应的修订与失败降级。
+7. [`CODEX_P0A_EXECUTION_HANDOFF.md`](CODEX_P0A_EXECUTION_HANDOFF.md)：可直接交给 Codex/ARIS 实施 P0a 的执行工单。
+8. [`EXPERIMENT_PLAN.md`](EXPERIMENT_PLAN.md)：正式基线、消融、统计和 RISC-V 验证。
+9. [`EVIDENCE_MATRIX.md`](EVIDENCE_MATRIX.md)：语料库证据、2024—2026 近邻和创新碰撞。
+10. [`THREATS_AND_REVIEW.md`](THREATS_AND_REVIEW.md)：反方审查、风险、降级与可证伪条件。
+11. [`REVIEW_ROUND_1.md`](REVIEW_ROUND_1.md)：以 CGO/PLDI 标准给出的独立强拒稿意见。
+12. [`REVISION_ROUND_1.md`](REVISION_ROUND_1.md)：每条拒稿意见对应的修订与失败降级。
 
 ## 当前结论
 
