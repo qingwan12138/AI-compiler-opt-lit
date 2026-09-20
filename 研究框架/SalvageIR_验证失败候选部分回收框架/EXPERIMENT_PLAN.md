@@ -33,7 +33,7 @@ Alive2 官方说明其不支持跨过程变换，并可能对相关 pass 产生�
 
 回答两个先决问题：
 
-1. 非 RL 模型是否产生足量可解析且明确 refuted 的候选？
+1. 未由本研究进行任务特定训练/RL 的冻结模型是否产生足量可解析且明确 refuted 的候选？
 2. 这些候选是否真的存在 verified 且 profitable 的严格子集？
 
 ### 3.2 步骤
@@ -46,9 +46,9 @@ P0 的测试集、顺序扩样、模型允许列表、过滤规则、`n_oracle=1
 4. 对 `REFUTED_ELIGIBLE` 进行对齐审计和组件统计；
 5. 对不超过 12 个组件的候选枚举所有依赖闭合子集；
 6. 每个子集执行 LLVM verifier、Alive2 和目标函数 ELF 符号大小测量；
-7. 冻结全部规则后，才允许打开 LLVM Opt Benchmark 的 240 函数确认集。
+7. 冻结全部规则后，才允许打开 LLVM Opt Benchmark 的 24 项目 × 10 函数确认集。
 
-LLM-VeriOpt 候选以 latency 为目标，不能与 code-size 主结果合并。受控候选统一从 `default<Oz>` 后的源 IR 出发，并在 Prompt 中明确优化 code size。
+LLM-VeriOpt 候选及其任务特定 SFT 以 latency 目标为主要外部来源，不能与 code-size 主结果合并。受控候选使用冻结的原始 instruct checkpoint，从 `default<Oz>` 后的源 IR 出发，并在 Prompt 中明确优化 code size。
 
 ### 3.3 P0 输出
 
@@ -83,6 +83,8 @@ P0 依次执行 E0 环境门、G0 候选供应门、G1 可分解门、G2 现象�
 | B3 | 文本 diff hunks + ddmin | 普通 delta debugging 即可 |
 | B4 | 随机依赖闭合回滚 | 结构约束已足够 |
 | B5 | 依赖闭合 best-first，无反例切片 | 反例引导是否有贡献 |
+| B6 | 同一组件图上的 hierarchical ddmin | 通用结构化 delta debugging 已足够 |
+| B7 | 反例 slice hitting-set 的 MaxSAT/ILP 最小诊断 | 约束求解已足够 |
 | O | 穷举 oracle | 最佳可恢复上界 |
 
 `llvm-reduce` 用于缩减触发错误的测试用例，并通过 interestingness test 保留“仍能触发问题”的性质；它不是直接构造有收益的正确子翻译，但可包装成 B3 的补充实现。[llvm-reduce](https://llvm.org/docs/CommandGuide/llvm-reduce.html)
@@ -98,7 +100,7 @@ P0 依次执行 E0 环境门、G0 候选供应门、G1 可分解门、G2 现象�
 
 ### 4.4 P1 判定
 
-SalvageIR 必须在相同预算下优于 B5，才能说明贡献不只是“做了 LLVM 依赖闭包”。若只优于文本 ddmin 而不优于 B5，研究应降级为工程实现，不继续宣称反例引导算法贡献。
+SalvageIR 必须在 `16/32/64/128/256` 次验证预算曲线和预注册主点上优于 B5/B6/B7 的最强者，才能说明贡献不只是“做了 LLVM 依赖闭包或通用诊断”。若只优于文本 ddmin 或随机回滚，研究应降级为工程实现，不继续宣称反例引导算法贡献。
 
 ## 5. P2：正式多模型、多项目实验
 
@@ -134,6 +136,8 @@ held-out model：从未用于调整的模型家族
 - `best-of-k resampling`：把相同模型调用和验证预算全部用于重采样；
 - `LLVM -Oz/-O3`：作为源程序传统优化性能参照，不作为恢复算法基线。
 
+另建编辑数、组件数、CFG 变化和 semantic-flag 类别 1:1 匹配的非 LLM 变异负对照。它不进入主恢复率，只检验“混合质量结构”是否真是 LLM whole-function Translator 的特征；若方法与来源无交互，论文转为通用 RCES/IR repair 定位。
+
 ### 5.4 消融
 
 | 消融 | 要回答的问题 |
@@ -141,6 +145,8 @@ held-out model：从未用于调整的模型家族
 | `-StructuralAlignment` | 结构对齐是否优于文本 diff |
 | `-DependencyClosure` | 合法状态约束是否降低失败与浪费 |
 | `-CounterexampleSlice` | 反例是否减少验证调用并提高恢复率 |
+| `StaticSliceOnly` | 动态 witness 是否比静态依赖本身多提供信息 |
+| `ShuffledCounterexample` | 真实反例是否优于同类别随机安慰剂信号 |
 | `-ProfitRecovery` | 找到正确子集后重新加入组件是否保住收益 |
 | `-UBClosure` | poison/undef/flag 专用闭包是否必要 |
 | `ProxyOnly` | 若只按 IR 指令数选择，会损失多少真实后端收益 |
@@ -180,7 +186,7 @@ UsefulSalvage = I[final verified and K(final) < K(source)]
 
 ### 6.4 性能
 
-主指标冻结为：源 IR 先经 `default<Oz>`，随后在固定 x86-64 generic 后端生成 ELF 对象，由 `llvm-readobj --symbols` 读取目标函数 `ST_Size`。成功至少减少 `max(2 bytes, 1%)`。Prompt、搜索目标和最终评价均使用 code size，不得在结果不利后切换到 latency。
+主指标冻结为：源 IR 先经 `default<Oz>`，对 `S/R` 同时显式设置 `optsize/minsize`，随后在经 `clang -Oz` 校准的固定 x86-64 generic TargetMachine 下生成 ELF 对象，由 `llvm-readobj --symbols` 读取目标函数 `ST_Size`。成功至少减少 `max(2 bytes, 1%)`。Prompt、搜索目标和最终评价均使用 code size，不得在结果不利后切换到 latency。函数级口径必须再由 D-H 的链接后二进制大小验证。
 
 补充：
 
@@ -197,8 +203,8 @@ LLVM Opt Benchmark 明确提醒 IR 差异只是代理，真实运行性能可能
 
 主要终点是每个冻结候选上的二元 `UsefulSalvage`。SalvageIR 与每个基线是配对数据：
 
-- 报告配对差值和 cluster bootstrap 95% CI；
-- bootstrap 以源函数或项目为簇，避免同一函数的多个模型输出被当作独立样本；
+- 报告配对差值和项目→源函数层级 bootstrap 95% CI；
+- D-C 至少 24 个项目，另做 leave-one-project-out jackknife 和项目内配对随机化；
 - 可补充 McNemar 检验；
 - 多基线次要显著性检验使用 Holm 校正。
 
@@ -222,7 +228,7 @@ success ~ method * model_family + component_count + failure_type
 
 ### 7.4 样本量
 
-P0 后根据配对不一致比例做 power 分析。正式 N 不在观察结果前凭经验写死。论文同时报告功效假设、预计失访和实际可用候选数量。
+打开 D-C 前，用 D-B 冻结的配对不一致率和 `Delta=5pp` 做前瞻模拟。正式 N 和扩样规则在查看 D-C 结果前冻结；不报告以观察效应计算的后验 power。
 
 ## 8. P3：RISC-V 保留验证
 
@@ -234,7 +240,12 @@ RISC-V 不参与：
 - 开发集阈值；
 - 方法选择。
 
-方法完全冻结后，把 `S`、最佳 x86-64 恢复结果 `R` 和各基线结果编译到：
+方法完全冻结后，只在可从同一源代码独立生成两套 IR 的 D-H 上评价。不得把 x86 datalayout IR 直接改 triple。分别生成 `S_x86` 与 `S_rv`，再运行：
+
+- 可用 target-neutral 锚点时的冻结编辑决策迁移；
+- 在 RV64GC 候选上的冻结算法重新搜索。
+
+目标为：
 
 - RV64GC 标量后端；
 - 方法适用时的 RVV 配置；
@@ -242,7 +253,7 @@ RISC-V 不参与：
 
 报告：
 
-- LLVM IR refinement 仍使用 target-independent 主检查；
+- 每个目标独立执行 `Alive2(S_tau,R_tau)`；
 - RISC-V 编译成功率；
 - `.text` 大小；
 - 静态指令数及关键指令类别；

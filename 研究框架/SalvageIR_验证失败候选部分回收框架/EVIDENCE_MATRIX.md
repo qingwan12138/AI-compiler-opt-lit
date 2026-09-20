@@ -32,6 +32,7 @@
 | Trivet，2026 | LLM+Lean 扩大 LLVM 翻译验证覆盖，可证明或反驳 147/148 个案例 | 目标是验证，不修改或回收候选 | 中：未来可替换/补充 Alive2，但不碰撞恢复机制。[预印本](https://arxiv.org/abs/2609.19583) |
 | llvm-reduce | delta passes 删除 IR 内容并维持 interestingness | 缩减测试用例，不从源/目标编辑中构造 verified profitable 程序 | 中：必须作为 reducer 基线。[官方文档](https://llvm.org/docs/CommandGuide/llvm-reduce.html) |
 | opt-bisect | 关闭优化流水线中某索引之后的 pass/变换以定位错误 | 只作用于 LLVM pass pipeline，不分解任意 LLM 目标 IR | 低到中：[官方文档](https://llvm.org/docs/OptBisect.html) |
+| LLVM SandboxIR，LLVM 23/24 文档 | 对 LLVM IR 修改提供 change tracking、嵌套 checkpoint、accept/revert；Sandbox Vectorizer 还能在 region 粒度按盈利接受或回滚 | 它不从任意 `S/T0` diff 恢复 LLM 子翻译，也不使用 refinement 反例搜索；但事务回滚和“按区域接受”绝非 SalvageIR 创新 | 高：实现应复用或正面对照，不能重造后宣称贡献。[官方文档](https://llvm.org/docs/SandboxIR.html) |
 
 ## 3. 已不能声称的创新
 
@@ -48,14 +49,14 @@
 
 【候选创新】以下组合是当前尚未找到直接同构工作的部分：
 
-1. 把失败的 LLM LLVM-IR 优化表示为可重放、依赖闭合的编辑组件，而非源代码语句或文本 hunk；
+1. 把失败的 LLM LLVM-IR 优化表示为结构可重放组件，而非源代码语句或文本 hunk；闭合只保证可构建，不暗示语义独立；
 2. 明确处理 LLVM 的 poison/undef/freeze、semantic flags、SSA、CFG 和 MemorySSA；
 3. 用 refinement counterexample 形成组件命中排序，执行部分回滚；
 4. 在找到 verified 状态后重新加入组件做利润恢复；
 5. 所有输出均通过源到最终候选的直接整函数验证；
 6. 在固定候选与预算下，跨模型评价条件恢复率和端到端收益。
 
-核心增量必须通过 B5 与消融证明。若去掉反例切片后效果不变，创新缩减为 LLVM-aware structured rollback；若连结构化回滚也不优于 ddmin，则算法主张失败。
+核心增量必须通过 B5（无反例 best-first）、B6（同组件图 hierarchical ddmin）、B7（反例 hitting-set MaxSAT/ILP）与真实/打乱反例消融证明。若真实反例不优于打乱反例，创新缩减为 LLVM-aware structured rollback；若连结构化回滚也不优于 ddmin/最小诊断，则算法主张失败。
 
 ## 5. 数据与评价支撑
 

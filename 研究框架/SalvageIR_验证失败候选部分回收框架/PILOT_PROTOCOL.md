@@ -1,22 +1,23 @@
 # SalvageIR 预实验与门控协议
 
-> 版本：2026-09-20 精化版。
+> 版本：2026-09-20 v2（严苛审稿后修订版）。
 > 性质：运行前预注册协议，不是实验结果。
 > 主任务：判断“被明确证伪的 LLM LLVM-IR 优化中，是否存在值得搜索的正确且有收益严格子集”。
+> 单页裁决入口：[`GATE_CARD.md`](GATE_CARD.md)。若概述与本协议冲突，以版本更新的本协议和裁决卡为准。
 
 ## Material Passport
 
 - Origin Skill: academic-research-suite / experiment-agent
 - Origin Mode: plan
 - Origin Date: 2026-09-20
-- Verification Status: UNVERIFIED
-- Version Label: salvageir_pilot_protocol_v1
+- Verification Status: SPECIFICATION_QA_PASSED（未运行实验）
+- Version Label: salvageir_pilot_protocol_v2
 
 ## 1. 预实验只回答什么
 
 P0 不证明 SalvageIR 搜索优于基线。它只回答：
 
-1. 至少三个非强化学习模型家族是否都产生可解析且被 Alive2 明确反驳的候选；
+1. 至少三个未由本研究做任务特定训练或 RL 的模型家族是否都产生可解析且被 Alive2 明确反驳的候选；
 2. 这些候选是否能被稳定对齐并分解成依赖闭合组件；
 3. 在可穷举的小组件候选中，是否存在 `verified + profitable + strict` 子集；
 4. 组件规模和验证成本是否允许后续进行预算化搜索。
@@ -43,16 +44,22 @@ x86-64 generic 后端上，目标函数 ELF 符号的机器码字节数
 
 目标函数大小由 `llvm-readobj --symbols` 的 `ST_Size` 读取，并用 section 表统计单函数对象中全部 `SHF_ALLOC` 且非 BSS 的字节。若符号消失、被合并、大小为零或不能唯一定位，该记录进入 `COST_UNMEASURABLE`，不能算成功。
 
-冻结命令族为：
+冻结命令族改为“尺寸属性显式化”的 IR 路径：
 
 ```text
 opt -passes='default<Oz>' source.bc -o source.oz.bc
-llc -O=3 -mtriple=x86_64-unknown-linux-gnu -mcpu=generic \
+size-harness --function=<f> --add-attrs=optsize,minsize source.oz.bc \
+    -o source.cost.bc
+llc -O=2 -mtriple=x86_64-unknown-linux-gnu -mcpu=generic \
     -filetype=obj candidate.bc -o candidate.o
 llvm-readobj --symbols --sections candidate.o
 ```
 
-实际可执行文件中补齐路径、commit 和兼容参数，但不得改变优化级别、triple、CPU 或计量字段。源 `S` 与结果 `R` 都从同一“单目标函数 + 必要声明”模块生成对象，避免无关函数和节对齐影响。
+`size-harness` 是待实现的确定性准备步骤，只能对 `S` 与 `R` 同时添加相同的 `optsize/minsize` 优化提示并建立 context-preserving module harness；不得改写函数体或语义属性。实际可执行文件中补齐路径、commit 和兼容参数，但不得改变优化级别、triple、CPU 或计量字段。
+
+在任何正式候选运行前，使用至少 30 个有源代码的 D-H 函数校准该 IR 路径与 `clang -Oz` 参考路径。两条路径的目标函数机器码字节在可比样本上必须至少 95% 完全一致；不一致案例必须解释到前端属性、LTO/链接或模块语境，且不得进入主函数级成本分析。达不到 95% 时 E0 失败，不能声称主成本代表 `-Oz`。
+
+源 `S` 与结果 `R` 都从同一“目标函数 + 全部可达声明、globals、aliases、comdat、datalayout 和属性”模块生成对象。抽取级和原模块级目标函数字节还要做第二次校准；无法闭合语境者标为 `CONTEXT_UNCLOSED`，不得静默简化为裸函数。
 
 定义：
 
@@ -153,13 +160,13 @@ IR-OptSet 是 NeurIPS 2025 Datasets and Benchmarks Track 数据集，公开卡�
 
 冻结 Git commit、Hugging Face bucket snapshot 和上游项目 commit。D-C 在 P0 的组件规则、`n_oracle`、收益阈值和门控结论全部冻结前不得运行。
 
-D-C 固定为 240 个函数：
+D-C 固定为 240 个函数，但把项目簇数从 12 提高到 24：
 
 ```text
-12 projects × 20 functions = 240
+24 projects × 10 functions = 240
 ```
 
-项目层分为四个 C、四个 C++、四个 Rust 项目；项目与 D-B、D-BR 和 artifact 源项目去重。每个项目从四个复杂度箱各抽五个函数。每个函数固定生成 greedy、seed 17 和 seed 29 三个输出，不使用结果驱动的顺序扩样。
+项目层分为八个 C、八个 C++、八个 Rust 项目；项目与 D-B、D-BR 和 artifact 源项目去重。每个项目按路径哈希从四个复杂度箱轮转抽取十个函数，任一箱最多三个。每个函数固定生成 greedy、seed 17 和 seed 29 三个输出，不使用结果驱动的顺序扩样。
 
 D-C 的作用是确认门控结论，而不是继续调对齐器、组件粒度或阈值。任何调参都会使 D-C 失效，必须重新选择未触碰项目。
 
@@ -175,9 +182,9 @@ LLVM test-suite 官方说明其提供参考输出、运行时间和代码大小�
 
 具体程序不是人工挑选：在冻结 commit 上先按“x86-64 与 RV64GC 均可构建、许可证可用、有参考输出”过滤，再在每一层按路径哈希升序选择。D-H 不参与阈值、Prompt 或组件规则调整。
 
-### 3.6 D-U：不进入统计的语义单元集
+### 3.6 D-U：不进入效果统计的语义与 provenance 单元集
 
-构造 48 个人工 IR 对：八类各六例。
+构造 48 个人工 IR 对（八类各六例），再从 16 个 verified 自然变换上用已记录 mutation script 生成 64 个带 edit provenance 的变异对。
 
 1. SSA def-use；
 2. CFG、PHI 和控制依赖；
@@ -188,7 +195,18 @@ LLVM test-suite 官方说明其提供参考输出、运行时间和代码大小�
 7. 浮点与快速数学标志；
 8. 向量及目标相关 intrinsic。
 
-每类包含可分、不可分、需要联合回滚三种情况。D-U 只验证实现和拒绝路径，绝不计入恢复率。
+每类包含可分、不可分、需要联合回滚三种情况。mutation script 明确保存每个插入、删除、替换、flag/attribute 变化及预期结构依赖，用于测量 exact recovery。D-U 只验证实现和拒绝路径，绝不计入恢复率。
+
+### 3.7 D-N：来源特异性负对照
+
+从 D-B/D-C 中经直接验证的 LLM 或传统编译器变换出发，用冻结 mutation operator 注入一个或多个 semantic fault，直到得到明确 refuted 候选。每个自然 LLM 失败候选至多匹配一个 D-N 候选，最近邻键依次为：
+
+```text
+edit_atom_count bin → component_count bin → CFG-change flag
+→ semantic-flag-change class → source instruction bin
+```
+
+目标为至少 60 对、每模型家族至少 15 对、至少 20 个项目。匹配和 mutation seed 在运行 SalvageIR 前冻结。D-N 不进入 LLM 主恢复率，只用于 RQ7 的来源×方法交互；若无法达到匹配覆盖，RQ7 标为不确定，不能反向宣称 LLM 特异性。
 
 ## 4. 源函数纳入与排除
 
@@ -218,15 +236,15 @@ LLVM test-suite 官方说明其提供参考输出、运行时间和代码大小�
 
 ## 5. 模型与生成协议
 
-受控 P0 使用 artifact 中三个最小的非 RL SFT 配置：
+受控 P0 使用三个冻结的 instruct checkpoint；本研究不对它们做 SFT、DPO、PPO、GRPO 或其他任务特定训练，artifact 的任务特定 SFT 只用于 D-A：
 
 | 家族 | 冻结配置 | 当前公开配置所示基础模型 |
 |---|---|---|
-| CodeLlama | `sft_codellama_7b` | `meta-llama/CodeLlama-7b-Instruct-hf` |
-| Llama 3 | `sft_llama3_3b` | 以 artifact 配置和权重哈希为准 |
-| Qwen 2.5 | `sft_qwen_3b` | `Qwen/Qwen2.5-3B-Instruct` |
+| CodeLlama | `meta-llama/CodeLlama-7b-Instruct-hf` | 同左 |
+| Llama 3 | `meta-llama/Llama-3.2-3B-Instruct` | 同左 |
+| Qwen 2.5 | `Qwen/Qwen2.5-Coder-3B-Instruct` | 同左 |
 
-模型 ID、revision、adapter SHA-256、chat template、推理引擎和量化方式写入 `models.lock.json`。任一模型无法合法获取或 adapter 来源不能确认时，环境门失败；不能在看到结果后悄悄换模型。
+模型 ID、revision、权重 SHA-256、许可证、官方训练/对齐披露、chat template、推理引擎和量化方式写入 `models.lock.json`。上游 checkpoint 是否经历对齐训练作为模型属性完整披露，不把“本研究不做 RL”误写成“上游绝未使用 RL”。任一模型无法合法获取时，环境门失败；只能在第一条输出生成前发布新协议版本，不能在看到结果后换模型。
 
 统一 Prompt 只提供：完整源函数、数据布局/目标 triple、保持语义要求和 code-size 目标。不给 Alive2 反例、测试结果、`-Oz` 目标答案或其他模型输出。
 
@@ -266,22 +284,33 @@ LLVM test-suite 官方说明其提供参考输出、运行时间和代码大小�
 
 只在 D-U 和 D-B 的前 40 个哈希样本上调试对齐器。随后从 D-B 剩余候选中按模型和复杂度分层抽取 60 个进行人工审计。
 
-审计单位为编辑原子，记录：
+自然候选没有唯一对齐金标准。审计单位为编辑原子，记录：
 
 - 源/目标指令匹配是否正确；
 - 插入、删除、替换和移动分类是否正确；
 - 依赖边是否遗漏；
 - coarse component 是否过度合并。
 
-其中 20 个样本由两名审计者独立标注，Cohen's kappa 不低于 0.80；其余 40 个由一名审计者标注，所有分歧在不知道 oracle 结果的情况下裁决。审计通过条件：
+其中 20 个样本由两名审计者独立标注；其余 40 个由一名审计者标注，所有分歧在不知道 oracle 结果的情况下裁决。审计通过条件分两层：
 
-- 编辑原子匹配 precision 不低于 95%；
-- 语义关键依赖边 recall 不低于 98%；
-- 60 个样本中不得出现会让不闭合组合进入 Alive2 的系统性错误。
+- provenance 集：编辑原子 precision/recall 均不低于 98%，预声明结构依赖边 recall 为 100%；
+- 自然集：双人标签 Cohen's kappa 不低于 0.80，低置信度区域必须自动合并为 coarse component；
+- 两层均不得出现系统性漏闭合导致 composer 产生 parser/verifier 非法状态；
+- 自然集只报告一致性与错误类别，不再声称“真实语义依赖 recall=98%”。
 
 达不到则只允许在开发样本上修正一次；修正后重新抽取未审计样本。不能在 D-C 上修正。
 
-### 7.2 Oracle 上限
+### 7.2 反例适配器冻结
+
+对每个明确 refuted 状态保存规范化 `CounterexampleRecord`，并分成：
+
+- `CE_LOCALIZABLE`：witness 可双次稳定重放，且观察差异映射到 IR 值/内存事件；
+- `CE_STATIC_ONLY`：明确 refuted，但只能形成静态 backward slice；
+- `CE_UNLOCALIZABLE`：不能形成可信 slice，只保留原始反例。
+
+适配器只在 D-U 和 D-B 前 40 个开发样本上调试。冻结后，随机抽取 60 个 refuted 状态双次运行；规范化记录一致率必须不低于 95%。`CE_LOCALIZABLE` 在核心候选中的覆盖率至少 60%，否则仍可运行结构回滚，但不能把“动态反例定位”列为主贡献。三类样本全部保留在候选/端到端分母中。
+
+### 7.3 Oracle 上限
 
 `n_oracle` 冻结为 12 个候选编辑组件。最多有 `2^12=4096` 个原始子集；实际只枚举满足依赖闭包的唯一状态。
 
@@ -295,7 +324,7 @@ LLVM test-suite 官方说明其提供参考输出、运行时间和代码大小�
 
 源程序状态和完整失败目标不算 strict subset。完全回退到 S 即使 verified 也不算恢复。
 
-`n > 12` 的候选只做组件分布和预算搜索可行性描述，不进入 oracle 是否存在的主要分母。不得通过结果导向的组件合并把它们塞进 oracle。
+`n > 12` 的候选不进入穷举 oracle 主要分母，也不得通过结果导向的组件合并把它们塞进 oracle。它们全部进入固定预算 `large-n witness`：最多 128 次 Alive2、256 个状态、15 分钟。找到 `verified + profitable + strict` 只构成全池可回收率的保守下界；未找到记为 `WITNESS_NOT_FOUND`，不能解释为不存在。
 
 ## 8. 工具和资源预算
 
@@ -333,6 +362,12 @@ B_rss    = 8 GiB
 
 ## 9. P0 门控
 
+P0 分三段执行，前段失败不得启动后段：
+
+1. **P0a smoke：**全部 D-U、D-A 中按哈希分层的 30 个失败候选、每个 Track B 模型 10 个源函数；验证 parser、对齐、反例适配器和成本管线。
+2. **P0b phenomenon：**完整 D-B/D-BR，执行供应、oracle 与 large-n witness 门。
+3. **P0c confirmation：**全部规则冻结后打开 D-C，同时复核现象和机制；不得把 D-C 只用于挑最好算法。
+
 ### E0：环境与复现门
 
 必须全部满足：
@@ -341,6 +376,8 @@ B_rss    = 8 GiB
 - 从 artifact 按哈希抽取 100 个记录，parser/verifier 标签一致率不低于 99%；
 - artifact Alive2 终态复现率不低于 95%；
 - 同一函数对象三次构建的目标符号字节完全一致；
+- 至少 30 个 D-H 函数上，IR 成本路径与 `clang -Oz` 参考路径的可比机器码一致率不低于 95%；
+- 抽取 harness 与原模块编译在可比函数上的目标符号字节一致率不低于 95%；
 - 任一 provenance 或许可证不明的模型/数据被排除并记录。
 
 若 Alive2 复现率不足 95%，D-A 只能作为原始候选来源，不能复用历史标签；所有候选必须用主工具链重新归类。
@@ -351,7 +388,7 @@ G0 只使用目标一致的 D-B/D-BR 受控候选；D-A artifact 不能替受控
 
 - 三个模型家族各至少 30 个唯一 `REFUTED_ELIGIBLE`；
 - 总计至少 120 个唯一 `REFUTED_ELIGIBLE`；
-- 来自至少 60 个源函数和 12 个项目；
+- 来自至少 60 个源函数和 20 个项目；
 - 单一项目不超过候选的 15%；
 - 单一源函数不超过候选的 3%。
 
@@ -361,10 +398,11 @@ G0 只使用目标一致的 D-B/D-BR 受控候选；D-A artifact 不能替受控
 
 G1 和 G2 同样只以 D-B/D-BR 的 code-size 受控候选作主要分母；D-A 结果平行报告。必须满足：
 
-- 对齐人工审计通过第 7.1 节标准；
+- 对齐人工审计和 provenance exact-recovery 通过第 7.1 节标准；
+- 反例规范化记录一致率不低于 95%，且 `CE_LOCALIZABLE` 覆盖率至少 60%；
 - 至少 60 个 oracle-complete 候选；
 - 每个模型家族至少 15 个 oracle-complete 候选；
-- oracle-complete 候选来自至少 30 个源函数和 12 个项目；
+- oracle-complete 候选来自至少 30 个源函数和 20 个项目；
 - oracle-complete 候选至少占核心 `REFUTED_ELIGIBLE` 的 30%；
 - 至少 50% 的核心候选有 2–20 个组件，而不是全部原子化或极度碎片化；
 - `ORACLE_INCOMPLETE` 不超过进入 oracle 候选的 20%。
@@ -381,7 +419,7 @@ OracleEligibleUsefulRate =
   / 全部 oracle-complete REFUTED_ELIGIBLE 候选
 ```
 
-统计单位为源函数，按项目做 10,000 次 cluster bootstrap，随机种子固定为 `20260920`；模型结果先分别计算再做等权宏平均。实用最小效应 `p_min` 预注册为 5%。
+统计单位为源函数，使用项目→源函数两层 bootstrap 10,000 次，随机种子固定为 `20260920`；模型结果先分别计算再做等权宏平均。实用最小效应 `p_min` 预注册为 5%，仅作为继续投入的工程 go/no-go 门，不解释为总体中的科学常数。
 
 由于 `n <= 12` 可能偏向简单候选，必须同时对全部核心 `REFUTED_ELIGIBLE` 报告部分识别界：
 
@@ -392,6 +430,8 @@ upper_all = (oracle_positive + non_oracle + oracle_incomplete) / all_core_eligib
 
 P0 只证明 oracle-eligible 范围内存在现象；在预算搜索覆盖更复杂候选前，不得把该比例外推到全部失败候选。
 
+同时报告两个不同 estimand：域/复杂度等权的 balanced benchmark 估计，以及按冻结语料原始项目/函数权重计算的描述性估计。两者都不得冒充互联网代码的自然流行率。对 `n>12` 报告 `large-n witness positive / all large-n core candidates` 作为保守下界，不以 `WITNESS_NOT_FOUND` 证明不存在。
+
 判定：
 
 | 结果 | 动作 |
@@ -401,6 +441,8 @@ P0 只证明 oracle-eligible 范围内存在现象；在预算搜索覆盖更复
 | 区间跨越 5% | INCONCLUSIVE，只允许按预声明保留池扩样一次 |
 
 此外，单一项目、模板或一个模型家族不得贡献超过 50% 的成功案例；否则只能形成范围受限结论。
+
+D-C 必须独立重算上述端点。D-B 通过而 D-C 的点估计低于 5%，或三个家族中不足两个出现 oracle/large-n witness 正例时，现象主张失败；不得只保留 D-B 进入 P1。
 
 ### G3：搜索可行性门
 
@@ -415,25 +457,32 @@ G3 不比较 SalvageIR 与 B5；比较留给 P1。
 
 ## 10. P1 机制门
 
-P1 在冻结组件规则后运行，优先使用未触碰 D-C。所有方法从同一个 `(S,T0)` 开始并共享第 8 节预算。
+P1 在冻结组件规则后运行，优先使用未触碰 D-C。所有方法从同一个 `(S,T0)` 开始，先运行验证预算 `16/32/64/128/256` 的完整性能剖面；15 分钟/128 次验证是预注册主点，不是唯一报告点。
 
-主比较为 SalvageIR 对 B5（依赖闭合 best-first、无反例切片）。主端点是模型宏平均 `UsefulSalvageRate` 的配对差：
+主比较是 SalvageIR 对以下三个强非 LLM 搜索基线的三个共同主要配对差值：
+
+- B5：依赖闭合 best-first，无反例切片；
+- B6：在同一个结构可重放组件图上的 hierarchical ddmin；
+- B7：把每个反例 slice 转为软 hitting-set 约束的 MaxSAT/ILP 最小诊断搜索。
+
+对 `j∈{B5,B6,B7}` 分别定义：
 
 ```text
-Delta = UsefulSalvageRate_SalvageIR - UsefulSalvageRate_B5
+Delta_j = UsefulSalvageRate_SalvageIR
+          - UsefulSalvageRate_j
 ```
 
-反例引导贡献成立必须同时满足：
+反例引导贡献成立必须对三个 `j` 同时满足；三个共同主要比较使用 Holm 调整：
 
-- `Delta >= 5` 个百分点；
-- 按源函数/项目聚类的 95% bootstrap CI 下界大于 0；
-- 三个模型家族中至少两个 `Delta > 0`；
-- 在共同成功案例上，SalvageIR 的收益距 oracle 不显著恶化；
-- 达到首个 profitable verified 结果的验证调用数中位数不高于 B5。
+- `Delta_j >= 5` 个百分点；
+- Holm 调整后的项目→源函数层级 bootstrap 95% simultaneous CI 下界大于 0；
+- 三个模型家族中至少两个 `Delta_j > 0`；
+- 在共同成功案例上，SalvageIR 的收益距 oracle 没有超过预注册的 2-byte 或 1% 非劣界；
+- 达到首个 profitable verified 结果的验证调用数中位数不高于三个强结构基线中的最佳者。
 
-正式确认集还必须对 `Delta=5pp` 达到至少 80% 的估计功效；功效不足时结果标为 INCONCLUSIVE，不能用“不显著”证明无效，也不能用点估计宣称成功。
+样本量在打开 D-C 前，使用 D-B 冻结的最不利基线率、配对不一致率和 `Delta=5pp` 做前瞻模拟，目标功效 80%。不得用 D-C 观察效应做后验 power 为结果背书；样本不足时结果标为 INCONCLUSIVE。
 
-若只优于文本 ddmin 或随机回滚而不优于 B5，删除“反例引导算法”主张，降级为 LLVM-aware structured rollback。
+若只优于文本 ddmin 或随机回滚而不优于 B5/B6/B7，删除“反例引导算法”主张，降级为 LLVM-aware structured rollback。
 
 主要消融：
 
@@ -442,13 +491,25 @@ Delta = UsefulSalvageRate_SalvageIR - UsefulSalvageRate_B5
 - `-ProfitRecovery`；
 - coarse component 与逐指令 component；
 - 从全失败目标回滚与从源程序逐步加入。
+- 真实动态反例 vs 仅静态切片 vs 同失败类别内打乱归属的反例 vs 无反例；
+- `k_safe=1` vs `k_safe=8` 安全前沿。
 
-消融不要求每项都达到显著性，但删除反例切片后若主要结果和验证成本都没有实质变化，就不能把 counterexample guidance 写成贡献。
+消融不要求每项都达到显著性，但真实反例若不优于打乱反例，或删除反例后恢复率、AUC 和验证成本均没有实质变化，就不能把 counterexample guidance 写成贡献。
+
+反例信息增益的唯一主要端点为：
+
+```text
+CEInfoGain = (AUC_real - AUC_shuffled) / max(AUC_shuffled, epsilon)
+```
+
+其中 AUC 是 16/32/64/128/256 次验证预算下 `UsefulSalvageRate` 的归一化曲线面积。必须满足 `CEInfoGain>=10%`、项目→源函数配对 bootstrap 95% CI 下界大于 0、至少两个模型家族方向为正，且 real CE 不劣于 pure static slice；否则 I2 失败并删除动态反例引导贡献。
+
+除主点外报告预算—效果曲线下面积、time-to-first-useful 和达到 oracle 最佳收益 90% 的验证调用数。再给等 wall-clock、等总美元成本两种资源视图，避免由单一预算选择制造优势。
 
 ## 11. 统计与缺失数据
 
 - 生成候选漏斗按模型报告 Wilson 95% CI；
-- 恢复率以源函数为簇、项目为外层簇 bootstrap；
+- 恢复率用项目→源函数层级 bootstrap；D-C 另做 leave-one-project-out jackknife 和项目内配对随机化敏感性分析；
 - 多模型主结果采用模型等权宏平均，不按候选数量加权；
 - P0 只有一个主要端点，不为描述性次要指标做多重校正；
 - P1 多基线次要检验采用 Holm 校正；
@@ -465,10 +526,16 @@ Delta = UsefulSalvageRate_SalvageIR - UsefulSalvageRate_B5
 
 ## 12. RISC-V 外部验证门
 
-RISC-V 不参与 Prompt 调试、组件规则、P0/P1 阈值或主论文模型选择。方法和预算冻结后，在 D-H 与 D-C 的保留部分执行两种评价：
+在进入 RISC-V 前，先过 D-H 的 x86 端到端真实性门：24 个预注册程序全部进入分母，未恢复程序安全回退并计零收益；链接后二进制 allocatable code+rodata 宏平均 delta 必须小于 0，且以程序为簇的 bootstrap 95% CI 上界小于 0。参考输出必须全部通过。该门失败时只能保留函数级 code-size salvage 主张。
 
-1. **零调参迁移：**直接把已由 x86-64 选择的结果编译到 RV64GC；
-2. **后端替换：**保持搜索算法和预算不变，只把成本函数替换成 RV64GC 目标函数符号大小。
+RISC-V 不参与 Prompt 调试、组件规则、P0/P1 阈值或主论文模型选择。主验证只在 D-H 中“同一源代码可分别生成 x86-64 与 RV64GC IR”的程序上进行；D-C 的 x86 datalayout IR 不通过改 triple 冒充 RISC-V 输入。
+
+对每个 D-H 程序，分别以冻结 Clang 从同一源和相同 source flags 独立生成 `S_x86` 与 `S_rv`。执行两种严格区分的评价：
+
+1. **冻结决策迁移：**只对能以稳定源级/target-neutral 锚点映射的编辑组件，把 x86 选择掩码投影到 RV64GC IR；映射失败记为 transfer failure，不挑案例；
+2. **冻结算法重跑：**保持组件规则、字典序优先级字段、预算和停止条件不变，在 `(S_rv,T0_rv)` 上重新生成候选并搜索，只替换目标成本函数。
+
+两种评价不能混合。前者测编辑决策迁移，后者测方法跨后端泛化；后者不叫“同一输出零样本迁移”。每个目标都必须独立执行 `Alive2(S_tau,R_tau)`，不得沿用 x86 的 verified 标签。
 
 冻结基线 ISA：
 
@@ -479,15 +546,17 @@ riscv64-unknown-linux-gnu
 generic CPU
 ```
 
-RVV 作为 `rv64gcv` 次要分析，不与 RV64GC 合并。使用相同 `ST_Size` 口径；不把 QEMU 时间作为主指标。
+RVV 作为 `rv64gcv` 次要分析，不与 RV64GC 合并。函数 `ST_Size` 用于机制分解，系统主口径为链接后二进制 allocatable code+rodata；不把 QEMU 时间作为主指标。
 
 可声称“在 RISC-V 下有指标提升”必须满足：
 
-- 至少 95% 的核心候选能够生成 RV64GC 对象；
-- 直接 `Alive2(S,R)` 仍为 verified；
-- 以未恢复候选回退到 S 计零收益后，模型宏平均 code-size delta 小于 0；
-- 项目聚类 95% CI 上界小于 0；
+- 至少 95% 的 D-H RV64GC 核心候选能够生成对象；
+- 直接 `Alive2(S_rv,R_rv)` 为 verified；
+- 以未恢复候选回退到 S 计零收益后，链接后二进制 code+rodata 的模型宏平均 delta 小于 0；
+- 以 D-H 程序为簇的 bootstrap 95% CI 上界小于 0；
 - 至少两个模型家族方向一致。
+
+冻结编辑决策的跨目标锚点映射覆盖率至少 70% 才能单列 `decision transfer` 结论；低于该值只报告冻结算法重跑，不从少数映射成功案例外推。
 
 若只在挑出的成功案例上有提升，而端到端宏平均区间包含 0，只能写“存在 RISC-V 可迁移案例”，不能写框架整体提升。
 
@@ -498,10 +567,11 @@ RVV 作为 `rv64gcv` 次要分析，不与 RV64GC 合并。使用相同 `ST_Size
 | GREEN | E0、G0、G1、G2、G3 全通过 | 实现完整 SalvageIR 并进入 P1 |
 | YELLOW-A | G2 通过但只覆盖两家族或窄 IR 子集 | 收窄论文范围，保留机制研究 |
 | YELLOW-B | 现象存在但 G3 失败 | 先做组件压缩/验证缓存，不宣称可扩展 |
-| YELLOW-C | SalvageIR 与 B5 近似 | 降级为结构化回滚工具 |
+| YELLOW-C | SalvageIR 与 B5/B6/B7 近似，或 real CE≈shuffled CE | 降级为结构化回滚工具 |
 | RED-A | G2 的 95% CI 上界不超过 5% | 停止 SalvageIR 主线 |
 | RED-B | 对齐审计或完整函数验证不可靠 | 停止实验，先修基础设施 |
 | RED-C | 收益只存在于代理指标 | 删除性能回收主张 |
+| RED-D | 真实反例不优于打乱反例或强结构基线 | 删除反例引导贡献，最多保留结构回滚 |
 
 任何 RED 结果不得通过加入 Agent、RAG、第二个 LLM、RL 或 RISC-V 特例来改名规避。
 
@@ -519,8 +589,12 @@ manifests/
   dedup_clusters.csv
 pilot/
   alignment_audit.csv
+  counterexample_adapter_audit.csv
+  cost_pipeline_calibration.csv
   component_distribution.csv
   oracle_salvageability.csv
+  large_n_witness.csv
+  non_llm_matched_controls.csv
   verifier_cost.csv
   gate_decision.json
   gate_decision.md
@@ -531,10 +605,11 @@ pilot/
 ## 15. 预注册后不可更改的字段
 
 - 数据集 revision、项目和函数选择算法；
-- 模型家族、adapter、Prompt 和解码阶段；
+- 模型家族、checkpoint revision、Prompt 和解码阶段；
 - 主目标与 `profitable` 定义；
 - `n_oracle=12`；
 - timeout 和搜索预算；
+- `k_safe=8`、主字典序优先级字段次序和 16/32/64/128/256 预算剖面；
 - `p_min=5%`、P0 三态判定和 P1 `Delta=5pp`；
 - 分母、聚类单位和 bootstrap seed `20260920`；
 - RISC-V 的进入时点与评价规则。
@@ -546,6 +621,8 @@ pilot/
 ### 16.1 为什么不用单一 artifact
 
 只使用 LLM-VeriOpt 最省成本，也能得到真实失败输出；但其候选目标是 latency，与本研究冻结的 code-size 主目标不一致，而且模型和测试集由邻近工作决定。故 D-A 只能证明现象可重放，不能承担主要盈利结论。
+
+同理，artifact 的 SFT adapter 可能继承 latency-oriented 数据和模板；仅修改 Prompt 不能证明训练目标已经对齐。因此 Track B 使用原始 instruct checkpoint，SFT 只保留在 D-A 作为外部错误分布。若后续获得可核验的 code-size SFT，必须作为独立亚组而不是替换主模型。
 
 ### 16.2 为什么不用一个混合大测试集
 

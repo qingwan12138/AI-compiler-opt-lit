@@ -15,7 +15,9 @@
 | `K_tau(R)` | 目标后端 `tau` 上锁定配置的真实性能成本 |
 | `W` | 已收集的 Alive2 反例与相关切片集合 |
 
-目标是在预算 `B` 内寻找：
+### 1.1 研究问题：RCES
+
+把核心任务定义为 **Refinement-Constrained Edit Salvage（RCES）**。给定 `(S,T0,G,K_tau,B)`，在由结构可重放组件诱导的状态格上寻找：
 
 ```text
 R* = argmin K_primary(Build(S,T0,G,x))
@@ -25,7 +27,9 @@ R* = argmin K_primary(Build(S,T0,G,x))
                 K_primary(Build(...)) < K_primary(S)
 ```
 
-由于该组合问题可能指数增长，SalvageIR 只在小组件数时穷举；正式算法是有预算的近似搜索。
+由于该组合问题可能指数增长，SalvageIR 只在小组件数时穷举；正式算法是有预算的近似搜索。本文不在完成严格归约证明前声称 RCES 为 NP-hard，也不把依赖闭包称为语义独立性证明。
+
+RCES 与普通“找一个触发失败的最小输入”不同：其可行解必须相对原源函数通过 refinement，目标是保留最大真实后端收益，而不是最小化文本或编辑数量。该差异必须通过强基线而不是定义本身证明有研究价值。
 
 ## 2. 规范化
 
@@ -94,7 +98,7 @@ ABI：函数签名、calling convention、attribute 保持契约
 
 若两个闭包互相包含则合并。得到的组件图必须是 DAG；检测到环时合并强连通分量。
 
-组件不是被假定正确的优化规则。它只是搜索中能够合法重放的最小工程单位。
+组件不是被假定正确的优化规则。它只是搜索中能够合法重放的最小工程单位。为避免误解，论文正文统一称其为 **结构可重放组件**；“闭合”只表示满足构建所需的 SSA/CFG/属性联动，不表示组件可独立保持语义。
 
 ## 5. 反例切片
 
@@ -111,7 +115,27 @@ ABI：函数签名、calling convention、attribute 保持契约
 
 parser error、unsupported 和 timeout 不进入反例切片主流程。
 
-### 5.2 切片构造
+### 5.2 反例适配器契约
+
+每个验证状态产生一个 `CounterexampleRecord`：
+
+```text
+candidate_id, state_id, alive2_version, source_hash, target_hash,
+failure_kind, witness_inputs, source_observation, target_observation,
+ub_poison_facts, memory_events, raw_log_hash, normalized_record_hash
+```
+
+适配器只能输出三种状态：
+
+| 状态 | 定义 | 搜索用途 |
+|---|---|---|
+| `CE_LOCALIZABLE` | witness 可在同一状态稳定重放，且观察差异能映射到 IR 值/内存事件 | 动态+静态切片软排序 |
+| `CE_STATIC_ONLY` | 明确 refuted，但 witness 无法稳定物化或映射 | 静态 backward slice 软排序 |
+| `CE_UNLOCALIZABLE` | 只能保留明确 refutation，无法形成可信 slice | 不提供切片分数，仍保留完整样本 |
+
+同一 `(S,R)` 独立运行两次后，`failure_kind`、规范化 witness 和观察差异必须一致，才允许标为 `CE_LOCALIZABLE`。不一致记录降级；任何降级都不得从端到端分母删除。
+
+### 5.3 切片构造
 
 在能可靠重放反例时，从可观察差异逆向遍历：
 
@@ -126,15 +150,18 @@ parser error、unsupported 和 timeout 不进入反例切片主流程。
 多反例形成软命中分数：
 
 ```text
-score_coverage(RollbackSet) =
-  sum_w weight(w) * I[RollbackSet intersects slice(w)]
+score_coverage(state, RollbackSet) =
+  sum_w weight(w) * I[active(state) intersects slice(w)
+                       and RollbackSet intersects slice(w)]
 ```
 
-不得把“不命中”作为 soundness 剪枝。硬剪枝只来自 IR 合法性与已执行的验证结果。
+反例是 **state-conditioned**：由状态 `x` 得到的 slice 只能为 `x` 的后继排序，不能被当作所有状态都成立的全局因果事实。不得把“不命中”作为 soundness 剪枝。硬剪枝只来自 IR 合法性、依赖约束与已执行的验证结果。
+
+反例信息增益必须用四方对照检验：真实动态反例、仅静态切片、在同失败类别内打乱归属的反例、完全无反例。若真实反例不优于打乱反例，不能声称验证 witness 提供了定位信息。
 
 ## 6. 搜索算法
 
-### 6.1 第一阶段：寻找首个 verified 子翻译
+### 6.1 第一阶段：建立安全前沿
 
 ```text
 procedure SALVAGE(S, T0, Budget B):
@@ -142,13 +169,10 @@ procedure SALVAGE(S, T0, Budget B):
     Q = priority queue containing state FullTarget(G)
     Seen = empty set
     W = {InitialAlive2Counterexample(S, T0)}
-    Safe = {S}
+    SafeFrontier = ParetoSet({S}, max_size=k_safe)
 
     while Q not empty and within B:
-        state = Q.pop_best(counterexample_coverage,
-                           predicted_gain,
-                           rollback_size,
-                           stable_id)
+        state = Q.pop_best(frozen_priority)
         if state in Seen: continue
         Seen.add(state)
 
@@ -159,32 +183,51 @@ procedure SALVAGE(S, T0, Budget B):
 
         verdict = Alive2(S, R)
         if verdict == REFUTED:
-            W.add(extract_counterexample_and_slice(verdict, R, G))
+            W.add(extract_state_conditioned_counterexample(
+                    verdict, R, state, G))
             enqueue rollback successors guided by W
         else if verdict == VERIFIED:
-            Safe.add(R)
-            goto PROFIT_RECOVERY
+            SafeFrontier.add_non_dominated(
+                R, retained_gain_proxy, rollback_size, stable_id)
+            enqueue rollback successors and legal re-add successors
         else:
             record UNKNOWN
 
-    return NO_SALVAGE
+    return PROFIT_RECOVERY(SafeFrontier, remaining_budget)
 ```
+
+不再在首个 verified 状态停止。`k_safe` 在开发数据前冻结，主配置为 8；前沿以真实已测成本优先，其次为保留组件数和稳定 ID。若预算耗尽前未获得 strict verified 状态，返回 `NO_SALVAGE`。
+
+主排序不使用可调权重，冻结为字典序 tuple：
+
+```text
+frozen_priority = lexicographic_max(
+  newly_covered_real_ce_count,
+  newly_covered_static_slice_count,
+  backend_gain_upper_bound,
+  -structural_risk,
+  -rollback_atoms,
+  -stable_id)
+```
+
+所有项只用当前状态之前可见的信息；`stable_id` 只负责完全平局。开发集不得改变字段次序。加权、TTI 学习型或 learned ranker 版本都不属于主方法，只能作为预注册补充；P1 运行删除每一字段的敏感性分析。
 
 ### 6.2 第二阶段：利润恢复
 
-从首个 verified 状态开始，尝试重新加入已回滚组件：
+从安全非支配前沿的每个状态开始，尝试重新加入已回滚组件：
 
 ```text
-procedure PROFIT_RECOVERY(SafeState, RemovedComponents):
-    prioritize components by predicted backend gain / risk
-    for dependency-closed additions within remaining budget:
-        R = Build(...)
-        require LLVMVerify(R)
-        require Alive2(S, R) == VERIFIED
-        if verified:
-            update Safe
-            measure exact backend cost
-    return argmin exact_cost(Safe)
+procedure PROFIT_RECOVERY(SafeFrontier, RemainingBudget):
+    for SafeState in round_robin(SafeFrontier):
+        prioritize additions by frozen gain/risk score
+        for dependency-closed additions within RemainingBudget:
+            R = Build(...)
+            require LLVMVerify(R)
+            require Alive2(S, R) == VERIFIED
+            if verified:
+                update SafeFrontier
+                measure exact backend cost
+    return argmin exact_cost(SafeFrontier)
 ```
 
 利润预测只负责次序，可使用：
@@ -195,6 +238,8 @@ procedure PROFIT_RECOVERY(SafeState, RemovedComponents):
 - 组件规模。
 
 最终选择必须重新运行真实性能成本，不能用预测值裁决。
+
+实现层优先复用 LLVM SandboxIR 的事务 save/accept/revert 与 change tracking，避免把“可回滚 IR”包装为本工作创新。SalvageIR 的待证贡献是 **如何从外部 LLM whole-function diff 建立结构可重放组件，并用 refinement 反例在 RCES 状态格中排序**；LLVM 事务层只是基础设施。
 
 ### 6.3 小规模 oracle
 
@@ -262,3 +307,7 @@ reporter            -> candidate/model/project aggregates
 - PHI/CFG、flag、poison/undef 的定向单元测试；
 - 人工构造的可分错误、不可分错误和协同恢复案例；
 - 小规模穷举结果与搜索结果交叉检查。
+- `CounterexampleRecord` 双次重放稳定性测试；
+- 真实反例、打乱反例和静态切片的隔离测试；
+- `k_safe=1` 与安全前沿版本的回归测试；
+- 原模块语境与抽取 harness 的机器码校准测试。

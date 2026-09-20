@@ -12,7 +12,9 @@
 - 回滚后重新加入组件的利润恢复；
 - 整函数直接验证和目标后端收益。
 
-**裁决实验：**B5 与 `-UBClosure/-ProfitRecovery` 消融。若无显著差异，删掉算法新颖性主张。
+LLVM SandboxIR 已提供事务 save/accept/revert 和 region 粒度盈利接受，因此“IR 可回滚”也不能作为创新。
+
+**裁决实验：**B5 无反例 best-first、B6 同组件图 hierarchical ddmin、B7 反例 hitting-set MaxSAT/ILP，以及 `-UBClosure/-ProfitRecovery` 消融。若无实质差异，删掉算法新颖性主张。
 
 ### 反对意见 B：失败候选可能根本没有可救部分
 
@@ -30,7 +32,7 @@ LLVM 优化会重命名、重排、消除和合并 SSA 值，源/目标不存在
 
 Alive2 的反例说明整体不精化，不保证某个 slice 内组件就是原因；两个单独错误组件组合后也可能正确。
 
-**缓解：**反例仅排序，不作为 soundness 硬剪枝；所有候选仍完整验证；小规模 oracle 测量反例排序的 recall 与 optimality gap。
+**缓解：**反例仅排序，不作为 soundness 硬剪枝；所有候选仍完整验证；记录 `CE_LOCALIZABLE/STATIC_ONLY/UNLOCALIZABLE`；真实反例必须优于同失败类别内打乱归属的安慰剂反例和纯静态切片。
 
 ### 反对意见 E：删除修改后得到正确程序只是回到源程序
 
@@ -48,7 +50,7 @@ Alive2 的反例说明整体不精化，不保证某个 slice 内组件就是原
 
 搜索式方法天然可以通过更多尝试提高成功率。
 
-**缓解：**同时给出相同验证次数、相同 wall-clock 和成本—效果曲线；与 best-of-k、随机组件和无反例结构搜索对照。
+**缓解：**同时给出 16/32/64/128/256 验证预算性能剖面、相同 wall-clock 和等美元成本曲线；与 best-of-k、随机组件和全部强结构搜索对照。
 
 ### 反对意见 H：Alive2 本身有边界或 bug
 
@@ -66,7 +68,19 @@ Alive2 是实用的 bounded translation validator，但不支持跨过程变换�
 
 成立，因此 RISC-V 不列为贡献机制。
 
-**缓解：**方法冻结后才运行 RISC-V；只报告跨后端收益保持和反转，作为外部有效性证据。
+**缓解：**方法冻结后才运行 RISC-V；只在同一源代码独立生成的 RV64GC IR 上评价，区分冻结决策投影与冻结算法重跑，禁止直接改 x86 IR triple。
+
+### 反对意见 K：这不是 LLM 论文，而是通用 IR repair
+
+如果只把 LLM 当作失败输入生成器，且方法对匹配的随机/传统变异同样有效，那么 LLM 不是机制的一部分。
+
+**裁决实验：**构造编辑数、组件数、CFG 变化和 semantic-flag 类别匹配的非 LLM 负对照。若候选来源与方法无交互，改投通用 RCES/IR repair，不声称 LLM 特异贡献。
+
+### 反对意见 L：`-Oz` 与函数符号大小可能是测量假象
+
+`opt default<Oz>` 加任意 `llc -O` 不自动等价于 `clang -Oz`；函数 `ST_Size` 也忽略链接布局、ICF、常量池共享和 relaxation。
+
+**裁决实验：**先通过 `clang -Oz`/IR 路径和原模块/抽取 harness 双校准；函数级结果再由 D-H 链接后二进制验证。任一校准失败都停止 code-size 主张。
 
 ## 2. 风险登记表
 
@@ -77,7 +91,10 @@ Alive2 是实用的 bounded translation validator，但不支持跨过程变换�
 | 对齐失败率高 | 高 | 高 | 同构自检失败、coarse component 多 | 主张收窄到同 CFG/单块；发布覆盖率 |
 | Alive2 timeout/unsupported 高 | 中 | 高 | unknown 漏斗大 | 缩小语言子集；不把 unknown 转为失败样本 |
 | 搜索成本过大 | 中 | 高 | 验证次数接近穷举 | 强化闭包、缓存和预算；只主张离线恢复 |
-| B5 已达到相同效果 | 中 | 致命 | 反例消融无差异 | 删除反例引导贡献，降为结构化回滚工具 |
+| B5/B6/B7 已达到相同效果 | 中高 | 致命 | 预算曲线和反例消融无差异 | 删除反例引导贡献，降为结构化回滚工具 |
+| 真实反例≈打乱反例 | 中 | 致命 | real/shuffled AUC 无差异 | 删除动态反例定位主张 |
+| SFT 与 code-size 目标错配 | 高 | 高 | Track A/B 错误谱显著不同 | Track B 只用原始 instruct，SFT 单列 |
+| `-Oz` 成本管线未校准 | 中 | 致命 | 与 clang/reference 不一致 | 停止主实验，先修测量 |
 | 后端真实收益消失 | 中 | 高 | IR 减少但 `.text`/runtime 不变 | 改用真实性能排序；若仍无效则停止盈利主张 |
 | 只对一个模型有效 | 中 | 高 | method×model 强交互 | 收窄适用模型，禁止一般化 |
 | artifact 许可/内容不足 | 中 | 中 | 缺 raw IR 或日志 | 受控重新生成并公开 manifest |
@@ -89,15 +106,17 @@ Alive2 是实用的 bounded translation validator，但不支持跨过程变换�
 以下任一结果足以否定或显著收缩主张：
 
 1. P0 中几乎没有 `REFUTED_ELIGIBLE` 候选存在 profitable verified strict subset；
-2. SalvageIR 在相同预算下不优于 B5；
-3. 去掉反例切片、UB 闭包或利润恢复后结果基本不变；
+2. SalvageIR 在预算剖面下不优于 B5/B6/B7 的最强者；
+3. 真实反例不优于打乱反例，或去掉反例切片、UB 闭包、利润恢复后结果基本不变；
 4. 优势完全由更多 Alive2 调用、更多 wall-clock 或额外 LLM 请求解释；
 5. 结果只在单一弱模型、单一项目或近重复模板上成立；
 6. 模型宏平均或留一模型结果不支持方向一致性；
 7. 主性能收益在固定后端真实测量中消失；
 8. 结构对齐覆盖率低到使结果只适用于非常小的人工子集；
 9. 成功依赖把 timeout/unsupported 当作错误或正确；
-10. RISC-V/AArch64 大量收益反转，且分析表明主成本模型只过拟合 x86 后端。
+10. 从同一源独立生成的 RV64GC IR 上收益大量反转，且分析表明主成本模型只过拟合 x86 后端；
+11. 匹配非 LLM 负对照与 LLM 候选无可区分差异，却仍声称 LLM 特异贡献；
+12. `clang -Oz`/IR 路径或原模块/抽取 harness 校准失败。
 
 负结果不能改名为“发现边界”后继续保持原贡献措辞。只有在预先计划的 P0 现象研究本身规模和分析足够时，才能单独形成负结果或数据论文。
 
@@ -107,7 +126,7 @@ Alive2 是实用的 bounded translation validator，但不支持跨过程变换�
 
 - 与 ITER、MENTOR、PReMM 的逐项机制差异；
 - 为什么不是 llvm-reduce + Alive2；
-- B5 和 oracle 是否证明反例引导有贡献；
+- B5/B6/B7、打乱反例和 oracle 是否共同证明反例引导有贡献；
 - 是否搜索到同构的 2026 新工作。
 
 ### 正确性
@@ -148,8 +167,8 @@ Alive2 是实用的 bounded translation validator，但不支持跨过程变换�
 
 | 观察 | 决策 |
 |---|---|
-| 现象存在，M 优于 B5，消融成立 | 继续完整论文 |
-| 现象存在，但 M≈B5 | 改成 LLVM-aware structured rollback，降低创新等级 |
+| 现象存在，M 优于 B5/B6/B7，且 real CE 优于 shuffled CE | 继续完整论文 |
+| 现象存在，但 M≈强结构基线或 real≈shuffled | 改成 LLVM-aware structured rollback，降低创新等级 |
 | 只有 LLM 局部修复有效 | 改为局部修复论文，重新做模型公平协议 |
 | 现象只在弱模型存在 | 收窄到低资源模型后处理或停止 |
 | 只有 IR 指令收益 | 不声称 code size/runtime；评估是否仍值得投稿 |
