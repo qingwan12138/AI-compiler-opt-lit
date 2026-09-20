@@ -61,7 +61,8 @@
 
 - LLM-VeriOpt artifact 可作为候选和日志来源，但完整档案需要下载核验。[GitHub](https://github.com/carrotProgrammer/llmveriopt-AE)
 - IR-OptSet 提供 170K LLVM IR 样本、来自 1,704 个仓库，可作为受控生成的源程序池，但不能直接提供 LLM 失败候选。[NeurIPS 2025](https://papers.nips.cc/paper_files/paper/2025/hash/a4ab7aefc004bed00e577164c57eafd7-Abstract-Datasets_and_Benchmarks_Track.html)
-- LLVM Opt Benchmark 是真实 IR 数据来源，并明确区分 IR 代理和后端真实性能。[官方仓库](https://github.com/dtcxzyw/llvm-opt-benchmark)
+- LLVM Opt Benchmark 是真实 IR 数据来源；原仓库已归档并迁移到 nightly 仓库，正式实验必须冻结新仓库和数据 bucket 快照。[官方 nightly 仓库](https://github.com/dtcxzyw/llvm-opt-benchmark-nightly)
+- LLVM test-suite 提供参考输出、运行时间和代码大小测量，并支持交叉编译和模拟器前缀，适合冻结后的端到端及 RISC-V 外部验证。[官方指南](https://llvm.org/docs/TestSuiteGuide.html)
 - Meta LLM Compiler 提供 LLVM IR/汇编领域模型，但模型访问许可和版本锁定需纳入复现风险。[模型卡](https://huggingface.co/facebook/llm-compiler-7b/blob/main/README.md)
 
 ## 6. 可复现检索记录

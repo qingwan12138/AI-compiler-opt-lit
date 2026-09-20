@@ -77,13 +77,13 @@ Cost_primary(R) < Cost_primary(S)
 
 ## 8. 性能契约
 
-主论文在先导实验结束后只冻结一个主要目标。默认建议：
+主论文主要目标已经冻结：
 
 ```text
-Cost_primary = 固定 x86-64 后端与 -Oz 配置下的函数 .text 字节数
+Cost_primary = 源 IR 经 default<Oz> 后，在固定 x86-64 generic 后端生成的目标函数 ELF 符号字节数
 ```
 
-候选生成目标必须与 `Cost_primary` 一致。已有 artifact 若采用不同目标，只能用于现象先导或外部重放，不能混入主要盈利性比较。
+候选生成目标必须与 `Cost_primary` 一致。主要成功至少减少 `max(2 bytes, 1%)`。已有 artifact 若采用不同目标，只能用于现象先导或外部重放，不能混入主要盈利性比较。具体测量和门控遵循 [`PILOT_PROTOCOL.md`](PILOT_PROTOCOL.md)。
 
 同时报告：
 

@@ -23,9 +23,10 @@ SalvageIR 不把一个被 Alive2 明确证伪的 LLM 优化结果整体丢弃，
 2. [`FINAL_PROPOSAL.md`](FINAL_PROPOSAL.md)：完整问题、架构、算法、研究问题和论文定位。
 3. [`ALGORITHM_SPEC.md`](ALGORITHM_SPEC.md)：编辑图、反例引导回滚、正确性不变量和伪代码。
 4. [`DATA_AND_FAIRNESS_PROTOCOL.md`](DATA_AND_FAIRNESS_PROTOCOL.md)：候选来源、多模型公平性和数据冻结协议。
-5. [`EXPERIMENT_PLAN.md`](EXPERIMENT_PLAN.md)：先导实验、正式基线、消融、统计和 RISC-V 验证。
-6. [`EVIDENCE_MATRIX.md`](EVIDENCE_MATRIX.md)：语料库证据、2024—2026 近邻和创新碰撞。
-7. [`THREATS_AND_REVIEW.md`](THREATS_AND_REVIEW.md)：反方审查、风险、降级与可证伪条件。
+5. [`PILOT_PROTOCOL.md`](PILOT_PROTOCOL.md)：测试集、顺序扩样、oracle、资源预算和红黄绿门控的可预注册规格。
+6. [`EXPERIMENT_PLAN.md`](EXPERIMENT_PLAN.md)：正式基线、消融、统计和 RISC-V 验证。
+7. [`EVIDENCE_MATRIX.md`](EVIDENCE_MATRIX.md)：语料库证据、2024—2026 近邻和创新碰撞。
+8. [`THREATS_AND_REVIEW.md`](THREATS_AND_REVIEW.md)：反方审查、风险、降级与可证伪条件。
 
 ## 当前结论
 

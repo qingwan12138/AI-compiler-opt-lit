@@ -50,7 +50,7 @@ Frozen Candidate
 - 机制测试：人工可分/不可分案例与小规模穷举 oracle。
 - 公平性：冻结候选、统一预算、模型分层、模型宏平均、留一模型。
 - 正确性：最终 `Alive2(source,final)` 直接验证。
-- 性能：固定 x86-64 后端 `.text` 为默认主指标；运行时间、AArch64 与 RISC-V 为补充。
+- 性能：主指标冻结为 `default<Oz>` 后源 IR 与恢复 IR 在 x86-64 generic 后端上的目标函数 ELF `ST_Size`；至少减少 `max(2 bytes, 1%)` 且不得增加单函数对象的 allocatable non-BSS 字节才算有益。运行时间、AArch64 与 RISC-V 为补充。
 
 ## 完整规格位置
 
@@ -60,6 +60,7 @@ Frozen Candidate
 - [`FINAL_PROPOSAL.md`](../../../研究框架/SalvageIR_验证失败候选部分回收框架/FINAL_PROPOSAL.md)
 - [`ALGORITHM_SPEC.md`](../../../研究框架/SalvageIR_验证失败候选部分回收框架/ALGORITHM_SPEC.md)
 - [`DATA_AND_FAIRNESS_PROTOCOL.md`](../../../研究框架/SalvageIR_验证失败候选部分回收框架/DATA_AND_FAIRNESS_PROTOCOL.md)
+- [`PILOT_PROTOCOL.md`](../../../研究框架/SalvageIR_验证失败候选部分回收框架/PILOT_PROTOCOL.md)
 - [`EXPERIMENT_PLAN.md`](../../../研究框架/SalvageIR_验证失败候选部分回收框架/EXPERIMENT_PLAN.md)
 - [`EVIDENCE_MATRIX.md`](../../../研究框架/SalvageIR_验证失败候选部分回收框架/EVIDENCE_MATRIX.md)
 - [`THREATS_AND_REVIEW.md`](../../../研究框架/SalvageIR_验证失败候选部分回收框架/THREATS_AND_REVIEW.md)
@@ -69,6 +70,7 @@ Frozen Candidate
 - 无 `TODO/TBD` 作为设计要求；摘要中的实验结果占位明确标为未来真实结果。
 - 主任务不混入 syntax invalid、unknown 或 verified candidates。
 - 核心方法不依赖 RL 或额外 LLM。
-- RISC-V 未进入训练、搜索或主目标。
+- RISC-V 未进入训练、方法开发、Prompt、组件规则或主目标；仅在冻结后执行零调参迁移和成本后端替换评价。
 - 事实、推导与候选创新已分开。
 - 已设置能真正否定研究主张的停止条件。
+- 预实验已冻结测试集选择算法、顺序扩样、`n_oracle=12`、资源预算、最小实用效应和 RISC-V 外部验证门。

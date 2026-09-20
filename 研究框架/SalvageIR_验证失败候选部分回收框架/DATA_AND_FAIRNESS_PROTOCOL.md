@@ -33,32 +33,31 @@ candidate_id = hash(source_id, model_id, model_revision,
 
 LLM-VeriOpt 的 GRPO/模型正确性/模型延迟输出不进入主候选池，因为本研究明确不做 RL。若保留，单列为“高正确率模型压力测试”，不与非 RL 主结果合并。
 
-该 artifact 的公开通用 Prompt 以最小化延迟为目标。因此它主要服务 P0 的“失败候选是否可分解、是否可回收”现象研究，并沿用/复核其声明的延迟口径。若正式论文冻结 `.text` 代码大小为主要目标，不能把这些 latency-oriented 输出直接当作主要盈利性数据；正式主数据必须由 Track B 按代码大小目标重新生成，Track A 只作外部重放。
+该 artifact 的公开通用 Prompt 以最小化延迟为目标。因此它只服务 P0 的“失败候选是否可分解、是否可语义回收”现象研究，并沿用/复核其声明的延迟口径。论文主目标已经冻结为 code size，这些 latency-oriented 输出不能进入主要盈利性数据；正式主数据必须由 Track B 按代码大小目标重新生成。
 
 ### Track B：受控重新生成
 
 为避免完全依赖一个 artifact，使用项目级隔离的源 IR 重新生成候选：
 
-- IR-OptSet 的项目隔离子集；
-- LLVM Opt Benchmark/nightly 中许可证清晰的真实函数；
-- LLVM/GCC test-suite 中不与模型训练/开发重复的函数。
+- IR-OptSet 的 160 函数项目隔离发现集与 160 函数顺序扩样保留池；
+- LLVM Opt Benchmark/nightly 的 240 函数未触碰确认集；
+- LLVM test-suite 的 24 个端到端和跨后端保留程序。
 
 先冻结源函数，再调用模型。不得看到某模型输出后换函数。
 
-Track B 的 Prompt 与论文主要成本必须一致：代码大小论文要求候选生成时明确优化 code size；延迟论文要求明确优化 latency。不得用 latency-oriented 候选在事后切换到 code-size 目标并声称方法发现了原任务收益。
+Track B 的 Prompt、搜索和最终评价都明确优化 code size。不得用 latency-oriented 候选在事后切换目标并声称方法发现了原任务收益。确定性选择算法、配额和扩样门见 [`PILOT_PROTOCOL.md`](PILOT_PROTOCOL.md)。
 
 ## 3. 模型矩阵
 
-正式确认实验至少包含三个不同家族，建议四层：
+受控 P0 固定使用 artifact 中三个最小的非 RL SFT 配置：
 
-| 层 | 候选模型类型 | 目的 |
+| 家族 | 配置 | 用途 |
 |---|---|---|
-| 小型开源代码模型 | 约 3B | 获得足量失败候选和低成本开发 |
-| 中型开源代码模型 | 约 7B/8B | 主实验载体 |
-| IR 专用模型 | 如 LLM Compiler 7B，许可允许时 | 检查领域预训练模型 |
-| 强模型 | 固定快照的开放权重或可锁定 API | 外部有效性，不作为唯一证据 |
+| CodeLlama | `sft_codellama_7b` | 老一代代码模型错误分布 |
+| Llama 3 | `sft_llama3_3b` | 通用模型家族 |
+| Qwen 2.5 | `sft_qwen_3b` | 较新小型代码/通用模型家族 |
 
-模型名称、revision、量化、推理引擎和 chat template 在 P0 清点后锁定。不能用“small/medium/strong”替代最终报告中的真实 ID。
+同一家族不同参数规模作为亚组，不冒充独立家族。模型 ID、revision、adapter SHA-256、量化、推理引擎和 chat template 写入 `models.lock.json`。IR 专用模型和更强模型只可作为 P2 外部有效性补充，不能替换这三个预注册家族或用于 P0 调门。
 
 ## 4. 统一生成协议
 

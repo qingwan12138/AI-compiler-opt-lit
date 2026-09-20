@@ -38,34 +38,30 @@ Alive2 官方说明其不支持跨过程变换，并可能对相关 pass 产生�
 
 ### 3.2 步骤
 
-1. 下载并只读解包 LLM-VeriOpt artifact，清点每个模型的 IR、Alive2 日志和许可证；公开说明称其包含完整评价材料和参考输出。[Artifact](https://zenodo.org/records/17672452)
-2. 用锁定工具链重新验证，不直接信任历史标签。
-3. 从非 RL 模型中建立完整候选漏斗。
-4. 对 `REFUTED_ELIGIBLE` 做规范化、结构对齐和组件统计。
-5. 在组件数足以穷举的候选上枚举所有依赖闭合子集。
-6. 每个子集执行 LLVM verifier、Alive2 和主成本测量。
-7. 输出“是否存在可回收结果”、最佳收益、组件数、错误类型和模型来源。
+P0 的测试集、顺序扩样、模型允许列表、过滤规则、`n_oracle=12`、资源预算和数值门槛全部由 [`PILOT_PROTOCOL.md`](PILOT_PROTOCOL.md) 约束。执行顺序为：
 
-LLM-VeriOpt 候选以延迟优化为生成目标，P0 对其使用原论文的目标口径并补充真实性检查。若正式主实验选择 `.text` 大小，则 P0 artifact 只证明结构可回收性，P2 必须使用按代码大小目标受控生成的新候选。
+1. 全量重放 LLM-VeriOpt 的非 RL 输出，只用于外部现象复核；
+2. 在 IR-OptSet 的 160 函数项目隔离发现集上生成 code-size 对齐候选；
+3. 候选不足时只按预声明规则启用采样重复和 160 函数保留池；
+4. 对 `REFUTED_ELIGIBLE` 进行对齐审计和组件统计；
+5. 对不超过 12 个组件的候选枚举所有依赖闭合子集；
+6. 每个子集执行 LLVM verifier、Alive2 和目标函数 ELF 符号大小测量；
+7. 冻结全部规则后，才允许打开 LLVM Opt Benchmark 的 240 函数确认集。
+
+LLM-VeriOpt 候选以 latency 为目标，不能与 code-size 主结果合并。受控候选统一从 `default<Oz>` 后的源 IR 出发，并在 Prompt 中明确优化 code size。
 
 ### 3.3 P0 输出
 
-- `candidate_funnel_by_model.csv`
-- `decomposability.csv`
-- `oracle_salvageability.csv`
-- 对齐失败案例和不可分候选案例集
-- 继续/停止判定报告
+- 数据、模型、工具链三个 lock 文件；
+- 源函数、原始生成、去重簇和候选漏斗 manifest；
+- 对齐审计、组件分布、oracle 可回收性和验证成本表；
+- 含每一门分子、分母、区间和裁决的 `gate_decision.json/.md`。
 
 ### 3.4 P0 通过条件
 
-不预设任意的“必须 20%”。通过条件是：
+P0 依次执行 E0 环境门、G0 候选供应门、G1 可分解门、G2 现象门和 G3 搜索可行性门。核心数值包括：三个模型家族各至少 30 个明确失败候选、总计至少 120 个；至少 60 个 oracle-complete 候选；oracle useful rate 的模型宏平均点估计至少 10%，且项目聚类 95% CI 下界超过预注册的 5% 最小实用效应。完整红黄绿判定见 [`PILOT_PROTOCOL.md`](PILOT_PROTOCOL.md)。
 
-- 至少三个非 RL 模型家族都有明确 refuted 样本；
-- 可回收现象不是仅由同一模板或近重复函数贡献；
-- 在小规模 oracle 子集上，profitable verified strict subset 的比例置信区间与零有实质区分；
-- 组件数和验证成本显示预算化搜索可能优于盲目穷举。
-
-若样本量不足，先扩充受控生成，不能降低定义把 syntax error 或 unknown 混进来。
+区间跨越 5% 时只允许按预声明保留池扩样一次；区间上界不超过 5% 时停止 SalvageIR 主线。不得降低定义把 syntax error、unknown 或完全回退到源程序混入成功。
 
 ## 4. P1：最小机制门
 
@@ -184,16 +180,14 @@ UsefulSalvage = I[final verified and K(final) < K(source)]
 
 ### 6.4 性能
 
-主指标：固定 x86-64 `-Oz` 后端的函数 `.text` 字节数。
-
-这一默认选择只在 P0 后冻结。若 P0 表明可执行 harness 足够、实际延迟可稳定测量，也可以在查看方法比较结果之前把真实运行时间冻结为主指标；一经冻结不得在结果不利后切换。无论选择哪一个，生成 Prompt、搜索目标和最终评价必须一致。
+主指标冻结为：源 IR 先经 `default<Oz>`，随后在固定 x86-64 generic 后端生成 ELF 对象，由 `llvm-readobj --symbols` 读取目标函数 `ST_Size`。成功至少减少 `max(2 bytes, 1%)`。Prompt、搜索目标和最终评价均使用 code size，不得在结果不利后切换到 latency。
 
 补充：
 
 - x86-64 `llvm-mca`/TTI；
 - 可执行子集真实时间；
 - AArch64 代码大小和静态成本；
-- RV64GC/RVV 代码大小、指令数和真实/模拟周期。
+- RV64GC/RVV 代码大小和指令数；真实或模拟周期仅作探索性补充。
 
 LLVM Opt Benchmark 明确提醒 IR 差异只是代理，真实运行性能可能因后端识别而相反，因此论文必须避免把 IR 指令数变化写成运行加速。[LLVM Opt Benchmark](https://github.com/dtcxzyw/llvm-opt-benchmark)
 
