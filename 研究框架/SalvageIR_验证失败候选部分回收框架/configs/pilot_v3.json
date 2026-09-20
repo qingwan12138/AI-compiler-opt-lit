@@ -1,0 +1,100 @@
+{
+  "protocol_version": "salvageir_v3",
+  "spec_date": "2026-09-21",
+  "status": "DESIGN_ONLY_NOT_RUN",
+  "input": {
+    "primary": "PRE_SSA",
+    "secondary": "POST_OZ",
+    "normalization_passes": "mem2reg",
+    "baseline_passes": "default<Oz>",
+    "source_instruction_min": 8,
+    "source_instruction_max": 256,
+    "source_basic_blocks_max": 16,
+    "integer_widths": [
+      1,
+      8,
+      16,
+      32,
+      64
+    ]
+  },
+  "cost": {
+    "triple": "x86_64-unknown-linux-gnu",
+    "cpu": "generic",
+    "llc_opt_level": 2,
+    "min_gain_bytes": 2,
+    "min_gain_fraction": 0.01,
+    "require_alloc_non_bss_nonincrease": true,
+    "require_direct_post_oz_validation": true,
+    "build_repeats": 3
+  },
+  "pilot": {
+    "existing_reported_outputs": 32,
+    "existing_reported_refuted": 2,
+    "reported_counts_are_verified": false,
+    "fixture_count": 24,
+    "source_count": 64,
+    "project_count": 16,
+    "functions_per_project": 4,
+    "development_projects": 4,
+    "scout_projects": 12,
+    "model_count": 1,
+    "input_variants": [
+      "PRE_SSA",
+      "POST_OZ"
+    ],
+    "generations_per_source_variant": 1,
+    "max_generation_requests": 128,
+    "max_new_tokens": 4096,
+    "max_raw_output_chars": 32768,
+    "do_sample": false,
+    "hash_seed": "salvageir-v3-20260921",
+    "instruction_bins": [
+      [
+        8,
+        31
+      ],
+      [
+        32,
+        63
+      ],
+      [
+        64,
+        127
+      ],
+      [
+        128,
+        256
+      ]
+    ],
+    "search_batch_wall_seconds": 14400
+  },
+  "limits": {
+    "llvm_verify_seconds": 5,
+    "alive2_seconds": 30,
+    "opt_and_codegen_seconds": 30,
+    "rss_gib": 8,
+    "oracle_component_max": 10,
+    "oracle_state_max": 1024,
+    "oracle_alive_calls_max": 2048,
+    "oracle_candidate_wall_seconds": 600,
+    "search_state_max": 256,
+    "search_alive_calls_max": 128,
+    "search_cost_evaluations_max": 128,
+    "search_candidate_wall_seconds": 900,
+    "search_profile_alive_calls": [
+      16,
+      32,
+      64,
+      128
+    ],
+    "queue_proposal_max": 4096
+  },
+  "required_locks": [
+    "protocol.lock.json",
+    "toolchain.lock.json",
+    "datasets.lock.json",
+    "models.lock.json"
+  ],
+  "external_execution_authorized": false
+}

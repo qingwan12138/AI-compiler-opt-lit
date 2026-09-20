@@ -1,313 +1,168 @@
 # SalvageIR 算法规格
 
-## 1. 符号与状态
+> salvageir_v3 · 2026-09-21。算法是可实施的候选设计，未由自然样本证明有效。
 
-| 符号 | 含义 |
+## 1. 形式化对象
+
+输入 (S,T0) 已满足研究契约，T0 为 REFUTED。
+A 是有来源的编辑原子，C 是仅按必需共变关系合并的组件，x 是组件选择掩码。
+Build(S,T0,x) 构造 R；0 表示源版本，1 表示目标编辑。H(x) 是结构可构造性约束。
+主目标：在预算内最小化 C_backend(P(R))，满足严格子集、两次直接 refinement 和收益门。
+P 是固定 Oz，不是搜索 pass 的变量。不声称 NP-hard、完备定位或全局近最优。
+
+每个状态必须绑定 source_hash、target_hash、representation_version、mask、built_ir_hash。
+不同掩码产生相同 IR 时缓存计算，但保留所有掩码来源；相同最终 Oz IR 也可共享成本与对应证明。
+缓存键还包括工具/配置/超时/目标哈希；跨方法允许共享计算工件，但模拟预算须收取相同逻辑查询与冷缓存成本。真实 wall-clock 比较各方法独立冷缓存。
+
+## 2. 规范化与对齐
+
+输入准备在 PILOT_PROTOCOL 中定义；这里不能再调用 instcombine、DCE、simplifycfg 等改写差异。
+只去 debug、稳定名字；不排序可能影响观察/元信息的任意文本，不删除语义属性。
+匹配先用参数、返回、固定 CFG 块锚点；再用 opcode/type/operand origin/constant 匹配指令。
+flag 与可变操作数是独立字段，不能把 flag 差异当成两条完全无关的指令。
+
+P0 builder 首版：
+- 单块或唯一结构匹配的固定无环 CFG；
+- 每块中匹配指令顺序单调，无调度歧义；PHI 所属前驱相同；
+- 同一槽位的源/目标版本及原始顺序全部保留；
+- 非唯一对齐片段合为 coarse replacement；若无法满足两端重建，返回 REPRESENTATION_UNSUPPORTED。
+- 不支持 CFG 重构时记录覆盖失败，不偷偷调用 LLM、LLVM 优化 pass 或合成器弥补。
+固定 CFG 允许改变分支条件表达式，不把“控制含义变化”误当作 CFG 拓扑变化。
+
+原子：InsertInst、DeleteInst、ReplaceOpcode、ReplaceOperand、ReplaceConstant、ChangeSemanticFlag。
+接口、函数属性、datalayout、triple 和外部声明不可由模型改变。扩展版 CFG/PHI/属性原子另行注册。
+
+## 3. 结构约束与风险关联必须分开
+
+| 关系 | 处理方式 |
 |---|---|
-| `S` | 规范化后的源 LLVM IR 函数 |
-| `T0` | LLM 生成、可解析但被 Alive2 明确反驳的完整候选 |
-| `A` | 源到目标的候选编辑原子集合 |
-| `C={c1...cn}` | 对编辑原子求 LLVM 依赖闭包后得到的 CEC 集合 |
-| `G=(C,D)` | 组件依赖图；`D` 表示组合合法性约束 |
-| `x in {0,1}^n` | 组件选择向量；1 表示重放目标组件，0 表示保持/回滚到源 |
-| `Build(S,T0,G,x)` | 用选择向量构造完整候选 IR；可能返回结构非法 |
-| `V(S,R)` | Alive2 的整函数 refinement 结果 |
-| `K_tau(R)` | 目标后端 `tau` 上锁定配置的真实性能成本 |
-| `W` | 已收集的 Alive2 反例与相关切片集合 |
-
-### 1.1 研究问题：RCES
-
-把核心任务定义为 **Refinement-Constrained Edit Salvage（RCES）**。给定 `(S,T0,G,K_tau,B)`，在由结构可重放组件诱导的状态格上寻找：
-
-```text
-R* = argmin K_primary(Build(S,T0,G,x))
-     subject to x dependency-closed
-                LLVMVerify(Build(...)) = PASS
-                V(S, Build(...)) = VERIFIED
-                K_primary(Build(...)) < K_primary(S)
-```
-
-由于该组合问题可能指数增长，SalvageIR 只在小组件数时穷举；正式算法是有预算的近似搜索。本文不在完成严格归约证明前声称 RCES 为 NP-hard，也不把依赖闭包称为语义独立性证明。
-
-RCES 与普通“找一个触发失败的最小输入”不同：其可行解必须相对原源函数通过 refinement，目标是保留最大真实后端收益，而不是最小化文本或编辑数量。该差异必须通过强基线而不是定义本身证明有研究价值。
-
-## 2. 规范化
-
-规范化必须可逆或至少保留语义相关信息：
-
-1. 用 `opt -passes=verify` 检查输入；
-2. 移除 debug location、注释和与语义无关的名称噪声；
-3. 稳定编号匿名基本块和 SSA 值；
-4. 对交换律操作数按语义指纹排序；
-5. 保留 datalayout、triple、函数属性、调用约定和语义 flag；
-6. 保存原始、规范化和清理后 IR 的内容哈希。
-
-禁止为了便于对齐而删除 `nsw/nuw/exact/inbounds`、`freeze`、参数属性或内存语义，因为这些经常就是错误来源。
-
-## 3. 结构对齐
-
-### 3.1 基本块匹配
-
-优先级依次为：
-
-1. entry、return/exit 锚点；
-2. 前驱/后继度数与边标签；
-3. dominator/post-dominator 深度；
-4. 块内操作码和类型多重集；
-5. 已匹配邻居的一致性。
-
-若匹配置信度低于冻结阈值，则把相关 CFG 子图作为不可再分的 coarse component，而不是强行逐指令匹配。
-
-### 3.2 指令匹配
-
-指令语义指纹包括：
-
-```text
-opcode + result type + operand origin signatures
-+ constants + semantic flags + memory/call attributes
-```
-
-对换序、局部公共子表达式消除和临时值重命名允许多轮固定点匹配。匹配算法及阈值只在开发集调整，保留集冻结。
-
-### 3.3 编辑原子
-
-- `InsertInst`
-- `DeleteInst`
-- `ReplaceOpcode`
-- `ReplaceOperand`
-- `ReplaceConstant`
-- `ChangeSemanticFlag`
-- `ChangeAttribute`
-- `Add/Delete/RetargetEdge`
-- `ChangePhiIncoming`
-
-文本重命名和非语义 metadata 不形成编辑原子。
-
-## 4. 组件闭包
-
-从一个编辑原子出发，重复加入违反以下条件的关联编辑，直到固定点：
-
-```text
-SSA：每个使用都有唯一且支配该使用的定义
-CFG：terminator、边和 PHI incoming 集合同步
-Control：控制谓词变化与受控区域同步
-Memory：可能冲突的 load/store 与 MemorySSA 关系同步
-UB：产生或消费 poison/undef 的 flag、freeze、branch/address 同步
-ABI：函数签名、calling convention、attribute 保持契约
-```
-
-若两个闭包互相包含则合并。得到的组件图必须是 DAG；检测到环时合并强连通分量。
-
-组件不是被假定正确的优化规则。它只是搜索中能够合法重放的最小工程单位。为避免误解，论文正文统一称其为 **结构可重放组件**；“闭合”只表示满足构建所需的 SSA/CFG/属性联动，不表示组件可独立保持语义。
-
-## 5. 反例切片
-
-### 5.1 反例分类
-
-对 Alive2 refutation 保留以下类别：
-
-- return value mismatch；
-- target more undefined；
-- memory mismatch；
-- poison/undef mismatch；
-- attribute/precondition mismatch；
-- 其他可解析的明确 refutation。
-
-parser error、unsupported 和 timeout 不进入反例切片主流程。
-
-### 5.2 反例适配器契约
-
-每个验证状态产生一个 `CounterexampleRecord`：
-
-```text
-candidate_id, state_id, alive2_version, source_hash, target_hash,
-failure_kind, witness_inputs, source_observation, target_observation,
-ub_poison_facts, memory_events, raw_log_hash, normalized_record_hash
-```
-
-适配器只能输出三种状态：
-
-| 状态 | 定义 | 搜索用途 |
-|---|---|---|
-| `CE_LOCALIZABLE` | witness 可在同一状态稳定重放，且观察差异能映射到 IR 值/内存事件 | 动态+静态切片软排序 |
-| `CE_STATIC_ONLY` | 明确 refuted，但 witness 无法稳定物化或映射 | 静态 backward slice 软排序 |
-| `CE_UNLOCALIZABLE` | 只能保留明确 refutation，无法形成可信 slice | 不提供切片分数，仍保留完整样本 |
-
-同一 `(S,R)` 独立运行两次后，`failure_kind`、规范化 witness 和观察差异必须一致，才允许标为 `CE_LOCALIZABLE`。不一致记录降级；任何降级都不得从端到端分母删除。
-
-### 5.3 切片构造
-
-在能可靠重放反例时，从可观察差异逆向遍历：
-
-- SSA def-use；
-- control dependence；
-- MemorySSA dependence；
-- 触发 UB 的消费点及其输入；
-- 与该路径相关的 CEC。
-
-若无法可靠物化具体输入，退化为静态 backward slice，并把置信度记为低。切片集合 `slice(w)` 只是可疑集合。
-
-多反例形成软命中分数：
-
-```text
-score_coverage(state, RollbackSet) =
-  sum_w weight(w) * I[active(state) intersects slice(w)
-                       and RollbackSet intersects slice(w)]
-```
-
-反例是 **state-conditioned**：由状态 `x` 得到的 slice 只能为 `x` 的后继排序，不能被当作所有状态都成立的全局因果事实。不得把“不命中”作为 soundness 剪枝。硬剪枝只来自 IR 合法性、依赖约束与已执行的验证结果。
-
-反例信息增益必须用四方对照检验：真实动态反例、仅静态切片、在同失败类别内打乱归属的反例、完全无反例。若真实反例不优于打乱反例，不能声称验证 witness 提供了定位信息。
-
-## 6. 搜索算法
-
-### 6.1 第一阶段：建立安全前沿
-
-```text
-procedure SALVAGE(S, T0, Budget B):
-    G = BuildEditComponentGraph(S, T0)
-    Q = priority queue containing state FullTarget(G)
-    Seen = empty set
-    W = {InitialAlive2Counterexample(S, T0)}
-    SafeFrontier = ParetoSet({S}, max_size=k_safe)
-
-    while Q not empty and within B:
-        state = Q.pop_best(frozen_priority)
-        if state in Seen: continue
-        Seen.add(state)
-
-        R = Build(S, T0, G, state)
-        if R is structurally invalid:
-            enqueue dependency-closed supersets of rollback(state)
-            continue
-
-        verdict = Alive2(S, R)
-        if verdict == REFUTED:
-            W.add(extract_state_conditioned_counterexample(
-                    verdict, R, state, G))
-            enqueue rollback successors guided by W
-        else if verdict == VERIFIED:
-            SafeFrontier.add_non_dominated(
-                R, retained_gain_proxy, rollback_size, stable_id)
-            enqueue rollback successors and legal re-add successors
-        else:
-            record UNKNOWN
-
-    return PROFIT_RECOVERY(SafeFrontier, remaining_budget)
-```
-
-不再在首个 verified 状态停止。`k_safe` 在开发数据前冻结，主配置为 8；前沿以真实已测成本优先，其次为保留组件数和稳定 ID。若预算耗尽前未获得 strict verified 状态，返回 `NO_SALVAGE`。
-
-主排序不使用可调权重，冻结为字典序 tuple：
-
-```text
-frozen_priority = lexicographic_max(
-  newly_covered_real_ce_count,
-  newly_covered_static_slice_count,
-  backend_gain_upper_bound,
-  -structural_risk,
-  -rollback_atoms,
-  -stable_id)
-```
-
-所有项只用当前状态之前可见的信息；`stable_id` 只负责完全平局。开发集不得改变字段次序。加权、TTI 学习型或 learned ranker 版本都不属于主方法，只能作为预注册补充；P1 运行删除每一字段的敏感性分析。
-
-### 6.2 第二阶段：利润恢复
-
-从安全非支配前沿的每个状态开始，尝试重新加入已回滚组件：
-
-```text
-procedure PROFIT_RECOVERY(SafeFrontier, RemainingBudget):
-    for SafeState in round_robin(SafeFrontier):
-        prioritize additions by frozen gain/risk score
-        for dependency-closed additions within RemainingBudget:
-            R = Build(...)
-            require LLVMVerify(R)
-            require Alive2(S, R) == VERIFIED
-            if verified:
-                update SafeFrontier
-                measure exact backend cost
-    return argmin exact_cost(SafeFrontier)
-```
-
-利润预测只负责次序，可使用：
-
-- 组件导致的 IR/机器指令静态差；
-- `llvm-mca` 或 LLVM TTI；
-- 回滚该组件后的实际 `.text` 差；
-- 组件规模。
-
-最终选择必须重新运行真实性能成本，不能用预测值裁决。
-
-实现层优先复用 LLVM SandboxIR 的事务 save/accept/revert 与 change tracking，避免把“可回滚 IR”包装为本工作创新。SalvageIR 的待证贡献是 **如何从外部 LLM whole-function diff 建立结构可重放组件，并用 refinement 反例在 RCES 状态格中排序**；LLVM 事务层只是基础设施。
-
-### 6.3 小规模 oracle
-
-当 `n <= n_oracle` 时，枚举所有依赖闭合状态，得到：
-
-- 是否存在可回收结果；
-- 最佳可回收成本；
-- SalvageIR 与 oracle 的 optimality gap；
-- 验证调用节省。
-
-`n_oracle` 根据先导运行时间冻结，不在看结果后调整。
-
-## 7. 搜索预算
-
-每个候选同时受以下上限约束：
-
-- `B_verify`：Alive2 调用次数；
-- `B_compile`：LLVM verifier/后端编译次数；
-- `B_wall`：总墙钟时间；
-- `B_states`：唯一状态数；
-- 可选扩展的 `B_llm_tokens`。
-
-基线可选择共享四维预算或使用“墙钟+验证次数”主匹配并报告其他资源。不能只匹配候选数而允许某方法无限验证。
-
-## 8. 输出状态机
-
-| 状态 | 定义 |
-|---|---|
-| `SALVAGED_PROFITABLE` | 最终直接 verified，且主成本优于 `S` |
-| `SALVAGED_VALID_NO_GAIN` | verified，但未优于 `S`；不算主成功 |
-| `NO_VERIFIED_SUBSET` | 预算内无 strict verified 子集 |
-| `ATOMIC_FAILURE` | 编辑图只有一个不可分组件或所有组件必须联动 |
-| `ALIGNMENT_UNSUPPORTED` | 无法可靠构造可重放编辑图 |
-| `VERIFIER_UNKNOWN` | 候选搜索被 timeout/unsupported 主导 |
-| `TOOL_FAILURE` | LLVM/Alive2 崩溃或环境错误 |
-
-## 9. 实现接口
-
-建议模块边界：
-
-```text
-candidate_loader     -> FrozenCandidate
-ir_normalizer       -> NormalizedPair
-ir_aligner          -> EditAtoms + confidence
-component_builder   -> ComponentGraph
-counterexample      -> CounterexampleRecord + Slice
-composer            -> CompleteIR | StructuralFailure
-verifier            -> VERIFIED | REFUTED | UNKNOWN
-cost_model          -> ProxyCost + ExactCost
-search              -> Trace + SafeCandidates
-reporter            -> candidate/model/project aggregates
-```
-
-所有模块通过内容哈希连接。验证器、编译器和成本工具的 stdout/stderr 原样保存；不得只保存解析后的标签。
-
-## 10. 不变量测试
-
-实现时至少包含：
-
-- 规范化前后自 refinement 检查；
-- `Build(all source)` 与 `S` 同构；
-- `Build(all target)` 与 `T0` 同构；
-- 每个构建结果通过 LLVM verifier 后才进入 Alive2；
-- 依赖闭合性质测试；
-- PHI/CFG、flag、poison/undef 的定向单元测试；
-- 人工构造的可分错误、不可分错误和协同恢复案例；
-- 小规模穷举结果与搜索结果交叉检查。
-- `CounterexampleRecord` 双次重放稳定性测试；
-- 真实反例、打乱反例和静态切片的隔离测试；
-- `k_safe=1` 与安全前沿版本的回归测试；
-- 原模块语境与抽取 harness 的机器码校准测试。
+| 新操作数引用目标端新增定义 | 必须启用该定义；结构硬蕴含 |
+| 删除定义但还保留使用 | 必须重定向/删除相应使用，或构建失败 |
+| 指令类型/操作码/操作数槽位耦合 | 必需字段组合约束；互相必需才合并 |
+| PHI 与前驱集合、支配、终结指令 | 结构硬检查；P0 不补造新 PHI |
+| nsw/nuw/exact、freeze 与消费者 | 语义风险关联；不因存在 def-use 自动合并 |
+| 分支条件与受控区域 | 语义风险关联；不是整片区域强制共变 |
+| 内存别名/MemorySSA | P0 不支持；扩展时分别证明构造约束与语义风险 |
+| 签名/ABI/语义属性变化 | P0 拒绝契约变化，不当可恢复编辑 |
+
+硬蕴含可用有向图；互相蕴含的强连通分量可合并。
+多选一等关系保留为约束表达式，不能强行转换成“所有相关编辑必须一起改”。
+每条硬约束保存 reason、source/target实体及最小失败示例；风险边不得硬剪枝。
+组件称“结构可重放组件”，不是“语义独立优化组件”。
+
+必须满足：
+- Build(全0) 与 S 规范同构，Build(全1) 与 T0 规范同构；
+- 构建不引入两端都不存在的可执行计算；
+- 每个结果再次运行 LLVM verifier，静态图不是 verifier 的替代；
+- 不把某次整函数验证通过传播为其他上下文中的组件正确性。
+
+## 4. 重放与邻居
+
+composer 从 S 克隆；应用选中编辑，依据两端已记录映射重定向操作数。
+仅允许 alpha-renaming、重建对象引用和采用原有端点的块/指令顺序。
+无法恢复引用、支配或类型时返回 BUILD_INVALID；不得按当前结果临时“加一条 glue 指令”。
+
+基本邻居为逐组件翻转：
+- 回滚组件时，级联回滚依赖该组件的已启用组件；
+- 加回组件时，级联启用其必需前提；
+- 非蕴含约束由 H(x) 检查，不满足则该提案 BUILD_INVALID；
+- 两类邻居都去重、稳定排序，不能只扩展 VERIFIED 状态。
+只支持上述闭包能够表达的表示进入预算搜索；不支持的通用约束记为表示覆盖失败。
+oracle 则枚举全部掩码并检验 H，不依赖启发式邻居可达性。
+
+全0和全1作为公共起点，已有源验证/初始反例对所有方法相同。
+全0可生成单组件加回邻居，避免只沿着错误目标回滚而错失独立可行区域。
+对非法状态可继续生成未访问邻居；不把某个状态非法推成所有超集/子集非法。
+额外去重、限制队列/提前停止如未在 lock 中声明，不得静默增加。
+
+## 5. 反例接口：有效而非相同
+
+CounterexampleRecord 包含：
+candidate_id、state_id、S/R哈希、verifier版本、failure_kind、witness、
+source/target_observation、poison_undef_facts、raw_log_hash、localization_state、reason。
+
+三态：
+- CE_LOCALIZABLE：该 witness 在对应状态可可信地物化/核验，差异能映射到 IR 值或观察点。
+- CE_STATIC_ONLY：明确 REFUTED，但不能可信重放；只使用静态 backward slice。
+- CE_UNLOCALIZABLE：明确 REFUTED，却没有可信切片；无切片分数。
+
+同一日志重复解析必须一致；重复求解返回不同有效 witness 不触发降级。
+普通执行器不能重现 LLVM poison/undef 语义时，不把普通整数运行结果当作完整 witness 重放。
+两次 verdict 相互矛盾则是工具故障，隔离该记录并调查；不是挑选 VERIFIED 结果。
+witness 只影响产生它的状态的邻居排序；不得跨状态当永久故障约束。
+从返回/分支/poison消费差异逆向形成可疑编辑集，允许包括需要加回的已回滚源编辑。
+不声称切片里所有编辑都错误，也不声称切片外编辑正确。
+
+## 6. 预算搜索 v3
+
+统一队列搜索取代两套容易不一致的“安全前沿＋第二阶段”实现。
+保留一个已精确验证和测量的最佳 incumbent；VERIFIED 无收益状态仍继续扩展。
+每次展开同时产生回滚和加回邻居，因而允许恢复利润；并非只找最小修复。
+优先级依次是：
+1. 提案翻转编辑命中当前父状态可信动态切片的数量；
+2. 命中当前父状态静态切片的数量；
+3. 按选中编辑槽位估算的相对 S 的 IR 指令减少量（gain_estimate，可能为负）；
+4. 较少的结构编辑数；
+5. 稳定状态 ID。
+
+各父状态只评价自己的提案；相同状态多条提案保留最大字典序键并保留来源。
+源状态和 VERIFIED 父状态没有错误 witness，前两项为0。
+gain_estimate 不是后端收益上界，不用于硬剪枝。任何代理好坏都不决定最终成功。
+不得为免费给队列排序预先编译所有候选；若排序时实际构建了IR，该唯一状态须计入状态预算。
+最多状态数、验证数、精确测量数及总时间共同限流；参数见配置。
+
+~~~text
+initialize queue with neighbors(all-target, initial CE) and neighbors(all-source)
+incumbent = NONE
+while queue not empty and budgets remain:
+    x = pop deterministic priority; skip duplicate built IR if already evaluated
+    R = Build(x)
+    if BUILD_INVALID:
+        log; enqueue unseen structural neighbors; continue
+    result = direct Alive2(S,R)
+    if result == VERIFIED:
+        Q = P(R)
+        exact cost = backend(Q)
+        if profitable and strict:
+            require LLVMVerify(Q) and direct Alive2(S,Q) == VERIFIED
+            update incumbent using exact cost, then alloc_non_bss, then stable ID
+    if result == REFUTED: extract state-conditioned CE
+    if result == UNKNOWN: record reason, do not accept
+    enqueue unseen legal rollback and re-add proposals using this state's information
+return incumbent or NO_SALVAGE
+~~~
+
+如果最终证明/测量预算不足，该结果未成功；不得以“搜索找到”计入成功。
+保存完整 anytime trace；每个预算截点只能使用此前已经完成两道证明和测量的 incumbent。
+time-to-first-useful 必须计入未成功样本的删失，不只比较共同成功样本的均值。
+
+## 7. 正确性与成本边界
+
+LLVMVerify、Alive2、P 和 llc 都使用协议锁定版本。
+证明链同时记录 S→R 与 S→P(R)，不靠局部正确性拼装代替。
+P0 禁止循环，减少 bounded loop validation 的额外解释负担；未来循环支持须单列边界。
+后端编译器仍是可信边界，IR 证明不等于 ELF 机器码证明。
+直接 whole-function refinement 和后端真实成本决定接纳，动态切片失败只影响效率。
+
+## 8. Oracle 与表示审计
+
+小表示完整枚举，定义在冻结 A/C/H 上，不能因想穷举而合并到阈值内。
+任意 unknown、未测成本或未完成状态阻止“没有可回收解/精确最优”的结论。
+即使枚举未完成，已证实的有益状态仍是存在性证据。
+状态类别和上/下界见 PILOT_PROTOCOL；oracle 不是全部可能程序变换的上界。
+
+必须人工审计：
+- flag 是否被不必要地绑到消费者；
+- 是否存在联合修改才正确、分别修改都错误的案例；
+- coarse component 是否吞掉人工可验证的子集；
+- 需要新 glue 的案例是否被错误计为严格回收。
+人工构造的方案只作表示上限诊断，不混入自动恢复率。
+
+## 9. 基线与消融接口
+
+B5 与主算法完全相同但把动态/静态切片键置0；其余提案、预算、接纳均相同。
+StaticOnly 只移除动态键；MatchedRandom 在同一状态同一翻转方向中置换真实组件分数。
+MatchedRandom 在硬依赖度数桶(0、1–2、≥3)内置换，保留非零个数及分数分布；
+冻结随机种子，桶太小时记录实际可置换比例，不能宣称完成有效安慰剂。
+B6/B7 的具体实现与确认比较见 EXPERIMENT_PLAN。
+移除加回操作是利润恢复消融；硬结构约束与语义风险关联不得再混名为“UB闭包”。

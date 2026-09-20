@@ -1,139 +1,43 @@
-# SalvageIR 唯一裁决卡
+# SalvageIR v3 裁决卡
 
-> 作用：这是执行时的单页裁决入口。详细定义以 [`PILOT_PROTOCOL.md`](PILOT_PROTOCOL.md) 为准；若其他概述文件与本卡冲突，以本卡和预注册版本较新的协议为准。
-> 原则：F、I、S 三层分别裁决，不用一个综合分数掩盖某层失败。
+> salvageir_v3 · 2026-09-21。摘要；详细定义与数值以 PILOT_PROTOCOL.md 和 configs/pilot_v3.json 为准。
 
-## 0. 固定分析单位
+## 不可偷换的接纳门
 
-| 项目 | 固定值 |
-|---|---|
-| 主要候选 | Track B 冻结 instruct checkpoint 产生的唯一 `REFUTED_ELIGIBLE`；本研究不做任务特定训练/RL |
-| 主要正确性 | 最终直接 `Alive2(S,R)=VERIFIED` |
-| 主要收益 | 校准的 x86-64 `ST_Size` 至少减少 `max(2 bytes,1%)`，alloc non-BSS 不增加 |
-| 主要聚类 | 项目→源函数层级；模型先分层、再等权宏平均 |
-| 主预算点 | 128 次 Alive2、256 状态、15 分钟、8 GiB |
-| 预算剖面 | 16/32/64/128/256 次 Alive2 |
-| 主搜索排序 | 无权重字典序：real CE→static slice→gain upper bound→risk→rollback atoms→stable ID |
-| oracle | 结构可重放组件数 `n<=12` 的全部闭合状态 |
-| 大规模下界 | `n>12` 的 128-call fixed witness search；未找到不算不存在 |
+严格编辑子集；LLVM verifier通过；直接X→R及X→Oz(R)都VERIFIED；
+同流水线下Oz(R)的目标函数机器码至少减少max(2 bytes,ceil(1%基线))；
+allocatable非BSS字节不增加。UNKNOWN、仅修正确、回到源、仅Oz前收益均不算主成功。
 
-## E：环境有效性门
+## 分阶段裁决
 
-全部满足才可进入自然候选实验：
+| 阶段 | 允许裁决 | 下一步 |
+|---|---|---|
+| P0a fixtures/测量未过 | BLOCKED_TOOLCHAIN 或 FAIL_INFRA | 修复并重跑受影响测试；不生成新数据 |
+| P0a smoke通过但无自然输入 | SMOKE_PASS_NATURAL_MISSING | 给出raw/source/target/log/模型信息缺件清单 |
+| P0a smoke及自然审计完成 | P0A_AUDITED | 如实报告正例、负例或未决；P0b需资源授权 |
+| P0b ≥2个项目有自然自动正例 | PROCEED_MECHANISM_DEV | 只支持P1开发，不代表统计确认 |
+| P0b 少量/集中/未决 | LIMITED_OR_INCONCLUSIVE | 说明瓶颈，固定批次停止，不无限加样 |
+| P0b 预算内零正例 | NO_POSITIVE_WITHIN_BUDGET | 停止自动扩大；不是证明普遍不存在 |
+| P1 不优于结构/静态基线 | MECHANISM_UNSUPPORTED | 删除反例贡献，保留工具/现象的范围内结论 |
+| P2 独立确认支持 | CONFIRMED_IN_SCOPE | 仅在预声明范围内报告效果 |
+| RISC-V正例但总体不确定 | RV_CASES_ONLY | 只能说存在案例，不能宣称总体改善 |
 
-- artifact parser/verifier 标签复现率 `>=99%`，Alive2 终态复现率 `>=95%`；
-- 机器码三次构建逐字节一致；
-- IR 成本路径与 `clang -Oz` 参考路径在至少 30 个可比函数上机器码一致率 `>=95%`；
-- 抽取 harness 与原模块编译的目标函数字节一致率 `>=95%`；
-- provenance 集编辑原子 precision/recall `>=98%`，预声明结构依赖边 recall `=100%`；
-- 自然对齐审计 Cohen's kappa `>=0.80`；
-- 反例规范化双次重放一致率 `>=95%`。
+## Oracle语义
 
-任一项失败：**STOP-ENV**，先修基础设施，不得进入效果统计。
+POSITIVE_COMPLETE、POSITIVE_PARTIAL均证明表示内存在有益状态。
+NEGATIVE_COMPLETE需所有合法严格状态有决定性结论。
+UNRESOLVED不等于negative；表示失败仍在核心分母。
+枚举最优只对冻结表示空间有效，不是所有可能优化的全局最优。
 
-## F：现象门
+## 不再使用的门
 
-### F0 候选供应
+不以三个模型120个失败为P0a前置条件；不以固定60%动态反例覆盖决定是否存在现象；
+不要求两个求解返回相同witness；不要求clang -Oz与IR路径95%字节相同；
+不把0/小样本或稀疏bootstrap区间当作不存在证据。
+文档检查通过不是LLVM集成测试通过；集成测试通过也不是自然样本研究通过。
 
-- 三个模型家族各 `>=30` 个唯一核心失败，总计 `>=120`；
-- 至少 60 个源函数、20 个项目；单项目 `<=15%`，单源函数 `<=3%`。
+## 每次报告必备
 
-失败：删除“跨模型通用”，只能重写为足量家族的范围受限研究。
-
-### F1 可分解与覆盖
-
-- `>=60` 个 oracle-complete，每家族 `>=15`；
-- 来自 `>=30` 个源函数、`>=20` 个项目；
-- oracle-complete 覆盖核心失败候选 `>=30%`；
-- 至少 50% 核心候选具有 2–20 个组件；oracle incomplete `<=20%`；
-- `CE_LOCALIZABLE` 覆盖核心候选 `>=60%`。
-
-反例覆盖单项失败但其余通过：仍可研究结构回滚，但删除动态反例定位主张。
-
-### F2 现象存在
-
-主要端点：`OracleEligibleUsefulRate`。D-B/D-BR 必须满足：
-
-- 模型宏平均点估计 `>=10%`；
-- 项目→源函数层级 bootstrap 95% CI 下界 `>5%`；
-- 至少两个模型家族点估计为正；
-- 单项目、模板或模型家族不贡献超过 50% 的成功。
-
-D-C 独立复核：点估计必须 `>=5%`，且至少两个家族观察到 oracle 或 large-n witness 正例。D-B 通过而 D-C `<5%`：**STOP-PHENOMENON**。
-
-D-B 区间跨 5% 时只允许启用一次 D-BR；上界 `<=5%` 立即停止。
-
-### F3 搜索可行性
-
-- 75% 核心候选组件数 `<=20`；
-- Alive2 单状态 median `<=5s`、P90 `<=30s`；
-- timeout/unsupported `<=10%`；
-- oracle-positive 中“只能保留一个组件”的比例 `<=80%`。
-
-失败：现象论文仍可能成立，但不宣称可扩展搜索系统。
-
-## I：机制识别门
-
-### I1 对强结构基线
-
-对 B5 无反例 best-first、B6 hierarchical-ddmin、B7 MaxSAT/ILP diagnosis 分别定义配对差 `Delta_j=M-Bj`。主预算点必须对三个比较同时满足：
-
-- 每个 `Delta_j >= 5pp`；
-- 三个比较经 Holm 调整后的配对层级 bootstrap 95% simultaneous CI 下界均 `>0`；
-- 每个比较至少两个模型家族差值 `>0`；
-- 首个有益结果的验证调用数 median 不劣于三个基线中的最佳者；
-- 共同成功案例的收益相对 oracle 不超过 `max(2 bytes,1%)` 非劣界。
-
-### I2 反例信息增益
-
-在相同状态图、初始队列和预算下比较 real CE 与同失败类别内 shuffled CE。定义：
-
-```text
-CEInfoGain = (AUC_real - AUC_shuffled) / max(AUC_shuffled, epsilon)
-```
-
-其中 AUC 是 16/32/64/128/256 验证预算下 `UsefulSalvageRate` 的归一化曲线面积。必须满足：
-
-- `CEInfoGain >=10%`；
-- 项目→源函数配对 bootstrap 95% CI 下界 `>0`；
-- 至少两个模型家族方向为正；
-- real CE 同时不劣于 pure static slice。
-
-I1 或 I2 任一失败：不得声称“counterexample-guided algorithm”，降级为结构可重放 rollback 工具。只在一个预算点获胜不算通过。
-
-## S：系统真实性与跨后端门
-
-### S1 x86 端到端
-
-在 D-H 全部 24 个预注册程序上，未恢复程序安全回退并计零收益：
-
-- 链接后二进制 allocatable code+rodata 宏平均 delta `<0`；
-- 以程序为簇的 bootstrap 95% CI 上界 `<0`；
-- 参考输出全部通过；任何错误程序按方法失败并回退。
-
-失败：只能声称函数级 salvage，不声称端到端系统收益。
-
-### S2 RV64GC 外部验证
-
-只使用从同一源代码独立生成的 `S_rv/T0_rv`：
-
-- RV64GC 核心候选对象生成率 `>=95%`；
-- 每个输出独立 `Alive2(S_rv,R_rv)=VERIFIED`；
-- 回退计零后的链接二进制 code+rodata 宏平均 delta `<0`；
-- 以程序为簇的 bootstrap 95% CI 上界 `<0`；
-- 至少两个模型家族方向一致。
-
-冻结编辑决策的跨目标锚点映射覆盖 `>=70%` 才单列“decision transfer”；否则只报告冻结算法重跑，不把映射成功案例外推。
-
-失败：只能写“存在 RISC-V 可迁移案例”或“RISC-V 上无总体提升”，不得写框架在 RISC-V 上有指标提升。
-
-## 最终投稿定位
-
-| 通过情况 | 允许定位 |
-|---|---|
-| E+F | 失败候选可回收性测量/数据论文 |
-| E+F+I | Translator 后处理方法论文；系统收益仍限函数级 |
-| E+F+I+S1 | 有端到端证据的 Translator 方法论文 |
-| E+F+I+S1+S2 | 可声称在独立 RV64GC 流水线上也有总体代码尺寸提升 |
-| F 失败 | 停止 SalvageIR 主线 |
-| I 失败 | 降级结构 rollback，不保留反例算法主张 |
+版本/哈希；实际阶段；分子分母；项目/模型/设置；表示覆盖；
+两道证明与精确成本；所有unknown/超预算/缺件；实际调用和时间；
+允许主张、禁止主张、唯一下一阶段。没有证据一律未验证。

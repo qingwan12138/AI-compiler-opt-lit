@@ -1,208 +1,88 @@
-# SalvageIR：面向 LLM 生成 LLVM IR 优化的精化引导部分回滚
+# SalvageIR：失败 LLM IR 优化的验证式部分回收
 
-英文题目建议：**SalvageIR: Refinement-Guided Partial Rollback for LLM-Generated LLVM IR Optimizations**
+> salvageir_v3 · 2026-09-21 · 设计稿，无实验结论。
 
-## 1. 问题陈述
+## 1. 唯一问题
 
-现有 LLM IR 优化系统通常遵循“生成完整候选—整体验证—接受或回退”的原子提交语义。一旦完整候选被形式验证反驳，候选中所有修改都会随之丢弃，即使其中一部分修改本身正确且有收益。
+LLM 整体优化失败后，能否不用第二次生成，从原有改动中保留正确且有益的部分？
+进一步要求：收益经过统一 LLVM Oz 优化后仍存在，而非只重新实现普通优化。
 
-SalvageIR 研究一个更窄但可检验的问题：
+源 S 是规范，T0 是明确 REFUTED 的翻译，R 是严格编辑子集。
+程序本身不是待修复的 bug；被修正的是一次失败的优化翻译。
+核心归属 Translator/T2，保持无训练、无 RL、x86 主实验、RISC-V 外部验证。
 
-> 被明确证伪的完整 LLVM IR 翻译，是否经常包含可重新组合为正确且有收益结果的子翻译；若存在，能否用 LLVM 结构依赖和反例证据在固定预算内找到它们？
+## 2. 文献事实与尚待证明的空白
 
-该问题不是提高验证覆盖率，也不是修复任意程序 bug。源函数 `S` 是语义规范，目标 `T0` 是优化翻译，系统允许撤销目标中的错误变换，但不允许改变源函数契约。
+LLM-VeriOpt 的生成/验证/失败回退支持“失败池存在”，不证明池内可回收。
+LPO 已有已优化 IR 切片、验证反馈和重试；Minotaur 已有 IR 切片与形式化局部优化。
+PReMM 已有依赖分组及补丁组合；SandboxIR 已有事务与按区域接受/回滚。
+因此以下内容单独不算创新：调用 Alive2、反例反馈、组件图、rollback 或换平台。
 
-## 2. 研究空白推导
+候选增量是：对固定失败翻译构造可审计的严格编辑子集空间，在结构合法性与语义风险分离的条件下，利用状态相关反例提高有益回收的预算效率。
+尚未找到直接同构工作不等于“首次”；证据与原文位置见 EVIDENCE_MATRIX。
 
-### 2.1 已经解决的内容
+## 3. 数据流
 
-- LLM-Vectorizer、LLM-VeriOpt、IntOpt 等工作已经证明 LLM 可以生成 LLVM IR 或优化程序，并用 Alive2 做验证。
-- Compiler Generated Feedback、LPO 等工作已经把编译错误或验证反例反馈给 LLM 进行完整候选重试。
-- CoV 已经用静态与运行时验证扩大 LLM 优化的可接纳范围。
-- ITER、MENTOR、PReMM 等程序修复工作已经证明部分补丁、多位置修复、反例引导定位并非新概念。
+~~~text
+有出处的未优化 raw IR
+    ↓ 明确的属性处理 + mem2reg（不是 Oz）
+PRE_SSA 源 S ──→ LLM 一次优化 ──→ T0
+    │                               │ parser/接口/Alive2分类
+    │                               ↓ 仅明确 REFUTED
+    └────────→ 对齐与编辑表示 → 硬构造约束 + 软风险关系
+                                      ↓
+                       预算内回滚/加回，直接验证 S→R
+                                      ↓
+                         两边统一 Oz + 后端尺寸
+                                      ↓
+                        直接验证 S→Oz(R) 后接纳
+~~~
 
-### 2.2 仍未直接解决的内容
+同源 POST_OZ 输入独立生成候选，作为配对困难设置。不得把两种输入设置的失败条件率直接当作因果差异；应配对比较全部源函数的端到端结果。
 
-当前定向检索尚未发现同时满足以下条件的方法：
+## 4. 四个必要模块
 
-1. 输入是 LLM 生成的、已被明确证伪的 LLVM IR 优化翻译；
-2. 不是让模型重新生成整个程序，而是把源到目标的变化显式分解为 LLVM-aware 编辑组件；
-3. 在 poison、undef、SSA、CFG 和内存依赖约束下回滚或重放组件；
-4. 用 LLVM refinement 逐步裁决组合；
-5. 目标不是最小补丁，而是恢复 verified 且 profitable 的子翻译；
-6. 对完全相同的失败候选进行跨模型、配对和预算相等的评价。
+1. 可追溯输入与候选分类：保留 raw、S、T0、模型/工具版本和完整漏斗。
+2. 可审计编辑表示：保证两端重建，禁止凭空合成 glue；结构约束与风险关系分开。
+3. 有预算搜索：共享状态空间，反例只排序；同时允许回滚和加回。
+4. 双重整函数验证与精确测量：S→R、S→Oz(R)，主目标是真实后端代码尺寸。
 
-因此剩余空白不是“利用反例修复代码”，而是：
+P0 builder 首先是固定 CFG 的无环整数 SSA；候选重构 CFG 的覆盖损失必须公开。
+先证明这一范围有效，再决定是否值得支持内存和大幅 CFG 变化。
+不同时开发多智能体、跨 ISA 掩码投影、IR 专用训练模型等旁支。
 
-> **面向 LLVM 优化翻译的 refinement-aware partial commit。**
+## 5. 可证伪假设
 
-“尚未发现”仅代表截至 2026-09-20、在当前数据库和检索式下未找到直接同构工作，不构成“首次”声明。
+| 假设 | 最小证据 | 何种结果会否定/收缩 |
+|---|---|---|
+| H1 有自然可回收现象 | 自然 REFUTED 候选中，自动严格子集满足全部主门 | 只有合成例、只有 Oz 前收益，或预算内始终无证据 |
+| H2 表示保留机会 | 人工识别的可验证子集在自动空间中可表达 | 过度合并/对齐失败系统性丢失机会 |
+| H3 反例有增量 | 固定空间等预算下优于 B5、StaticOnly 和状态内匹配随机 | 只与文本 diff 或无效跨函数反例相比有优势 |
+| H4 方法有实际价值 | 强诊断搜索与 LLM 重试对照，计全部 CPU/GPU/费用 | 优势被预算抵消或仅在旧弱模型中出现 |
+| H5 可跨后端复现 | 冻结后 RV64GC 独立构建、验证和成本报告 | 没有总体收益则不能宣布用户的跨后端要求达成 |
 
-## 3. 系统总览
+没有来源×方法交互，不自动否定 Translator 应用价值；只撤回“LLM 特有错误结构”的主张。
+通用方法能服务 LLM 翻译是合理定位，不必为了“LLM 特异”制造统计门槛。
 
-```text
-源 IR S ───────────────┐
-                      ├─ M1 规范化与结构对齐
-失败候选 T0 ──────────┘          ↓
-                          候选编辑原子
-                                ↓
-                 M2 结构可重放闭包 → 候选编辑组件 CEC
-                                ↓
-Alive2 反例 ──→ M3 反例相关切片与回滚命中约束
-                                ↓
-                    M4 预算化回滚/重放搜索
-                     ↙ refuted          ↘ verified
-              累积反例与切片          收益评估
-                     ↖                   ↓
-                      └────────── 保留安全 incumbent
-                                             ↓
-                                  最终整函数 S -> R 验证
-                                             ↓
-                               verified 且 profitable 才输出
-```
+## 6. 最小 Demo 与阶段
 
-## 4. 四个核心模块
+- P0a：复核已有32条记录与全部明确失败例；24个定向 fixture；实现两端重建、严格子集枚举和成本流水线。
+- P0b：一份冻结的64函数、小批单模型、双输入设置；先开发后只读可行性审计。
+- P1：冻结表示，实施 B5/B6/B7、反例消融和资源公平比较；结果仍属开发。
+- P2：独立项目与保留模型确认，按预先功效规划固定样本；再做完整程序及 RV64GC 外部验证。
 
-### M1：规范化与结构对齐
+具体数值、分母和停止规则仅由 PILOT_PROTOCOL、configs/pilot_v3.json 管理。
+单例只是存在性，两例不同项目只是继续机制开发的工程依据，不是论文通过门。
+预计人力/运行时间只能由 AutoDL preflight 和 P0a 测得成本后给出，不编造工期。
 
-输入是 `S` 与 `T0`。系统移除不影响语义的调试噪声，稳定化匿名值和基本块标识，但保留数据布局、目标 triple、函数属性以及 `nsw/nuw/exact/inbounds` 等语义相关信息。
+## 7. 拟议贡献与可信程度
 
-对齐不依赖行号，而使用：
+最有证据的是问题边界和验证/测量约束；最缺证据的是自然候选可分解性与反例搜索增量。
+研究新颖性暂为中等、可实现性受限、实验可检验性较高；这不是录用概率评分。
+只有真实数据支持后才写贡献：
+- 自然失败优化的可回收性及表示覆盖测量；
+- 比同空间强基线更有效的反例辅助回收方法；
+- 跨模型、项目及固定后端的可复核收益边界。
 
-- 参数、返回值和外部可观察位置作为锚点；
-- CFG 前驱/后继、支配与后支配签名匹配基本块；
-- 操作码、类型、常量、操作数来源和交换律规范化匹配指令；
-- 无法可靠对齐的区域形成一个整体组件，不猜测细粒度对应关系。
-
-输出是源/目标映射和候选编辑原子，包括增加、删除、替换指令，操作数变化，flag/attribute 变化，以及可选的 CFG/PHI 变化。
-
-### M2：依赖闭合的候选编辑组件
-
-单个文本编辑通常不是可执行单位。SalvageIR 对编辑原子求闭包：
-
-- SSA def-use 闭包；
-- 删除定义与其剩余使用的闭包；
-- PHI 与 CFG 边闭包；
-- 控制依赖闭包；
-- MemorySSA/别名相关闭包；
-- poison、undef、freeze 和语义 flag 约束闭包；
-- 函数属性与调用约定闭包。
-
-闭包后的最小构建单位称为 **Candidate Edit Component（CEC，结构可重放候选编辑组件）**。“闭合”不表示语义独立或正确。只有当一个 CEC 或 CEC 组合已经通过整函数验证时，才称为 **Verified Optimization Component（VOC，已验证优化组件）**。
-
-组件图 `G=(C,D)` 中，`C` 是 CEC 集合，`D` 表示必须同时存在或先于重放的依赖。任意搜索状态都必须是依赖闭合的组件子集。
-
-### M3：反例相关切片
-
-Alive2 的反例说明完整候选不满足 refinement，但通常不直接给出唯一错误指令。SalvageIR 不把反例解析包装成完备故障定位，而把它作为搜索引导：
-
-1. 保存反例原始文本、版本、状态 ID 和哈希；
-2. 双次重放后分为 `CE_LOCALIZABLE`、`CE_STATIC_ONLY` 和 `CE_UNLOCALIZABLE`；
-3. 对可稳定物化的输入，在当前源/候选状态上复现可观察差异；
-4. 从差异的返回值、内存或 UB/poison 事件逆向构造数据与控制依赖切片；
-5. 把切片投影到当前仍活跃的 CEC，形成 state-conditioned 可疑集合；
-6. 多个反例只形成软排序，不形成 soundness 剪枝。
-
-切片只改变搜索优先级，不能声称未进入切片的组件必然正确，也不能据此跳过最终验证。真实反例必须与静态切片、同失败类别内打乱归属的反例和无反例进行四方对照；否则无法证明反例信息本身有效。
-
-### M4：部分回滚与利润恢复
-
-搜索从完整失败目标开始。每一步选择一个依赖闭合的回滚集，把相应区域恢复到源版本并重建合法 IR。
-
-- 若候选无法通过 LLVM verifier：记录结构失败并扩大闭包。
-- 若 Alive2 再次 refuted：累积反例和切片，更新命中约束。
-- 若 Alive2 verified：加入最多 8 个非支配状态组成的安全前沿；继续探索其他安全盆地，并从前沿轮转重加组件以恢复利润。
-- 若 timeout/unsupported：标记 unknown，不更新安全集合。
-
-搜索目标不是保留最多编辑，而是：
-
-```text
-maximize Gain(R) - lambda_v * VerifyCost(R) - lambda_s * SearchCost(R)
-subject to Alive2(S, R) = VERIFIED
-```
-
-实际实现不声称精确求全局最优。第一版用冻结评分的确定性 best-first/beam search，并在组件数较小时提供穷举 oracle 作为上界。实现优先复用 LLVM SandboxIR 的事务 save/accept/revert；事务回滚本身不列为创新。
-
-## 5. 安全不变量
-
-任何阶段都必须保持：
-
-1. 安全 incumbent 只包含整函数验证成功的候选；
-2. unknown 永远不进入 verified 集合；
-3. 搜索代理成本不能替代实际后端成本；
-4. 局部或逐步证明不能替代最终 `Alive2(S,R)`；
-5. 最终收益必须相对源 `S`，不是相对错误候选 `T0`；
-6. 若没有 verified 且 profitable 的结果，返回 `NO_SALVAGE`，系统部署时才安全回退 `S`，但论文不把回退计作成功。
-
-## 6. 研究问题与假设
-
-### RQ1：现象是否存在
-
-被明确证伪的 LLM LLVM-IR 优化中，有多少包含至少一个能组成 verified 且 profitable 结果的严格子集？该比例如何随模型、失败类型和编辑复杂度变化？
-
-**H1：**该现象在至少三个未由本研究进行任务特定训练/RL 的模型家族中均可观察；若仅弱模型或单一模板出现，则不支持一般性主张。
-
-### RQ2：方法是否有效
-
-在相同候选与预算曲线下，SalvageIR 是否比整体丢弃、整函数重试、文本 ddmin、同组件图 hierarchical ddmin、无反例 best-first 和反例 hitting-set MaxSAT/ILP 恢复更多有益候选？
-
-**H2：**SalvageIR 的配对有益恢复率和预算曲线 AUC 高于最强非 oracle 基线，且真实反例优于打乱反例安慰剂。
-
-### RQ3：哪个机制贡献收益
-
-结构对齐、依赖闭包、反例切片和利润恢复各自有什么影响？
-
-**H3：**去掉反例切片后验证调用数上升；去掉依赖闭包后非法 IR 比例上升；去掉利润恢复后 verified 率可能相近但实际收益下降。
-
-### RQ4：是否跨模型稳定
-
-效果是否只来自较弱模型的明显错误？
-
-**H4：**在模型宏平均和留一模型测试中，方法仍优于最强基线；若模型×方法交互完全由一个模型驱动，则收窄主张。
-
-### RQ5：成本是否合理
-
-恢复收益是否值得额外的编译、验证和搜索成本？
-
-**H5：**在固定 wall-clock/验证调用预算下仍保持优势；若无限预算才有效，则不支持实用性主张。
-
-### RQ6：是否具有跨后端外部有效性
-
-在同一源代码独立生成的 x86-64 与 RV64GC/RVV IR 上，冻结编辑决策能否迁移，冻结算法重新搜索能否保持正确性与收益方向？
-
-**H6：**RISC-V 只验证可移植性和收益方向；它不参与方法开发、Prompt、组件规则或 P0/P1 门控。仅在同一源代码独立生成的 RV64GC IR 上评价，并区分冻结编辑决策迁移与冻结算法重新搜索；不允许把 x86 datalayout IR 直接改 triple。
-
-### RQ7：LLM 是否是必要研究对象
-
-相对编辑数、组件数、CFG 变化和 semantic-flag 类别匹配的非 LLM 变异，LLM whole-function 失败是否具有不同的可分解性、协同编辑结构或回收难度？
-
-**H7：**候选来源与方法存在可解释交互。若没有交互，方法仍可能成立，但论文必须改写为通用 RCES/IR repair，不把 LLM 特异性写成贡献。
-
-## 7. 预期论文贡献
-
-只有实验支持时，才能写成贡献：
-
-1. **问题刻画：**系统性量化“被证伪的 LLM IR 优化中可回收有效子翻译”的数据集与失败谱系；在完成穷尽检索前不使用“首次”。
-2. **方法候选：**LLVM refinement-aware 的依赖闭合部分回滚与利润恢复算法。
-3. **公平评价协议：**固定候选、模型分层、预算相等、条件恢复率与端到端率并报。
-4. **跨后端证据：**主实验不依赖 RISC-V，但在 RV64GC/RVV 上验证正确性和收益保持边界。
-
-若 H2 或 H3 不成立，贡献 2 必须删除；不能以数据集和工程量掩盖算法没有增益。
-
-## 8. 论文结构建议
-
-1. Introduction：原子接受/丢弃造成的浪费与研究问题。
-2. Background：LLVM refinement、LLM IR 优化、Alive2 边界。
-3. Empirical Motivation：多模型失败候选和可分解性先导研究。
-4. SalvageIR：对齐、CEC、反例切片、回滚/重放和安全不变量。
-5. Experimental Methodology：候选冻结、公平性、指标、统计。
-6. Evaluation：RQ1—RQ6。
-7. Related Work：Translator、验证、APR、多位置补丁、reducer。
-8. Threats and Limitations。
-9. Conclusion。
-
-## 9. 论文摘要骨架
-
-> LLM-based IR optimizers generate whole-function transformations that must be rejected when translation validation finds a counterexample. Existing systems typically retry or fall back to the source, discarding all edits in the failed candidate. We investigate whether such candidates contain profitable sub-translations that can be recovered safely. We present SalvageIR, a refinement-constrained edit-salvage framework that aligns source and target LLVM IR, groups edits into structurally replayable components, and uses state-conditioned counterexamples to prioritize a budgeted search over directly validated whole functions. [实验规模与结果待填] Across [模型] and [数据集], SalvageIR recovers [结果待填] under matched budget profiles and outperforms structured ddmin, no-counterexample best-first search, MaxSAT/ILP diagnosis, and shuffled-counterexample controls [结果待填]. Every emitted result is directly validated against the source. A held-out evaluation independently regenerates RV64GC IR from the same source programs to examine cross-backend profitability without making RISC-V part of the method.
-
-方括号内容必须由真实实验填入，当前不得删除“待填”后当作论文摘要使用。
+若 H3 不成立，保留结构化回收工具或现象研究，不把工程量包装成算法贡献。
+若 H1 无可信证据，停止扩大系统，记录负结果及表示/预算边界。

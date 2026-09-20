@@ -1,51 +1,53 @@
-# SalvageIR：验证失败候选部分回收框架
+# SalvageIR：失败 IR 优化候选的验证式部分回收
 
-> 状态：完整研究设计，尚未实现、尚无实验结果。
-> 日期：2026-09-20。
-> 唯一主类：`TRANSLATOR / T2_IR_ASM_Optimization_Superoptimization`。
-> 约束：不使用强化学习；RISC-V 仅作保留平台上的外部有效性验证。
+> 当前版本：salvageir_v3，2026-09-21。状态：研究设计与执行交接；尚未证明自然可回收性或算法优势。
 
-## 一句话主线
+一句话：LLM 改写 LLVM IR 后，如果整体被验证器明确反驳，尝试只保留其中一部分改动；只有完整验证通过且统一 Oz 后仍有代码尺寸收益，才接纳。
 
-SalvageIR 不把一个被 Alive2 明确证伪的 LLM 优化结果整体丢弃，而是把源 IR 到候选 IR 的变化表示为结构可重放组件，在反例软引导下搜索安全子翻译，并且只输出经过整函数 LLVM refinement 验证且确有机器码收益的 IR。真实反例是否比安慰剂反例和强结构搜索更有效，是待验证假设，不是既成事实。
+## 现在做什么
 
-## 与仓库中旧 Translator 后优化框架的关系
+在 AutoDL 上只复制本文件夹即可，不要求本地 Windows 路径、ARIS 仓库或某个插件。
+先读 [执行交接](CODEX_P0A_EXECUTION_HANDOFF.md)，再读它列出的三份规范，开始 P0a。
+已有 32 条/2 条的说法仅是用户报告，原始记录尚未在此核验；先审计，不追加大规模生成。
 
-本目录不覆盖 [`../Translator_后优化框架/`](../Translator_后优化框架/)：
+给 Codex 的最短提示词：
 
-- 旧框架后期把“已验证正确候选的进一步优化”作为主任务；
-- SalvageIR 的主任务严格限定为“可解析但被形式验证明确反驳的候选”；
-- 两者不能混用分母、成功率或论文贡献。正确候选的二次优化不进入 SalvageIR 主实验。
+> 阅读当前目录的 README.md、CODEX_P0A_EXECUTION_HANDOFF.md、RESEARCH_CONTRACT.md、PILOT_PROTOCOL.md 和 ALGORITHM_SPEC.md。按 v3 执行 P0a，优先复核已有 32 条结果及其中明确 REFUTED 的候选；实现并运行最小审计、子集枚举和统一 Oz 成本测量。保留旧代码和日志，不自动启动 P0b、大型下载或付费任务。不要只停在计划；缺少数据时先完成能做的本地测试，再报告具体缺件。
 
-## 阅读顺序
+## 主线与边界
 
-1. [`RESEARCH_CONTRACT.md`](RESEARCH_CONTRACT.md)：不可漂移的研究对象、主张和完成条件。
-2. [`FINAL_PROPOSAL.md`](FINAL_PROPOSAL.md)：完整问题、架构、算法、研究问题和论文定位。
-3. [`ALGORITHM_SPEC.md`](ALGORITHM_SPEC.md)：RCES 问题、编辑图、反例适配器、安全前沿和正确性不变量。
-4. [`DATA_AND_FAIRNESS_PROTOCOL.md`](DATA_AND_FAIRNESS_PROTOCOL.md)：候选来源、多模型公平性和数据冻结协议。
-5. [`PILOT_PROTOCOL.md`](PILOT_PROTOCOL.md)：测试集、顺序扩样、oracle、资源预算和红黄绿门控的可预注册规格。
-6. [`GATE_CARD.md`](GATE_CARD.md)：执行时唯一使用的 F/I/S 单页裁决卡。
-7. [`CODEX_P0A_EXECUTION_HANDOFF.md`](CODEX_P0A_EXECUTION_HANDOFF.md)：可直接交给 Codex/ARIS 实施 P0a 的执行工单。
-8. [`EXPERIMENT_PLAN.md`](EXPERIMENT_PLAN.md)：正式基线、消融、统计和 RISC-V 验证。
-9. [`EVIDENCE_MATRIX.md`](EVIDENCE_MATRIX.md)：语料库证据、2024—2026 近邻和创新碰撞。
-10. [`THREATS_AND_REVIEW.md`](THREATS_AND_REVIEW.md)：反方审查、风险、降级与可证伪条件。
-11. [`REVIEW_ROUND_1.md`](REVIEW_ROUND_1.md)：以 CGO/PLDI 标准给出的独立强拒稿意见。
-12. [`REVISION_ROUND_1.md`](REVISION_ROUND_1.md)：每条拒稿意见对应的修订与失败降级。
+- 角色：Translator / T2，LLM 输出程序实例；内部搜索不是 LLM pass Selector。
+- 核心：一次既有 LLM 输出，结构编辑重放，整函数 LLVM refinement 验证；不再次调用 LLM。
+- 本研究不训练模型、不做 RL。上游通用模型的对齐史单列披露。
+- 主输入：PRE_SSA，未做通用优化、仅进行明确记录的 mem2reg 与非语义规范化；不简称原始 O0。
+- 主比较：Cost(Oz(R)) 对 Cost(Oz(S))；POST_OZ 为配对困难设置，旧样本为 LEGACY。
+- 主目标：固定 x86-64 generic 的函数机器码字节；不是运行加速。
+- RISC-V：方法冻结后的独立外部验证，不参与主方法调试。
 
-## 当前结论
+## 文档地图与唯一权威
 
-- **研究问题完整度：**已完成。
-- **机制规格完整度：**已完成到可进入实现计划的程度。
-- **候选来源：**公开来源可行，但 LLM-VeriOpt 的 1.1 GB 完整档案仍需下载后清点；公开仓库说明其保存 IR 输出、Alive2 日志和指标。
-- **创新可信度：**暂定中等。LLVM SandboxIR 已覆盖事务回滚，程序修复已覆盖部分补丁、依赖聚类和反例/MaxSAT 定位；剩余贡献必须由“真实反例优于打乱反例与强结构搜索”证明，不能靠系统组合宣称。
-- **最大未知量：**真实失败候选是否经常包含可单独组合成正确且有收益结果的子变换。P0 先导实验是继续或停止该主线的强制门。
+| 文件 | 职责 |
+|---|---|
+| [研究契约](RESEARCH_CONTRACT.md) | 对象、成功定义、范围与禁止偷换事项 |
+| [总方案](FINAL_PROPOSAL.md) | 研究问题、机制与贡献边界 |
+| [算法规格](ALGORITHM_SPEC.md) | 编辑表示、硬约束/风险关联、搜索及验证不变量 |
+| [预实验协议](PILOT_PROTOCOL.md) | 输入、成本、样本、预算、oracle 与阶段执行的唯一详细权威 |
+| [参数文件](configs/pilot_v3.json) | P0 默认数值；缺少版本锁不允许生成 |
+| [公平性协议](DATA_AND_FAIRNESS_PROTOCOL.md) | 数据来源、模型、分母、日志契约 |
+| [裁决卡](GATE_CARD.md) | 协议摘要，不得覆盖协议 |
+| [执行交接](CODEX_P0A_EXECUTION_HANDOFF.md) | AutoDL 独立目录、P0a任务和验收 |
+| [正式实验计划](EXPERIMENT_PLAN.md) | P1/P2 的基线、统计与外部验证；不是启动授权 |
+| [证据矩阵](EVIDENCE_MATRIX.md) | 原文依据与近邻差异 |
+| [风险审查](THREATS_AND_REVIEW.md) | 否定条件与降级 |
+| [v3 修订审计](REVISION_V3.md) | 本轮改变、审查结果与未解决事项 |
+| [旧版归档](archive/v2/README.md) | v2 历史原文，不得作为当前执行指令 |
 
-## 明确不做
+冲突顺序：研究契约 → 预实验协议 → 参数文件 → 专题规格 → 概述/交接。
+数值或公式冲突应停止受影响运行并记录偏差，不能静默选择某份文件。
+协议、参数和实现全部计算哈希写入每个 run；查看结果后改变规则必须新建版本与开发批次。
 
-- 不训练 LLM，不使用 PPO、GRPO、MCTS 或任何强化学习。
-- 不把 Alive2、RAG、Agent、换模型或换到 RISC-V 单独包装成创新。
-- 不把 timeout、unsupported、fuzzing 未发现错误当作正确。
-- 不以“保留编辑数最多”代替真实性能收益。
-- 不把返回源 IR 计作恢复成功。
-- 不以 RISC-V 为主要数据来源、方法条件或主实验背景。
-- 不把 x86 datalayout IR 直接改 triple 当作 RISC-V 验证；RISC-V IR 必须从同一源代码独立生成。
+## 完成意味着什么
+
+v3 旨在达到“可以实施并检验”的设计标准，不代表实现、实验或论文已完成。
+没有真实日志不宣布 P0 通过；没有强基线证据不宣布方法创新成立。
+框架文档检查、LLVM/Alive2 集成测试、自然样本实验是三个不同的验收层次。
