@@ -2,6 +2,7 @@
 
 ## 当前 Translator 主线候选
 
+- [ProbeTrans：反事实探针驱动的 LLVM IR 翻译框架](ProbeTrans_反事实探针驱动的源码翻译框架/)：基于 IR-OptSet 工具链，对 pre-LoopVectorize LLVM IR 搜索最小干预证书并约束 LLM 生成 replacement function；首版不训练、不使用 RL，TSVC 为主测试，RISC-V/RVV 仅作冻结 IR 的外部验证。当前为 ARIS `CONDITIONAL_GO`，须先通过两周 P0。
 - [SalvageIR：验证失败候选部分回收框架](SalvageIR_验证失败候选部分回收框架/)：对可解析但被 Alive2 明确反驳的 LLM LLVM-IR 优化做 refinement-guided 部分回滚；不使用 RL，RISC-V 仅作保留平台验证。
 
 本目录执行“一框架一文件夹”。框架之间共用的证据、筛选规则和历史比较材料集中在 `00_通用证据与框架筛选/`，不混入任一具体框架。

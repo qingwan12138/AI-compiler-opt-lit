@@ -1,0 +1,16 @@
+{
+  "project": "ProbeTrans-IR",
+  "updated_at": "2026-09-22T01:56:14+08:00",
+  "phase": "done",
+  "status": "completed",
+  "verdict": "conditional_go",
+  "round": 5,
+  "score": 8.8,
+  "target_score": 9.0,
+  "stop_reason": "proposal_stable_remaining_gap_requires_p0_evidence",
+  "next_gate": "M0-M4 from PREEXPERIMENT_PROTOCOL.md",
+  "implementation_base": "yilingqinghan/IR-OptSet",
+  "abstraction": "LLVM_IR_to_LLVM_IR",
+  "review_backend": "inline-single-model-adversarial-review",
+  "independent_review_completed": false
+}
