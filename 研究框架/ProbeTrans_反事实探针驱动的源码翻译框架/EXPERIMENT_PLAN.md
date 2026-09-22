@@ -1,177 +1,103 @@
-# Experiment Plan — LLVM IR ProbeTrans
+# ProbeTrans 实验计划
 
-**Problem**：可靠修复 LLVM LoopVectorize 漏优化，而不是让 LLM 自由猜测和重写整个程序。
-**Method Thesis**：编译干预得到的最小证书是比 remarks 更有效的 IR 翻译条件；SOC/VAG 确保成功安全且可归因。
-**Date**：2026-09-22
+**状态**：预注册计划；没有实验结果。
+**P0 操作协议**：[PREEXPERIMENT_PROTOCOL.md](PREEXPERIMENT_PROTOCOL.md)
+**schema/算法**：[P0_IMPLEMENTATION_SPEC.md](P0_IMPLEMENTATION_SPEC.md)
 
-详细 P0 操作见 `PREEXPERIMENT_PROTOCOL.md`；本文定义论文级实验逻辑。
+## Claim map
 
-## Claim Map
-
-| Claim | Minimum Convincing Evidence | Blocks |
+| Claim | 最小证据 | 否定条件 |
 |---|---|---|
-| C1 Certificate information gain | 同模型同预算下，ProbeTrans 在 held-out TSVC/外部集的 CVUR/APIR 高于 Direct 与 Remark-only；诊断集 set-F1 更高 | B1, B2, B4 |
-| C2 LLM 与可信验收均非装饰 | Template 未追平；SOC 拦截实际语义泄漏；VAG 排除实际错误归因 | B3 |
-| Anti-claim | 收益不是更多查询、完整函数重写、模型差异、TSVC 泄漏或静态代理造成 | B2, B3, B4, B5 |
+| C1 certificate 有信息增量 | 同模型同生成预算下 strict CVUR 高于 Remark；且高于 query-matched Iterative Remark | paired difference 不为正 |
+| C2 LLM 有必要 | ProbeTrans 高于共享 certificate 的 Template，并解决预注册的非机械函数内 restructuring | Template 追平 |
+| C3 接受结果可信 | SOC、strict refinement、target lineage 和 VAG 均通过 | 依赖语义强化、lineage 歧义或 LV-off 仍有同等收益 |
+| Anti-claim | 成本、查询、缓存、模型、数据泄漏与静态代理分别报告/控制 | 收益可由额外预算或筛样偏差解释 |
 
-## Benchmark Roles
+## Benchmark 角色
 
-| Dataset | Split | Role | Main metrics |
+| 数据 | 角色 | 纳入/切分 | 指标 |
 |---|---|---|---|
-| autovec-benchmark re-certified pairs | group-wise dev/test | 诊断标签 | set-F1, exact match, queries, realizability |
-| TSVC eligible missed loops | dev families / held-out families | 主端到端 | CVUR, APIR, fallback geomean |
-| PolyBench/C + 3–5 apps | frozen external | 泛化 | CVUR, APIR, failure shift |
-| IR-OptSet 200–500 loop functions | fixed-hash static sample | 工具压力 | parse/verify/certificate/codegen coverage |
-| frozen successes on RV64GCV | no retuning | 跨 ISA 外部验证 | correctness, vector effect, native speedup if available |
+| autovec re-certified pairs | D0 诊断 | 所有有效 pair；按 original kernel 分组；OUT_OF_REGISTRY 保留 | coverage、conditional/overall accuracy、replay、queries |
+| TSVC eligible missed loops | 主端到端 | dev family 与 held-out family 隔离 | strict CVUR、补充 CVUR、APIR、漏斗 |
+| PolyBench/C + 3–5 apps | P0 后外部 | prompt/registry/阈值冻结 | 同上 + distribution shift |
+| IR-OptSet fixed-hash subset | 静态压力 | 不要求 runtime harness | parse/verify/search/codegen coverage |
+| frozen IR on RV64GCV | 跨 ISA 外部 | 不重新 prompt/调参 | compile、correctness、effect、真机 performance（若有） |
 
-## Baseline Families
+## 实验块
 
-### B-Family 1：LLM information baselines
+### B0 基础设施有效性（M0–M2b）
 
-- Direct function IR translation；
-- Remark-only translation；
-- ProbeTrans certificate-conditioned translation。
+验证 verifier/Alive2/detector fixtures、canonical capture、lineage、effect detector、bounded search 与 clean replay。M2b 任何硬条件失败即停止，不接 LLM。
 
-### B-Family 2：Non-LLM necessity baseline
+### B1 D0 certificate diagnosis（M3）
 
-- Certificate→Template；
-- 可选：固定 LLVM canonical repair templates。
+系统：raw remark parser、precise-remark classifier、冻结 certificate search。Decision-flip 不需要 blocker 标签；classification 只用独立 ground truth。主要报告全样本 coverage/overall accuracy，conditional accuracy 仅解释 registry 内表现。
 
-### B-Family 3：Recent IR optimizer baseline
+### B2 Translator necessity（M4–M5）
 
-- IntOpt-style structured intent prompt；
-- IR-OptSet/LLM Compiler 可复现模型（若获取与依赖允许）。
+系统：LLVM、Direct、Remark-only、Iterative Remark/Analysis、Template、ProbeTrans。主结果用 strict semantics；differential-only 仅为补充敏感性分析。
 
-不同模型分别报告，不能混入同一汇总成功率。
+### B3 Trust isolation（M4–M6）
 
-## Experiment Blocks
+比较 SOC 前后接受集合、strict 与 differential-only 口径、naive performance 与 target-LV-only VAG。Seeded controls 只证明 gate sensitivity，不混入自然样本成功率。
 
-### B0：Infrastructure validity
+### B4 P0 后泛化
 
-- **Claim**：捕获的是稳定且可重放的 pre-LV IR，gate 本身可信。
-- **Data**：12 sanity loops、6 semantic fixtures、3 seeded scalar-optimization controls。
-- **Metrics**：loop-ID stability、remark/IR agreement、verifier/Alive2 sensitivity、timing noise。
-- **Success**：identity/decision 100% 重放；seeded error 全被预期 gate 捕获；稳定 CPU CV/MAD 达标。
-- **Failure**：基础设施失败，不运行模型。
-- **Placement**：Appendix methodology，MUST-RUN。
+冻结 ProbeTrans 后在外部 benchmark、第二模型、LLVM 次版本与 RV64GCV 上评估边界。若外部 eligible loops 太少，只作案例分析，不作普遍结论。
 
-### B1：Certificate diagnosis
+## Baseline 公平性
 
-- **Claim**：主动干预比 remarks 更准确地定位决策翻转条件。
-- **Data**：held-out re-certified autovec pairs。
-- **Systems**：raw remark、precise-remark LLM、greedy single-probe、minimal certificate search。
-- **Metrics**：set-F1、exact match、flip precision、queries、certificate size、realizable rate。
-- **Success**：达到 P0 D0 gate；正式实验使用 paired bootstrap CI，且 ProbeTrans 对最强 remark baseline 的下界为正。
-- **Failure**：若只靠 remark 已等价，主创新不存在。
-- **Placement**：Main Table 1，MUST-RUN。
+所有 LLM 系统匹配 model、context/output token cap、K、repair 和 seed。分两条轨：
 
-### B2：End-to-end IR translation
+- Natural-cost：Direct/Remark 为 0 probe queries；Template/ProbeTrans 共享 certificate。
+- Query-matched：Iterative Remark/Analysis 使用与该 case ProbeTrans 相同的 charged query 上限，不做语义干预。
 
-- **Claim**：certificate 提高正确的目标向量化解锁与真实收益。
-- **Data**：held-out TSVC eligible missed loops。
-- **Systems**：LLVM baseline、Direct、Remark-only、Template、ProbeTrans。
-- **Metrics**：APIR 主指标；CVUR、gate funnel、fallback-inclusive geomean、negative transfer、tokens/queries/wall time。
-- **Success**：ProbeTrans 对 Direct/Remark 的 paired APIR/CVUR 差异为正；完整实验 95% CI 不跨 0；不存在 safety regression。
-- **Failure**：仅 parse/verify 提升而 effect/APIR 不升，不支持主张。
-- **Placement**：Main Table 2 + funnel figure，MUST-RUN。
+分别报告 model calls、generated tokens、compiler queries、cache hits、verifier/Alive2 calls、wall time。Certificate 成本同时用 non-amortized 和 amortized 口径。研究主张是额外 certificate 信息的效用，不是等总成本优越性。
 
-### B3：Novelty and necessity isolation
+## Correctness 与 effect
 
-- **Claim**：最小 certificate、LLM、SOC 与 VAG 各自改变关键结论。
-- **Data**：B2 全部 cases/candidates。
-- **Ablations**：non-minimal certificate、w/o SOC、w/o VAG、certificate→template、whole-function free generation。
-- **Metrics**：CVUR/APIR、semantic leakage、false attribution、token cost、accepted-set change。
-- **Success**：Template 未追平；SOC/VAG 至少各揭示一类真实错误或由 seeded controls 证明灵敏度；minimal certificate 不劣于全探针且成本更低。
-- **Failure**：删除某机制无任何变化，则从最终系统删除。
-- **Placement**：Main Table 3，MUST-RUN。
+- Alive2：原始 source → replacement target refinement；proved/disproved/timeout/unsupported/internal error 分开。
+- Differential：覆盖 pointer overlap、misalignment、trip 边界、overflow、poison/undef、null/object-size/dereferenceability、guard fast/fallback 和浮点策略。
+- Strict 主表：只接受 `FORMALLY_PROVED`。
+- Supplementary：`DIFFERENTIAL_ONLY_SUPPORTED` 单列；排除它后结论必须重算。
+- G4：只接受目标 fast-path lineage 的 vector body；歧义或其他 loop 成功不计。
 
-### B4：External generalization
+## Performance 与 VAG
 
-- **Claim**：不是 TSVC 模式记忆。
-- **Data**：frozen PolyBench/C hot missed loops + 3–5 open applications。
-- **Systems**：Remark-only、Template、ProbeTrans；prompt 和阈值不变。
-- **Metrics**：CVUR、APIR、fallback geomean、probe/certificate distribution shift。
-- **Success**：外部 eligible loops ≥15 时，ProbeTrans paired delta 对最强基线为正；否则只作案例研究。
-- **Failure**：只在 TSVC 成功则降级为 benchmark-specific。
-- **Placement**：Main Table 4，MUST-RUN before submission。
+四格 `O_on/O_off/E_on/E_off` 只改变目标 LoopVectorize。SLP、其他 pass、PGO、features、codegen 不变；pipeline manifest 检查 drift。全局关闭 SLP 是敏感性分析。
 
-### B5：Scale, version, and ISA robustness
+保存全部 raw timing；按预注册 warm-up、随机交错、median/MAD、bootstrap CI 报告。共享 CPU 噪声未过 gate 时，只能判 `PERFORMANCE_ENV_BLOCKED` 或 mechanism-only，不能声称 APIR。
 
-- **Claim**：工具链可扩展，输出保持 target-independent，但不主张处处加速。
-- **Data**：IR-OptSet static sample；LLVM 次版本；冻结成功 IR 的 RV64GCV 编译。
-- **Metrics**：pipeline success、certificate coverage、compile/codegen、RVV effect/native speedup。
-- **Success**：完整逐例报告；不要求所有平台同向。
-- **Failure**：若 IR 大量只对单 LLVM 版本有效，收窄适用边界。
-- **Placement**：Appendix，NICE-TO-HAVE；RVV 是用户要求的必要外部验证。
+## 统计与失败
 
-## Model Protocol
+- 二元 case-level outcome：成功数、paired difference、exact McNemar 或 paired bootstrap CI；小 P0 不以单一 p-value 决策。
+- 多候选每 case 只计一次成功；candidate-level failure 另表。
+- 超时、崩溃、无证书、module-required、unresolved 和 zero-success 全保留在分母。
+- 任何数字必须标为 plan/threshold/result；当前文件只有计划与 gate。
 
-- P0：单个可在 4090 部署的冻结 coder model，零训练；
-- 正式实验：主模型 + 一个不同能力档模型；逐模型 paired；
-- `K=3`，固定 token，最多一次 verifier repair；
-- 性能、隐藏测试结果不反馈给模型；
-- 完整 prompt/response 公布；
-- 若后期 SFT，必须增加“相同 backbone 零训练”对照，且 SFT 不能替代 certificate 消融。
+## 里程碑
 
-## Correctness Protocol
+| Milestone | 内容 | LLM | 决策 |
+|---|---|---:|---|
+| M0 | 环境与 gate fixtures | 禁止 | infrastructure PASS/FAIL |
+| M1 | capture、lineage、effect | 禁止 | stable/ambiguous/drift |
+| M2a | registry 与 bounded search | 禁止 | worst path ≤16 |
+| M2b | 6–12 loop vertical slice | 禁止 | 硬门 PASS/FAIL |
+| M3 | full calibration 与 D0 | 禁止 | D0 GO/NO_GO/LABEL_INSUFFICIENT |
+| M4 | splicer、SOC、Template | 禁止 | implementation gate |
+| M5 | Direct/Remark/Iterative/ProbeTrans | 允许 | translator gate |
+| M6 | performance/VAG | 无新增生成 | P0 verdict |
 
-结果分别报告：
+Run ID 与 artifact 以 [实验追踪表](EXPERIMENT_TRACKER.md) 为准，不在本文复制。
 
-- verifier pass；
-- Alive2 proved；
-- Alive2 disproved；
-- Alive2 timeout/unsupported + differential pass；
-- differential fail。
+## 论文级 readiness checklist
 
-Alive2 unknown 不得并入 formally verified。随机测试 seed、输入域、浮点比较规则和 sanitizer 选项在测试前冻结。
+- [ ] D0 全样本口径显示 certificate 对最强 remark baseline 有增量。
+- [ ] Query-matched baseline 未解释全部收益。
+- [ ] Strict CVUR 中 ProbeTrans 高于 Direct/Remark/Template。
+- [ ] SOC 和 lineage 没有安全/归因漏计。
+- [ ] 稳定 CPU 上 VAG 支持目标 LoopVectorize 归因。
+- [ ] 外部集趋势不反转。
+- [ ] 冻结 IR 至少在 RV64GCV 上有可复现 compile/correctness/effect 报告。
 
-## Performance and Attribution
-
-- stable CPU 上随机交错测量 `O_on/O_off/E_on/E_off`；
-- 5 warm-ups、≥30 samples，保存原始数据；
-- noise-derived minimum effect threshold；
-- median/MAD、bootstrap CI；
-- APIR 以所有 eligible cases 为分母；
-- 失败/超时在 fallback geomean 中记 1.0×；
-- QEMU 不用于性能。
-
-## Run Order
-
-| Milestone | Goal | Runs | Decision Gate | Cost |
-|---|---|---|---|---|
-| M0 | 环境与 gate sanity | R001–R006 | B0 通过 | 0 GPUh, 1天 |
-| M1 | pre-LV pipeline/loop ID | R010–R014 | 三次重放稳定 | 0 GPUh, 1天 |
-| M2 | benchmark registry | R020–R026 | calibration-test≥24，TSVC pilot≤24 | 0 GPUh, 2天 |
-| M3 | probe/certificate | R030–R036 | D0 Go | 0 GPUh, 1–2天 |
-| M4 | P0 translator | R040–R047 | E0 Go/Mechanism-only | 4–10 GPUh, 3–4天 |
-| M5 | P0 ablation/decision | R050–R055 | 明确单一裁决 | 0–3 GPUh, 2天 |
-| M6 | full TSVC/external/second model | R060–R079 | 论文 claims | 30–80 GPUh |
-| M7 | IR-OptSet/RVV/version | R080–R095 | robustness boundary | 依硬件 |
-
-## Compute Budget
-
-- P0 GPU：约 4–13 小时，取决于本地模型吞吐；
-- P0 CPU：约 2,000–5,000 次短编译/验证，Alive2 是主要长尾；
-- Full：约 30–80 GPUh；先依据 P0 实测重新估算，不提前承诺；
-- 存储：保存 IR、responses、logs、timings，预留 50–100GB；
-- 最大风险不是 GPU，而是证书安全可实现率和 CPU 测量稳定性。
-
-## Paper-Readiness Gates
-
-进入论文完整实验必须同时满足：
-
-1. D0 证明 certificate 对 remark 有信息增量；
-2. E0 的 ProbeTrans 正确解锁数超过 Direct/Remark/Template；
-3. SOC/VAG 实际改变接受集合或由强阳性对照验证；
-4. 稳定 CPU 上有至少若干 APIR successes；
-5. 外部集趋势不反转；
-6. 相同 IR 至少能在 RV64GCV 编译并出现目标 effect 的正例。
-
-## Intentionally Cut
-
-- RL、RAG、多 Agent、MCTS；
-- 多 Pass 和 pass ordering；
-- 源码 patch；
-- explicit intrinsic；
-- 在线性能反馈搜索；
-- 在 P0 同时比较多个模型/LLVM 版本。
+未满足 checklist 前，不使用“方法有效”“跨 ISA 加速”或论文完成表述。

@@ -1,56 +1,41 @@
-# ARIS Review Summary — ProbeTrans IR-v2
+# ProbeTrans 实现前终审摘要
 
-**Problem**：反事实探针驱动的 LLVM IR→LLVM IR 漏向量化修复
-**Rounds**：5/5
-**Final Score**：8.8/10
-**Verdict**：CONDITIONAL_GO
+**裁决**：`READY_FOR_M0`
+**含义**：文档足以开始 M0；不代表实现或实验完成。
+**审查方式**：当前模型内的对抗式协议审查；没有独立第二模型复核。
 
-> 本轮按 ARIS rubric 在当前模型内完成对抗复核；受会话约束，没有调用独立第二模型，不能声称跨模型审稿一致。
+## Readiness checklist
 
-## Problem Anchor
+- [x] LLVM IR→LLVM IR Translator 的输入、输出和禁止范围明确。
+- [x] Probe family 已展开为有限 instance schema，P0 收缩为三族。
+- [x] 11+3+2 搜索算法最坏路径不超过 16；minimality 声明有硬条件。
+- [x] D0 不按 registry coverage 筛样；标签不由搜索结果生成。
+- [x] Generation-matched、query-matched 与成本报告口径分开。
+- [x] Module-level 与跨函数证书退出当前安全成功分子。
+- [x] Loop lineage 支持 fast/fallback/vector/epilogue 一对多，并有歧义失败态。
+- [x] Alive2 refinement 方向、未决状态、差分边界和 strict 主口径明确。
+- [x] VAG 主协议只开关目标 LoopVectorize。
+- [x] M2b 前禁止 LLM，run ID 与 tracker 已统一。
+- [ ] 实现与 fixtures 尚未开始。
+- [ ] 任何 coverage、正确性、性能和泛化结论均待实验。
 
-在不修改 LLVM 后端、不使用 RL、不依赖 ISA intrinsic 的前提下，利用 LLM 对 pre-LoopVectorize LLVM IR 做语义保持翻译，修复一部分 missed vectorization，并证明收益来自目标 LoopVectorize。
+## 最强拒稿攻击与对应防线
 
-## Round-by-Round Resolution
+1. **证书只是更多 queries**：增加同 charged-query 上限、但不做语义干预的 Iterative Remark/Analysis。
+2. **D0 只挑方法能覆盖的样本**：OUT_OF_REGISTRY 保留在总分母，分别报告 coverage/conditional/overall。
+3. **所谓最小证书预算不闭合**：固定 baseline-inclusive 11 discovery +3 deletion +2 replay；删除检查不全即 non-minimal。
+4. **成功其实来自非法 attribute 或 module edit**：SOC、realization class 和 replacement-function 边界共同拒绝。
+5. **追踪错 loop 或加速来自标量改写**：一对多 lineage + target-fast-path G4 + target-LV-only VAG。
+6. **差分测试被包装成证明**：strict 主表只接受 Alive2 proved，未决/差分候选单列。
 
-| Round | 严厉问题 | 修订 | 结果 |
-|---|---|---|---|
-| 0 | 错写成 source-to-source，偏离用户意图 | 冻结为 LLVM IR→LLVM IR；删除源码 patch/restrict helper 叙事 | 已纠正 |
-| 1 | 没有明确在哪篇论文代码上修改 | 选择 IR-OptSet NeurIPS 2025 MIT 工具链；列出复用/新增边界 | 已解决 |
-| 2 | `-O0` 太低、`Oz/O3` 太晚，输入 IR 无科学边界 | 定义 frozen canonical pre-LV IR；P0 canonical 与正式 O3-aligned 两阶段 | 部分待实现 |
-| 3 | 探针可能只是非法 attributes；最小性夸大 | 探针只供诊断；SOC；限定 registry/budget 内 inclusion-minimal | 已解决 |
-| 4 | Benchmark 混用、TSVC 泄漏、IR-OptSet 无 runtime harness | calibration/main/external/static/RVV 五种角色分离；group holdout | 已解决 |
-| 5 | LLM 可能完全是装饰；共享 CPU 性能不可靠 | certificate→template kill baseline；mechanism-only gate；CPU noise protocol | 已解决为可证伪问题 |
+## 尚存拒稿风险
 
-## Reviewer’s Strongest Rejection Case
+- Registry 可能覆盖率太低，尤其 alias/trip facts 难以安全实现。
+- Alive2 对循环、memory 和 versioning CFG 的 unresolved 比例可能过高。
+- Template 可能足以完成所有可安全实现证书。
+- Canonical prefix 的结果可能不能迁移到真实 O3-aligned capture。
+- AutoDL CPU 可能无法支持可靠性能归因。
 
-> ProbeTrans 可能只是 IR-OptSet 工具链上“更详细的 compiler feedback + LLM IR generation”。所谓 certificate 由人工设计探针决定，template 可能足以实现；如果收益来自新加 attributes 或标量简化，则向量化与 LLM 两个叙事都不成立。
+## 审稿结论
 
-该攻击被转换为四项必做证据：
-
-1. held-out calibration 上 certificate 对 precise remarks 的诊断增量；
-2. same-certificate template baseline；
-3. semantic-strengthening audit 与运行时 guard/fallback；
-4. original/edit × vectorizer on/off attribution。
-
-任一核心项失败均触发降级或停止，而不是追加模型和搜索预算。
-
-## Scores
-
-| Dimension | Score | Reason |
-|---|---:|---|
-| Problem Fidelity | 9.6 | 已纠正到明确的 LLVM IR Translator |
-| Method Specificity | 9.1 | 表示点、输入输出、探针、证书、门控均可实现 |
-| Contribution Quality | 8.2 | 最近邻密集；需要实验证明 certificate 不是 renamed remark |
-| Frontier Leverage | 8.6 | LLM 角色窄且必要性可测；没有强行加 RL/RAG |
-| Feasibility | 8.7 | IR-OptSet 显著降低工程成本；Alive2/CPU 是长尾风险 |
-| Validation Focus | 9.3 | benchmark 角色分离、强模板基线和 kill gates 清楚 |
-| Venue Readiness | 8.0 | 方法可能成论文，但尚无任何正结果 |
-| **Overall** | **8.8** | 纸面已足够进入 P0；9 分只能由数据补齐 |
-
-## Final Status
-
-- Anchor：preserved after correction。
-- Focus：tight；单一 LoopVectorize、单一 IR abstraction。
-- Modernity：appropriately frontier-aware；零训练优先。
-- Remaining weaknesses：pre-LV capture 的工程真实性、证书可安全实现率、LLM 超过模板的幅度、共享 CPU 性能稳定性。
+可开始实现 M0，但不得跳过 M2b，也不得把 `conditional_go`、文档完成度或 seeded fixture 通过写成方法有效。下一次审查应基于 M0–M2b 的真实 artifacts，而不是再增加纸面模块。

@@ -1,451 +1,149 @@
-# ProbeTrans 完整预实验协议（P0）
+# ProbeTrans P0 预实验协议
 
-**版本**：IR-v2
-**目标周期**：10–14 天
-**资源**：AutoDL，1×RTX 4090，Linux；CPU 型号和独占程度未知
-**目的**：验证机制是否值得进入正式实验，而不是追求论文级最好结果。
+**协议版本**：P0-v3
+**目的**：实现前注册的工程 kill-gate；不产生论文级结论
+**当前状态**：未实现、未运行
+**唯一 schema/算法来源**：[P0_IMPLEMENTATION_SPEC.md](P0_IMPLEMENTATION_SPEC.md)
 
-## 0. P0 必须回答的五个问题
+## 1. 服务器目录与可移植性
 
-1. 能否稳定构造“进入 LoopVectorize 前”的 LLVM IR，并准确追踪同一目标循环？
-2. 有限反事实探针能否在合理查询预算内稳定翻转部分 missed decisions？
-3. 证书中有多少条件能够在不偷偷强化语义的情况下实现？
-4. 在相同模型和生成预算下，证书是否比 remark-only 更有用？
-5. LLM 是否比读取相同证书的确定性模板多解决非机械结构改写？
-
-P0 不负责证明广泛泛化、跨版本稳健性或 RVV 性能。
-
-## 1. 建议服务器目录
-
-只复制一个自包含目录到服务器：
+用户只需把 ProbeTrans 文件夹复制到 AutoDL。所有路径必须相对项目根，第三方仓库固定 commit，secrets 只读环境变量。
 
 ```text
 ProbeTrans/
   README.md
-  pyproject.toml
-  configs/
-    p0.yaml
-    toolchain.lock.yaml
-    models.yaml
-  third_party/
-    IR-OptSet/           # 固定 commit 的 fork/submodule
-    llvm-test-suite/     # 固定 commit
-    autovec-benchmark/   # 固定 commit
-    PolyBenchC/          # P0 可暂不下载
-    alive2/              # 固定 commit/预编译版本
-  probetrans/
-  scripts/
-  tests/
-  data/
-    raw/
-    registry/
-    snapshots/
-  runs/
-  artifacts/
+  P0_IMPLEMENTATION_SPEC.md
+  configs/{p0.yaml,toolchain.lock.yaml,models.yaml}
+  third_party/{IR-OptSet,llvm-test-suite,autovec-benchmark,alive2}
+  probetrans/{capture,probes,certificates,translator,audit,gates,benchmarks}
+  scripts/  tests/  data/{raw,registry,snapshots}/
+  artifacts/p0/  runs/
 ```
 
-任何脚本不得依赖 Windows 路径。API key 仅从环境变量读取，不能写入仓库。
+环境锁必须记录 OS、CPU/GPU、LLVM/Clang/Alive2 commit、IR-OptSet 与 benchmark commit、Python、target triple、data layout、CPU features、pipeline hash。P0 固定一个 LLVM 19.1.x 工具链；若实际基座要求不同版本，先记录不兼容并冻结统一版本，不得混用。
 
-## 2. 环境冻结
+## 2. M0：环境与 gate fixtures
 
-### 2.1 主工具链
+**输入**：冻结依赖候选、人工构造的 valid/invalid/equivalent/non-equivalent/unsupported IR fixtures、seeded lineage/effect controls。
+**输出**：`environment.lock.json`、verifier/Alive2/detector JSONL、`M0_DECISION.json`。
+**失败状态**：工具版本不一致、verifier 误判、Alive2 四态无法区分、detector 阳/阴性不敏感。
 
-- Ubuntu 22.04/24.04 容器或 Conda 环境；
-- LLVM/Clang 19.1.x，优先与 IR-OptSet 论文工具链对齐；
-- CMake、Ninja、Python 3.10+；
-- Alive2 使用与 LLVM 主版本匹配的构建；
-- `perf` 若服务器允许；否则使用 benchmark 自带 wall-clock runner。
+通过条件：工具可调用；verifier fixtures 全部符合预期；Alive2 能区分 proved/disproved/timeout-or-unsupported；lineage/effect seeded controls 全部符合预期。LLM endpoint 不属于 M0，不在此时部署。
 
-不在 P0 同时比较多个 LLVM 版本。LLVM 21/22 只在正式实验做版本稳健性。
+## 3. M1：canonical capture、lineage、effect detector
 
-### 2.2 环境探测产物
+从 source 产生 raw IR，运行统一 canonical prefix，保存 pre-LV snapshot；不得声称这是 `default<O3>` 的精确中间态。对 12 个预注册 sanity loops 做三次 clean build。
 
-运行 `scripts/doctor.sh` 后生成：
+**输出**：每次 capture、pass trace、pipeline hash、original loop ID、一对多 lineage、remarks、post-LV structure、round-trip oracle。
+**通过条件**：baseline decision 三次一致；remark 与 target-lineage structural detector 一致；重新序列化/原样 splice 不改变 oracle；无 verifier error；lineage 无歧义。
+**失败状态**：`BASELINE_NOT_ELIGIBLE`、`AMBIGUOUS_LOOP_LINEAGE`、`PIPELINE_DRIFT`、effect mismatch。
 
-```json
-{
-  "os": "...",
-  "cpu_model": "...",
-  "cpu_cores": 0,
-  "gpu": "...",
-  "clang": "...",
-  "opt": "...",
-  "llvm_mca": "...",
-  "alive2_commit": "...",
-  "ir_optset_commit": "...",
-  "benchmark_commits": {},
-  "model_id": "...",
-  "model_revision": "...",
-  "quantization": "..."
-}
-```
+Loop metadata、源码 span、header 和 depth 只是提示；匹配规则与 G4 见实现规范。
 
-### 2.3 M0 通过条件
+## 4. M2a：probe registry 与 bounded search
 
-- `clang --version`、`opt --version`、`llvm-as`、`llvm-dis` 主版本一致；
-- IR-OptSet 自带最小测试可运行；
-- 10 个正确/错误 IR fixture 中 verifier 判定 100% 符合预期；
-- Alive2 能证明至少 3 个等价 fixture，并反驳至少 3 个 seeded wrong fixture；
-- LLM endpoint 用固定 seed/temperature=0 连续两次请求格式稳定。
+只实现 profitability、alias/dependence、trip-count 的冻结 instance；不得逐案例新增 probe。每个 instance 必须满足 schema、hash、applicability、semantic requirement、realization class 和冲突/依赖检查。
 
-任何一项失败，停止 benchmark 与模型实验。
+搜索单元测试必须覆盖：baseline 计费、cache hit 不计费、timeout/crash 计费、不适用 probe 不计费、11+3+2 最坏路径、大小>3不搜索、删除预算不足返回 non-minimal、两次 replay 禁用缓存，以及五个 certificate 终态。
 
-## 3. 冻结 IR 表示点
+**通过条件**：任何执行路径 charged queries ≤16；只有完整 deletion checks 可输出 `inclusion-minimal`；日志可重建每次查询。
+**输出**：`probes.jsonl`、registry hash、search tests、status tests。
 
-### 3.1 两阶段策略
+## 5. M2b：6–12 loop vertical slice
 
-**P0 canonical pipeline**：从前端 raw IR 运行一条显式、版本固定的 canonicalization pipeline，形成适合 loop analysis 的 IR，再单独运行 LoopVectorize。该设置用于快速验证机制。
+在冻结 registry 前选定 6–12 个不同 blocker/结构的 loop；选择规则和 case hash 先写入 manifest。运行完整 capture → applicability → search → replay → realizability → lineage/effect，但不接 LLM。
 
-**正式 O3-aligned pipeline**：若 P0 通过，再通过 PassBuilder instrumentation 捕获 `default<O3>` 中目标 LoopVectorize instance 前的 IR，并保存可重放的 suffix。
+必须全部满足：
 
-P0 不能把 canonical pipeline 称为“完整 O3 中间态”。
+1. baseline decision 三次 clean run 一致；
+2. remark 与 IR effect detector 一致；
+3. 每例 charged query 从未超过 16；
+4. 所有 `CERTIFICATE_FOUND` clean replay 100%；
+5. 每例有可审计终态，包括 zero-success；
+6. 无逐案例人工修改 probe；
+7. loop lineage 无歧义。
 
-### 3.2 M1 实际冻结流程
+任何一项失败，`M2B_DECISION=FAIL`，停止在诊断层。**M2b PASS 前不得部署/调用 LLM，也不得运行 24-case E0。**
 
-1. 用 IR-OptSet frontend 从 benchmark source 产生 `raw.ll`；
-2. 运行候选 canonical prefix；
-3. 对 12 个 sanity loops 检查 LoopInfo、LCSSA、dominance 和 verifier；
-4. 输出 pass trace；
-5. 将最终 pipeline 字符串和工具版本写入 `toolchain.lock.yaml`；
-6. 后续不得按样本修改。
+## 6. M3：完整 calibration 与 D0
 
-### 3.3 Loop identity
+### 6.1 Pair 纳入
 
-每个 loop ID 至少包含：
+保存所有 hidden 稳定 missed、exposed 稳定 vectorized、oracle equivalent、三次可复现且 sanitizer 未显示已知问题的 autovec pair。registry 不覆盖时标 `OUT_OF_REGISTRY`，不删除。按 original kernel group 切分 dev/test；所有阈值只在 dev 冻结。
 
-```text
-benchmark / function / header-block structural hash / debug source span / parent-loop depth
-```
+### 6.2 两项任务
 
-remark、pre-LV IR、post-LV IR 和 executable timing 必须通过该 ID 关联。只靠源码行号不够。
+- Decision flip：全部有效 pair；报告 registry coverage、搜索终态、clean replay、queries。
+- Blocker classification：只用独立标签；标签来自原始 transformation、冻结规则或对 probe 结果盲化的双人标注。
 
-### 3.4 M1 通过条件
+输出 coverage、conditional accuracy、overall accuracy；OUT_OF_REGISTRY 留在 overall 分母。不得用搜索结果作标签。
 
-- 12 个 sanity loops 的 identity 在三次 clean build 中 100% 稳定；
-- remark 与 IR structure 对“是否向量化”的判断 100% 一致；
-- 原始/重新序列化 IR 的 harness 输出一致；
-- pipeline 不产生 verifier error。
+### 6.3 D0 gate
 
-## 4. Benchmark 构造
+以下均是预注册工程阈值，不是实际结果：test 有效 pair ≥24；replay precision=100%；P90 charged queries≤16；coverage≥30%；overall blocker accuracy 对最强 remark baseline 的差值为正。独立标签不足 24 时输出 `D0_LABEL_INSUFFICIENT`，分类 F1 不作为 Go 依据。
 
-### 4.1 Calibration pairs
+## 7. M4：splicer、SOC、Template
 
-从 `autovec-benchmark` 生成 hidden/exposed variants。一个 pair 仅在以下条件全部成立时有效：
+构建 TSVC eligible registry 与 excluded registry，然后实现同名同签名 function splicer、SOC 静态审计、允许的 runtime versioning 和 Certificate→Template。
 
-1. 两个版本均可构建和运行；
-2. 测试 oracle 相同；
-3. hidden 的目标 loop 连续三次 clean build 均 missed；
-4. exposed 的同一 loop 连续三次均 vectorized；
-5. 差异可映射到一个或一组已注册 probe family；
-6. sanitizer 未发现明显 UB。
+P0 runtime guard 只允许函数内可安全计算的 trip/pointer-range 条件；fast path 与保留原语义的 fallback 在函数内汇合。EH/invoke、convergent、deopt、不可建模副作用、irreducible CFG、跨函数或 module 改动直接排除。
 
-按 original kernel group 做 30/70 calibration-dev/test split。所有阈值和 prompt 只能在 dev 上调整。
+**输入**：冻结 TSVC cases、found certificates、semantic fixtures。
+**输出**：splicer round-trip、SOC seeded violations、Template candidates、四态语义结果。
+**通过条件**：原样 splice oracle 不变；所有 seeded semantic strengthening 被捕获；module 未变；Template 全部保留失败记录。
 
-**数量 gate**：test 中至少 24 个有效 pairs；不足则停止以该资产支撑诊断主张。
+## 8. M5：LLM systems 与公平性
 
-### 4.2 TSVC pilot registry
+仅在 M2b、M3、M4 通过后冻结一个可在 4090 运行的 model ID/revision/quantization。P0 不训练。每个 LLM 系统匹配 model、input/output 上限、K=3、repair≤1 和 seed 策略。
 
-对完整 TSVC 自动运行：
+系统：Direct、Remark-only、Iterative Remark/Analysis（query-matched）、Template、ProbeTrans。Natural-cost 与 query-matched 分开报告。Template/ProbeTrans 共享 certificate artifact，同时列 amortized/non-amortized 成本。
 
-- correctness harness；
-- pre-LV snapshot；
-- LoopVectorize effect check；
-- 可用时做目标 loop profile。
+逐 case 记录 model calls、generated tokens、compiler queries、cache hits、verifier/Alive2 calls、wall time 和失败。Compiler query 不等价时，不声称等成本优越，只检验额外 certificate 信息的效用。
 
-纳入条件：稳定 missed、harness 通过、无已知 UB、目标 loop 热度≥20%。若 profiling 不可得，P0 可用 benchmark 结构和计时对比暂定热点，但必须标为弱证据。
+## 9. Candidate gates
 
-从 held-out kernel families 中按 TSVC category 分层选择 24 个；若合格数不足 24，使用全部且记录不足，不补入开发样本。
-
-### 4.3 Registry schema
-
-`data/registry/p0_cases.jsonl` 每行至少包含：
-
-```json
-{
-  "case_id": "tsvc_s000_xxx",
-  "suite": "TSVC",
-  "group_id": "original-kernel-id",
-  "function": "...",
-  "loop_id": "...",
-  "source_hash": "...",
-  "pre_lv_ir_hash": "...",
-  "baseline_effect": "missed",
-  "remark_ids": [],
-  "harness": "...",
-  "inclusion_reason": "...",
-  "exclusion_reason": null,
-  "split": "p0-test"
-}
-```
-
-必须同时保存 `excluded_cases.jsonl`，防止选择性报告。
-
-## 5. Probe Registry v0
-
-### 5.1 允许的五族探针
-
-| ID | Family | P0 操作 | 目的 | 最终候选是否可直接复制 |
+| Gate | 输入 | PASS | 明确失败/未决状态 | Artifact |
 |---|---|---|---|---|
-| P0 | profitability | 强制 vectorize enable/固定候选 VF | 区分成本与合法性 | 否 |
-| P1 | alias | 临时 argument `noalias` 或 scoped noalias metadata | 测试 alias blocker | 否 |
-| P2 | alignment | 临时加强 argument/load/store alignment | 测试 alignment blocker | 否 |
-| P3 | trip-count | 临时 assume 下界/倍数或固定 trip fact | 测试 SCEV/remainder blocker | 否 |
-| P4 | control-call | 临时暴露 invariant/memory effects 或可向量化调用事实 | 测试控制/调用 blocker | 否 |
+| G0 splice | replacement function + module | 同名同签名且仅函数体替换 | FORMAT/SIGNATURE/MODULE_CHANGE | spliced IR + diff |
+| G1 verify | spliced IR | assemble + verifier pass | PARSE/VERIFY_FAIL | logs |
+| G2 SOC | original/candidate | 无未授权强化 | SEMANTIC_STRENGTHENING | audit JSON |
+| G3 semantics | original source/candidate target | FORMALLY_PROVED；补充口径可 differential-only | DISPROVED/TIMEOUT/UNSUPPORTED/INTERNAL_ERROR/DIFF_FAIL | Alive2 + tests |
+| G4 effect | lineage + post-LV + remarks | 目标 fast-path vector body | AMBIGUOUS/TARGET_EFFECT_NOT_FOUND | lineage/effect JSON |
+| G5 performance | strict survivors | noise threshold 与 CI 通过 | NOISY/NO_SPEEDUP | raw timings |
+| G6 VAG | four cells | interaction 方向/CI 通过 | PIPELINE_DRIFT/NOT_ATTRIBUTED | manifests + stats |
 
-### 5.2 禁止进入 P0 的探针
+G3 的 differential matrix 包括 overlap、misalignment、0/small/odd/max trip、overflow、poison/undef、null/object-size/dereferenceability、guard true/false 和 fast/fallback。浮点默认 bitwise/IEEE；只有原 IR 明确许可时才改变比较规则。固定随机数只是压力测试，不是证明。
 
-- fast-math/reassociation；
-- 删除可能有副作用的 call；
-- 改变 signed overflow 定义；
-- target intrinsic；
-- 直接替换为手写 vector IR；
-- 任何会改变 benchmark oracle 的干预。
+Strict CVUR/APIR 只接受 `FORMALLY_PROVED`；`DIFFERENTIAL_ONLY_SUPPORTED` 单列并做敏感性分析。
 
-### 5.3 查询与最小化
+## 10. M6：性能与 VAG
 
-每 case 上限 16 次 `opt`：
+先冻结 CPU noise threshold。若环境不稳定，M6 可输出 `PERFORMANCE_ENV_BLOCKED`，不得把 CVUR 当 APIR。
 
-1. P0–P4 单探针；
-2. 只对 remark/analysis 相关族形成二元组合；
-3. 必要时最多测试两个三元组合；
-4. 成功后执行 deletion minimization；
-5. 新进程重放两次。
+主 VAG 四格只改变目标 LoopVectorize：`O_on/O_off/E_on/E_off`；SLP、其他 pass、PGO、features、codegen 完全相同。全局关闭 SLP 仅作敏感性分析。VAG 提供机制归因证据，不写成完整因果证明。
 
-超过预算返回 `NO_CERT_WITHIN_BUDGET`，不能继续人工试探。
+建议计时计划（均为计划值）：5 次 warm-up、至少 30 个随机交错有效样本，报告 median、MAD、bootstrap CI 和全部 raw timings。
 
-### 5.4 证书 schema
+## 11. P0 判定
 
-```yaml
-case_id: ...
-toolchain_fingerprint: ...
-loop_id: ...
-baseline_effect: missed
-probe_set:
-  - family: alias
-    target: arg0,arg1
-    diagnostic_edit_hash: ...
-effect_after_probe: vectorized
-minimality: inclusion-minimal
-replay: [vectorized, vectorized]
-queries: 9
-realization_status: unknown
-```
+`P0_DECISION.md` 只能选择一个：`GO`、`GO_MECHANISM_ONLY`、`NO_GO_DIAGNOSIS`、`NO_GO_TRANSLATOR`、`NO_GO_SAFETY`、`NO_GO_EFFECT`、`PERFORMANCE_ENV_BLOCKED`。
 
-## 6. 诊断实验 D0
+P0 的具体成功阈值必须在 M2b 前作为 config hash 冻结；当前文档里的 24 cases、差值和数量均为计划/gate，不是结果。零成功、超时和崩溃保留在分母。
 
-### 系统
+## 12. P0 后工作
 
-1. Raw remark rule parser；
-2. Precise-remark LLM classifier；
-3. 单探针 greedy；
-4. 完整 minimal certificate search。
+只有 P0 Go 类裁决后，才运行全量 held-out TSVC、PolyBench/C/应用、第二模型、LLVM 版本稳健性、IR-OptSet 静态压力和冻结 IR 的 RV64GCV 外部验证。QEMU 只作 correctness，不作性能。
 
-### 指标
-
-- blocker-family exact match；
-- set precision/recall/F1；
-- flip precision：声称成功的证书在 clean replay 中实际成功的比例；
-- median/P90 compiler queries；
-- certificate size；
-- realizable/guardable/unrealizable 三态比例。
-
-### D0 Go 条件
-
-- ≥24 test pairs；
-- flip precision =100%；
-- median queries ≤12、P90 ≤16；
-- certificate method 的 set-F1 相对 precise-remark 至少提高 0.10，或 exact match 至少提高 15 个百分点；
-- 至少 30% test pairs 的证书被静态规则判为 potentially realizable。
-
-这些是预实验工程决策阈值，不是论文显著性结论。
-
-## 7. LLM 配置与公平性
-
-### 7.1 P0 主模型
-
-- 选择一个能在 RTX 4090 稳定服务的 14B 级 coder/instruct 模型或等价量化模型；
-- 通过 OpenAI-compatible endpoint 调用；
-- exact model/revision/quantization 在第一次正式请求前冻结；
-- `temperature=0`；若服务不支持确定性，使用三个固定 seeds 并逐 seed 配对；
-- 最大输入 16k tokens，最大输出 4096；
-- 每 case 每系统最多 3 个候选；
-- 仅允许一次 parser/verifier-error repair；
-- 不反馈 correctness 反例或性能，避免系统变成开放式搜索。
-
-### 7.2 四个系统
-
-| System | 模型看到的信息 | Probe queries | 候选预算 |
-|---|---|---:|---:|
-| Direct | IR function + “unlock auto-vectorization” | 0 | 3 |
-| Remark | Direct + raw/precise LLVM remarks | 0 | 3 |
-| Template | certificate，确定性规则，无 LLM | 与 ProbeTrans 共享缓存 | 每模板1个 |
-| ProbeTrans | IR + remarks + certificate + SOC | 与 Template 共享缓存 | 3 |
-
-Template 与 ProbeTrans 必须读取同一个 certificate artifact，不能分别搜索。
-
-### 7.3 防止模型差异造成不公平
-
-- 所有方法在同一模型内做 paired comparison；
-- 不把不同模型的成功数相加；
-- P0 只用一个模型决定机制可行性；
-- 第二模型只在 P0 Go 后做稳健性；
-- prompt 长度差异和 token 使用量单独报告。
-
-## 8. Candidate Gates
-
-按顺序执行；失败即停止该候选，不能跳关。
-
-### G0：格式与 splice
-
-- 输出仅包含一个同名同签名函数；
-- deterministic splicer 成功；
-- module declarations/attributes 引用完整。
-
-### G1：解析与 verifier
-
-- `llvm-as` 成功；
-- `opt -passes=verify` 成功；
-- SSA dominance、PHI predecessor 和类型合法。
-
-### G2：Semantic-strengthening audit
-
-比较原/候选 function：新 attributes、metadata、instruction flags、assumes 与 call memory effects。未经 contract 允许的强化直接拒绝。
-
-### G3：语义验证
-
-- 首先 Alive2，结果分 `proved / disproved / timeout / unsupported`；
-- `disproved` 永久拒绝；
-- `timeout/unsupported` 进入 differential tests，不得写成 formally verified；
-- differential tests 包含 benchmark oracle、边界输入、随机输入和 sanitizer。
-
-P0 建议每 case 至少 1,000 个有效随机/边界输入；随机 seed 固定并公开。
-
-### G4：目标 effect
-
-同时要求：
-
-- 原始 target loop 为 missed；
-- 候选 target loop 出现 vectorization-success remark；
-- post-LV IR 中出现对应 vector loop body；
-- 不能仅是其他 loop 被向量化。
-
-### G5：性能
-
-先运行 CPU 噪声试验：相同 binary 重复 50 次。若 median absolute deviation/median >3%，尝试 pinning、扩大 workload、批内随机化；仍>5%则 P0 不做 APIR 决策，只报告 CVUR，并明确性能阶段被环境阻塞。
-
-稳定时，每 binary：5 次预热、至少 30 次有效测量；原/候选与 on/off 采用随机交错顺序；保存所有原始样本。
-
-### G6：VAG
-
-构建四个 binary：`O_on, O_off, E_on, E_off`。关闭配置必须同时禁用 loop 和 SLP vectorization，或通过 pass pipeline 只移除目标 LoopVectorize；具体定义在 M1 冻结。
-
-接受性能成功需：
-
-- `E_on` 相比 `O_on` 超过 noise-derived threshold；
-- paired/bootstrap 95% CI 为正；
-- attribution interaction `A` 的 95% CI 为正。
-
-## 9. 端到端实验 E0
-
-### 样本
-
-24 个 held-out TSVC eligible loops。若少于 24，使用全部，不从开发集补齐。
-
-### 主指标
-
-- `CVUR = correct vectorization unlocks / all eligible cases`；
-- CPU 稳定时：`APIR = attributed profitable IR rewrites / all eligible cases`。
-
-### 辅助漏斗
-
-`eligible → certificate found → potentially realizable → parse → verify → semantic → vectorized → profitable → attributed`
-
-### E0 Go 条件
-
-1. ProbeTrans 至少取得 5/24 个正确向量化解锁；
-2. 相比 Direct 和 Remark 各至少多 3 个正确解锁；
-3. 相比 Template 至少多 2 个，且至少两个成功涉及非机械 CFG/loop restructuring；
-4. accepted candidates 中 semantic-strengthening violation 为 0；
-5. 若 CPU 稳定，至少 3/24 达到 APIR；
-6. VAG 至少能重新分类一个“表面加速但非向量化归因”候选，或者通过预先植入的标量优化阳性对照证明 gate 有辨识力；
-7. 全部 LLM 调用、候选和失败均有日志。
-
-若只差性能条件且 CPU 噪声不合格，状态为 `GO_MECHANISM_ONLY`，换稳定 CPU 后补测；不能把它判为完整 Go。
-
-## 10. 必做消融 A0
-
-在 E0 24 cases 上做：
-
-- `w/o certificate`：即 Remark system；
-- `non-minimal certificate`：给全部成功探针；
-- `w/o SOC`：允许模型自由实现，但仍执行 audit，统计会被拒绝的泄漏；
-- `w/o VAG`：比较会被错误计入的性能成功；
-- `certificate→template`：检验 LLM 必要性。
-
-不做 RAG、多 Agent、微调或多 LLVM 版本消融。
-
-## 11. 统计与报告
-
-- 二元 paired outcome：给出每系统成功数、成对差异和 exact McNemar/paired bootstrap CI；P0 小样本重点报告 effect size，不以 `p<0.05` 作为唯一 Go 条件。
-- 性能：报告 median、MAD、bootstrap 95% CI；geomean 只对 accepted 和 fallback-inclusive 两种口径分别报告。
-- 多候选：case-level success 只计一次；同时报告 candidate-level failure taxonomy。
-- 超时：probe 60s、verifier 30s、Alive2 300s、单候选总验证 15min；实际阈值在 sanity 后冻结。
-- 缺失/崩溃/超时均计失败，不删除分母。
-
-## 12. 运行顺序与预计成本
-
-| 日程 | 工作 | GPU | 退出条件 |
-|---|---|---:|---|
-| Day 1 | 环境、IR-OptSet、LLVM、Alive2 smoke | 0h | M0 未通过则停止 |
-| Day 2 | canonical pipeline 与 loop ID | 0h | M1 未通过则停止 |
-| Day 3–4 | autovec 重认证与 registry | 0h | test pairs <24 则停止 |
-| Day 5 | probes + certificate search | 0h | D0 gate 未通过则停止 |
-| Day 6 | SOC、function splice、template baseline | 0h | fixture tests 未通过则停止 |
-| Day 7–9 | Direct/Remark/Template/ProbeTrans 生成 | 4–10h | 保留所有候选 |
-| Day 9–11 | verifier/Alive2/differential/effect | 0h | 生成漏斗 |
-| Day 12 | CPU noise 与性能/VAG | 0h | 噪声高则 mechanism-only |
-| Day 13 | 消融与失败分类 | 0–3h | 完成 kill decision |
-| Day 14 | P0 report 与下一阶段裁决 | 0h | GO/GO_MECHANISM_ONLY/NO-GO |
-
-## 13. 必须生成的产物
+## 13. 必备 artifacts
 
 ```text
 artifacts/p0/
-  environment.lock.json
-  toolchain.lock.yaml
-  benchmark_registry.jsonl
-  excluded_cases.jsonl
-  calibration_pairs.jsonl
-  certificates/*.yaml
-  prompts/*.json
-  responses/*.json
-  candidates/*.ll
-  gate_results.jsonl
-  timing_raw/*.csv
-  summary.csv
-  failure_taxonomy.md
-  P0_DECISION.md
+  environment.lock.json  toolchain.lock.yaml
+  registry/{probes.jsonl,cases.jsonl,excluded_cases.jsonl}
+  m0/ m1/ m2a/ m2b/ m3/ m4/ m5/ m6/
+  certificates/ prompts/ responses/ candidates/
+  gate_results.jsonl costs.csv timing_raw/
+  failure_taxonomy.md P0_DECISION.md
 ```
 
-`P0_DECISION.md` 必须明确写一个且只能写一个：
-
-- `GO`：诊断、翻译和性能归因 gate 均通过；
-- `GO_MECHANISM_ONLY`：诊断/翻译通过，但共享 CPU 无法可靠测性能；
-- `NO_GO_DIAGNOSIS`：证书无信息增量；
-- `NO_GO_TRANSLATOR`：证书有效但 LLM 不超过 remark/template；
-- `NO_GO_SAFETY`：主要收益依赖不可接受语义强化；
-- `NO_GO_EFFECT`：生成正确但不能解锁目标 vectorizer。
-
-## 14. P0 后才允许的工作
-
-只有 GO 或 GO_MECHANISM_ONLY 后才进行：
-
-- 全量 held-out TSVC；
-- PolyBench/C 和真实应用；
-- 第二模型；
-- LLVM 版本稳健性；
-- 200–500 个 IR-OptSet 静态压力样本；
-- RV64GCV 外部验证；
-- 可能的 SFT。
-
-在 P0 之前做这些会稀释失败信号并浪费算力。
+所有 gate result 使用实现规范中的 schema，带 input hashes、状态、reason code、artifact path、toolchain fingerprint 和 duration。缺 artifact 的 run 不能标 PASS。

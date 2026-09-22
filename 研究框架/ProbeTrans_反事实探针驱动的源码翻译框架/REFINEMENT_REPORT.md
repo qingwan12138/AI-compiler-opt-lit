@@ -1,37 +1,35 @@
-# ProbeTrans IR-v2 Refinement Report
+# ProbeTrans 实现前终审报告
 
 **日期**：2026-09-22
-**最终裁决**：CONDITIONAL_GO
-**最终评分**：8.8/10
+**总体裁决**：`READY_FOR_M0`
+**状态边界**：proposal/design 已完成到可实现规范；implementation 未开始；experiments 未运行。
 
-## Score Evolution
+## 本轮修复结果
 
-| Round | 版本 | Score | Blocking issue |
-|---|---|---:|---|
-| 0 | source-level ProbeTrans | 6.0 | 抽象层错误 |
-| 1 | IR-level concept | 7.1 | 无代码基座、输入 IR 不明确 |
-| 2 | IR-OptSet-based | 7.9 | benchmark 与 probe safety 不清 |
-| 3 | certificate+SOC | 8.4 | LLM 必要性和归因仍弱 |
-| 4 | benchmark-frozen | 8.7 | 预实验执行细节不足 |
-| 5 | execution-ready P0 | **8.8** | 剩余差距只能由实验证据补齐 |
+| 阻断项 | 终审处理 | 验证位置 |
+|---|---|---|
+| 项目名/状态误导 | 正文统一为 LLVM IR 翻译；历史目录名仅作路径兼容；状态三分 | README、REFINE_STATE |
+| Probe 不是有限动作 | instance schema + realization class；P0 三族 | P0 spec §2 |
+| 16 次预算超限 | baseline-inclusive 11+3+2 确定性算法 | P0 spec §3 |
+| D0 循环标签 | 全 pair 保留；OUT_OF_REGISTRY；独立 ground truth | P0 spec §4 |
+| Baseline 不公平 | generation matched + query-matched + total cost | P0 spec §10 |
+| Translator 越界 | replacement function；module/cross-function 退出 | P0 spec §1/6 |
+| Loop identity 脆弱 | 一对多 lineage 与 AMBIGUOUS 状态 | P0 spec §5 |
+| 语义证据混报 | source→target refinement；四类结果；strict 主表 | P0 spec §7 |
+| VAG 定义混杂 | 主 off 只移除目标 LoopVectorize | P0 spec §9 |
+| Target 主张过宽 | target-aware、无手写 ISA intrinsic | P0 spec §12 |
+| P0 顺序不合理 | 新增 M2a/M2b，M2b 前禁止 LLM | P0 spec §11 |
 
-## Most Important Corrections
+## Readiness 判定依据
 
-1. 将输出从可移植源码改回 target-independent LLVM IR replacement function。
-2. 选择 IR-OptSet（NeurIPS 2025）为唯一开源代码基座。
-3. 输入从含糊的 `O0/Oz` 改为 frozen pre-LoopVectorize canonical IR。
-4. 将 benchmark 分为诊断、主性能、外部、静态压力和 RVV 五种不同职责。
-5. 将 template baseline 提升为会杀死 LLM 论文叙事的强基线。
-6. 为 AutoDL 共享 CPU 加入 `GO_MECHANISM_ONLY`，避免用噪声性能作错误结论。
+另一位工程师无需猜测以下关键协议：probe/certificate/lineage/gate schema；query 计费；search 终态；realization class；D0 标签来源；baseline 成本；replacement-function 边界；Alive2 方向；VAG off 定义；run ID/artifact。
 
-## Remaining Weaknesses
+## 尚未解决
 
-- LLVM `default<O3>` 中精确 capture/resume 需要 PassBuilder 工程；
-- alias/alignment 探针容易产生不可安全实现的证书；
-- Alive2 对循环和 memory IR 的 timeout/unsupported 可能较高；
-- 24-case P0 只能作机制 gate，不能提供论文级统计效力；
-- 目前无跨模型独立审稿。
+设计无法替代真实证据。Registry coverage、安全可实现率、Alive2 solved rate、LLM 对 Template 的增量、真实性能和外部迁移均未知。若 M2b 失败，应停止并修正诊断层，不能通过增加 LLM、RAG、RL、Agent 或搜索预算绕过。
 
-## Stop Reason
+## 下一 gate
 
-已经达到“可以动手证伪”的方案成熟度。继续加 RAG、多 Agent、SFT 或更多 benchmark 不会提高核心可信度。下一步只能执行 `PREEXPERIMENT_PROTOCOL.md`。
+只执行 M0：环境锁、verifier/Alive2/lineage/effect fixtures 和 `M0_DECISION.json`。没有任何结果时，tracker 继续保持 TODO/BLOCKED。
+
+本报告不使用主观分数；是否前进完全由 readiness checklist 与 milestone artifacts 决定。

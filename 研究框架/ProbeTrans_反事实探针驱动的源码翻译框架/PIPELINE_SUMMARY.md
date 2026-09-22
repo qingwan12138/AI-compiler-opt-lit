@@ -1,49 +1,37 @@
-# ARIS Pipeline Summary — ProbeTrans IR-v2
+# ProbeTrans Pipeline Summary
 
-**Problem**：LLVM IR 层漏自动向量化修复
-**Final Method Thesis**：用最小反事实干预证书条件化函数级 LLVM IR 翻译，并以语义义务和 vectorizer on/off 交互验收。
-**Final Verdict**：CONDITIONAL_GO
-**Date**：2026-09-22
+**研究对象**：target-aware but ISA-intrinsic-free pre-LoopVectorize LLVM IR → LLVM IR
+**主机制**：Intervention-Certified IR Translation
+**当前裁决**：`READY_FOR_M0`；`conditional_go` 仅授权 P0 M0
+**实验状态**：未运行
 
-## Final Deliverables
+## 交付物
 
-- Proposal：`FINAL_PROPOSAL.md`
-- Research contract：`RESEARCH_CONTRACT.md`
-- Detailed P0：`PREEXPERIMENT_PROTOCOL.md`
-- Formal experiment plan：`EXPERIMENT_PLAN.md`
-- Tracker：`EXPERIMENT_TRACKER.md`
-- Review：`REVIEW_SUMMARY.md`
-- Evidence：`EVIDENCE_MATRIX.md`
+- [研究契约](RESEARCH_CONTRACT.md)
+- [最终提案](FINAL_PROPOSAL.md)
+- [P0 实现规范](P0_IMPLEMENTATION_SPEC.md)
+- [P0 预实验协议](PREEXPERIMENT_PROTOCOL.md)
+- [实验计划](EXPERIMENT_PLAN.md)
+- [实验追踪表](EXPERIMENT_TRACKER.md)
+- [终审摘要](REVIEW_SUMMARY.md)
+- [终审报告](REFINEMENT_REPORT.md)
+- [变更记录](REFINEMENT_CHANGELOG.md)
+- [证据矩阵](EVIDENCE_MATRIX.md)
 
-## Contribution Snapshot
+## 唯一执行顺序
 
-- **Dominant contribution**：Intervention-Certified IR Translation。
-- **Supporting trust mechanism**：SOC + VAG。
-- **Base code**：IR-OptSet, NeurIPS 2025, MIT。
-- **Main benchmark**：held-out TSVC eligible missed loops。
-- **Explicitly rejected**：source-to-source、RL、RAG、多 Agent、多 Pass、intrinsics、O0/Oz 端点输入。
+M0 环境/fixtures → M1 capture/lineage/effect → M2a registry/search → M2b vertical slice → M3 D0 → M4 splicer/SOC/Template → M5 LLM → M6 performance/VAG。
 
-## Must-Prove Claims
+M2b 前不部署模型、不调用 LLM、不运行 E0。Run ID 只以 tracker 为准；schema、错误码和预算只以 P0 spec 为准。
 
-1. Certificate 比 precise remarks 提供可测的信息增量。
-2. LLM 比读取同一 certificate 的 template 多解决非机械 IR restructuring。
-3. SOC/VAG 实际防止安全泄漏和错误归因。
+## 必须证明而非假定
 
-## First Runs
+1. 全样本口径下 certificate 相对 remark 有信息增量。
+2. 增量不能被相同 compiler-query 数解释。
+3. LLM 在 strict semantic 口径下超过共享 certificate 的 Template。
+4. 目标 fast-path lineage 确实被 LoopVectorize 转换。
+5. 性能收益在只关闭目标 LoopVectorize 后显著减弱。
 
-1. R001–R006：环境、verifier、Alive2、CPU noise；
-2. R010–R014：冻结 pre-LV pipeline 与 loop identity；
-3. R020–R036：构造 calibration/TSVC registry 并决定 D0 Go/No-Go；
-4. 只有 D0 Go 后运行 LLM。
+## 下一工程任务
 
-## Main Risks
-
-- certificate 不可安全实现；
-- template 追平；
-- pre-LV snapshot 与真实 O3 pipeline 不一致；
-- AutoDL CPU 不适合性能结论；
-- IR-OptSet 静态样本被误当 runtime benchmark。
-
-## Next Action
-
-在服务器基于 IR-OptSet fork 实现 M0–M3；不要先做模型微调或全量 benchmark。
+创建 M0 的环境锁与 gate fixtures，并生成 `artifacts/p0/M0_DECISION.json`。本轮没有产生任何实验结果。

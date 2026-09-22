@@ -1,159 +1,83 @@
-# ProbeTrans Research Contract — LLVM IR Edition
+# ProbeTrans Research Contract — LLVM IR Translator
 
 **日期**：2026-09-22
 **类别**：TRANSLATOR
-**输入/输出**：pre-LoopVectorize LLVM IR function → semantically equivalent LLVM IR function
-**开源基座**：IR-OptSet, NeurIPS 2025 Datasets and Benchmarks, MIT License
+**输入/输出**：canonical pre-LoopVectorize LLVM IR function → semantically refining LLVM IR replacement function
+**当前状态**：设计已冻结到 M0 可实施；实现未开始；实验未运行
+**裁决**：`conditional_go`，仅允许进入 P0 M0
 
-## 1. Immutable Problem Anchor
+## 1. 不可变问题锚点
 
-- **底线问题**：在不修改 LLVM 后端、不使用 RL、不依赖 ISA intrinsic 的条件下，修复一部分 LLVM `LoopVectorize` 漏优化，使 LLM 产生正确、可验证、可归因的 LLVM IR 变换。
-- **必须解决的瓶颈**：普通 optimization remark 只能描述失败表象，不能可靠指出“改变哪些 IR 条件足以翻转当前编译器决策”；自由 IR 生成又容易引入语法错误、SSA 错误或更隐蔽的语义强化。
-- **非目标**：通用 `-O3` 替代器、多 Pass 协调、Pass ordering、源码重写、显式 SIMD、RL、以 RISC-V 为主场景。
-- **资源约束**：单张 RTX 4090；P0 优先零训练；服务器运行；公开数据和开源工具；x86 主实验，RVV 外部验证。
-- **成功条件**：在预注册 held-out benchmark 上，同模型同预算下，ICIT 相比 direct/remark-only IR 翻译提高“正确且由 LoopVectorize 归因的有益翻译率”，并明显超过读取相同证书的确定性模板。
+ProbeTrans 研究：主动、可撤销的编译器干预能否产生比 standard remarks 更有用的翻译条件，使 LLM 在函数级 LLVM IR 内安全修复部分 LoopVectorize 漏优化。
 
-## 2. Frozen Representation Point
+不研究通用 `-O3` 替代、多 Pass 协调、Pass ordering、C/C++ patch、显式 SIMD、RL 或以 RISC-V 为主要背景。P0 优先零训练。
 
-研究对象不是 `-O0` 原始 IR，也不是完整 `default<Oz>`/`default<O3>` 后的 IR，而是：
+## 2. 表示与目标边界
 
-> **完成固定的 target-independent canonicalization prefix、尚未运行 LoopVectorize 的 IR snapshot。**
+输入不是 `-O0` 原始 IR，也不是完整 `Oz/O3` 的末端 IR，而是运行冻结 canonical prefix 后、目标 LoopVectorize 前的 snapshot。P0 必须明确它是实验 pipeline，而非冒充 `default<O3>` 的精确中间态。
 
-P0 使用 IR-OptSet 所兼容的 LLVM 19.1.x。具体 prefix 在 M0 通过 pass trace 冻结；最低必须包含形成稳定循环表示所需的 `mem2reg/SROA`、`simplifycfg`、`loop-simplify`、`LCSSA`、`loop-rotate` 与 `indvars` 等等价阶段。不得根据结果为单个 benchmark 改 pipeline。
+表示是 **target-aware but ISA-intrinsic-free LLVM IR**：保留 triple、data layout、CPU features；不手写 x86/RVV intrinsic。x86 用于证书生成与主评测，RV64GCV 只评估冻结 IR 的 portability/robustness。
 
-选择该位置的原因：
+模型只能输出一个同名同签名 replacement function。任何需要修改 signature、callee/declaration、global/module metadata、vector-function mapping、新 helper 或跨函数证明的方案标为 `MODULE_CHANGE_REQUIRED`，不进入当前 Translator 的安全成功分子。
 
-1. `-O0` IR 含大量前端噪声，问题会退化为重做常规优化；
-2. `Oz/O3` 完整结束后，目标决策和可恢复的前提已经被多轮 pass 改写；
-3. pre-LoopVectorize snapshot 让“输入条件—向量化决策—后端效果”边界明确。
+## 3. 唯一主机制
 
-## 3. Base-Code Contract
+Intervention-Certified IR Translation（ICIT）在冻结、有限的 probe-instance registry 中，使用最多 16 次 compiler query 搜索能稳定翻转同一目标 loop 决策的证书。证书必须完成全部删除检查和两次无缓存 clean replay，才可标为 registry/budget 内 `inclusion-minimal`。
 
-### 直接继承 IR-OptSet
+P0 只启用 profitability、alias/dependence、trip-count。Profitability probe 是 `DECISION_ONLY`，只说明成本/启发式决策可被改变，不代表缺少语义事实。Alignment 延后或严格限域；control/call 不进入 P0。
 
-- `IRDS/core/llvm/`：Clang/`opt` wrapper 与版本管理；
-- `IRDS/core/preprocessing/`：IR 清洗、命名规范化；
-- `IRDS/tools/opt_verify.py`：解析和 verifier；
-- `IRDS/tools/alive2.py`：Alive2 接口；
-- `IRDS/tools/mca_cycles.py`：静态分析，只作辅助；
-- `IRDS/llm/`：prompt/model adapter；
-- 并行、日志、token 统计和 dataset schema。
+完整 probe schema、11+3+2 查询算法、certificate schema、终态和错误码以 [P0 实现规范](P0_IMPLEMENTATION_SPEC.md) 为唯一来源。
 
-### ProbeTrans 新增目录
+## 4. SOC 与 runtime versioning
 
-```text
-probetrans/
-  capture/       # pre-LV snapshot 与 loop identity
-  probes/        # 诊断专用 IR interventions
-  certificates/  # 搜索、最小化、重放
-  translator/    # 函数级 IR 生成与 splice
-  audit/         # semantic-strengthening 检查
-  gates/         # verify, Alive2, differential, effect, performance, attribution
-  benchmarks/    # TSVC/autovec/PolyBench/IR-OptSet adapters
-  configs/       # 冻结工具链、模型、预算、阈值
-```
+Semantic-Obligation Contract（SOC）禁止无依据新增 `noalias`、`nonnull`、`dereferenceable`、更强 alignment、`nsw/nuw/exact/inbounds`、fast-math、memory effects 或 `llvm.assume`。
 
-## 4. Main Mechanism: ICIT
+允许的条件只有两类：原 IR 可证明；或通过函数内 runtime guard + fast path + 原语义 fallback 实现。P0 排除 EH/invoke、convergent、deopt、不可建模 side effects、irreducible CFG 和跨函数事实。详细 guard 边界见实现规范。
 
-### 4.1 输入
+## 5. Loop lineage 与 effect
 
-- 一个可独立 splice 的 LLVM IR function；
-- 目标 loop identity；
-- 原始 `LoopVectorize` missed/analysis record；
-- frozen target triple、data layout、CPU features 与 pass pipeline；
-- 可执行 correctness harness（主性能 benchmark 必需）。
+原始 loop 到 fast path、fallback、post-LV vector body 和 epilogue 是一对多关系。metadata、源码行、block name 和 header hash只作提示；主匹配依靠 induction/SCEV、memory-access multiset、exit/live-out 和 CFG neighborhood。
 
-### 4.2 诊断探针
+歧义返回 `AMBIGUOUS_LOOP_LINEAGE`，不得计入 CVUR/APIR。目标 effect 必须发生在目标 fast-path lineage，不能用其他 loop、fallback 或 remainder 的向量化冒充。
 
-所有探针产物标记 `DIAGNOSTIC_ONLY`，不能直接成为模型输出：
+## 6. 语义验证合同
 
-| 探针族 | 临时干预示例 | 所识别障碍 |
-|---|---|---|
-| Profitability | `llvm.loop.vectorize.enable/width` | 仅成本模型拒绝还是 legality 拒绝 |
-| Alias/dependence | 临时 `noalias`/alias scope metadata | 未证明的内存相关 |
-| Alignment/memory | 临时加强 alignment/连续访问条件 | 对齐或访问形态阻碍 |
-| Trip/count | 临时 `llvm.assume` 下界、倍数或已知 trip count | 小 trip、remainder 或 SCEV 不充分 |
-| Control/call | 临时暴露不变量、内存效应或可 vectorize call | 控制流或调用副作用障碍 |
+Alive2 方向固定为原函数 `source` → replacement `target` 的 refinement。状态单独报告：`FORMALLY_PROVED`、`DISPROVED`、`TIMEOUT`、`UNSUPPORTED`、`INTERNAL_ERROR`、`DIFFERENTIAL_ONLY_SUPPORTED`。
 
-FP reassociation、overflow weakening 和异常语义变化默认不进入 P0。若以后研究，必须作为单独语义许可层。
+Strict CVUR/APIR 主表只接受 `FORMALLY_PROVED`；差分通过但形式验证未解决的候选只进入补充 coverage 表，并做排除后的敏感性分析。Sanitizer 和固定数量随机测试不是等价证明。
 
-### 4.3 证书搜索
+## 7. D0 合同
 
-- 预算 `B_probe=16` 次 `opt` 查询；
-- 先测试单探针，再测试同族/跨族二元组合；只有前两层均失败时才允许最多三元组合；
-- 每次查询要求 optimization record 与 vector IR structure 一致；
-- 对成功集合逐项删除，得到探针 registry 内的 **inclusion-minimal** 集合；
-- 在两次 clean process 中重放，决策不一致则证书无效；
-- 不使用“全局最小”“真实唯一根因”或“因果证明”措辞。
+所有满足 hidden missed、exposed vectorized、oracle equivalent、可复现的 pair 都保留；registry 不覆盖时标 `OUT_OF_REGISTRY`，不能删除。Decision-flip task 与 blocker-classification task 分开；blocker ground truth 只能来自原始 transformation、冻结规则或不知道 probe 结果的双人标注。
 
-### 4.4 LLM IR 翻译接口
+分别报告 coverage、conditional accuracy 和 overall accuracy。Probe 搜索结果不得充当自身标签。
 
-模型不重写整个 module。输入为 target function、必要 declarations/data layout/attributes、missed record、certificate、Semantic-Obligation Contract 和输出 schema。
+## 8. 公平性与成本
 
-模型输出一个完整 replacement function definition，允许重新编号 SSA，禁止输出 module-level 任意文本。deterministic splicer 将其放回原 module。P0 每个样本最多 `K=3` 个候选，最多一次仅针对 parser/verifier 错误的修复；不把性能数值反馈给模型。
+- generation-budget matched：同模型、token、候选数、repair 和 seed 策略。
+- natural-cost：Direct/Remark 不跑 probe；ProbeTrans/Template 共享 certificate。
+- query-matched feedback：Iterative Remark/Analysis 使用相同 charged query 上限，但不做语义干预。
+- 不主张等总成本优越，只检验 certificate 信息增量。
+- 每系统报告 model calls、tokens、compiler queries、cache hits、verifier/Alive2 calls、wall time，以及 certificate 的 amortized/non-amortized 成本。
 
-## 5. Semantic-Obligation Contract
+## 9. VAG 合同
 
-最终 IR 相对输入不得无依据新增：`noalias`、`nonnull`、`dereferenceable`、更强 alignment、`nsw/nuw/exact/inbounds`、fast-math flags、更强 memory effects 或无法由原 IR 推出的 `llvm.assume`。
+主 VAG 四格 `O_on/O_off/E_on/E_off` 只改变目标 LoopVectorize 是否运行；SLP 和其余 pipeline、features、PGO、codegen 保持一致。全局同时关闭 SLP 只能是敏感性分析。VAG 是机制归因证据，不是完整因果证明。
 
-允许两种实现：条件能由原 IR/分析证明；或新增运行时 guard，将满足条件的 fast path 与未经修改的 fallback path 组成语义保持版本化。静态 audit 只检查明显强化；最终正确性仍由 verifier、Alive2 和 differential testing 决定。
+## 10. Benchmark 合同
 
-## 6. Benchmark Contract
+- D0：现代 LLVM 重认证的 autovec hidden/exposed pairs，按原始 kernel 分组切分。
+- 主测试：TSVC 自动筛选的 held-out eligible missed loops。
+- 外部：冻结的 PolyBench/C 与少量公开应用热点。
+- 静态压力：IR-OptSet 子集，只报告工具稳定性。
+- RV64GCV：x86 阶段冻结 IR，不重新 prompt；QEMU 不作性能结论。
 
-### 6.1 诊断校准：autovec-benchmark
+## 11. 实施顺序与停止权
 
-- 在 LLVM 19.1.x 上重新生成 hidden/exposed variants；
-- 只保留 hidden 未向量化、exposed 向量化、测试等价、决策可重放的 pair；
-- 按原始 kernel 分组切分，禁止同一 kernel 的变体跨 calibration/test；
-- 只用于 blocker diagnosis，不用于端到端性能主结论。
+顺序固定为 M0 环境/gate fixtures → M1 capture/lineage/effect → M2a registry/search → M2b 6–12 loop vertical slice → M3 calibration/D0 → M4 splicer/SOC/Template → M5 LLM systems → M6 performance/VAG。
 
-### 6.2 主测试：TSVC
+M2b 通过前不得部署或调用 LLM，不得运行 24-case E0。任何基础设施失真、预算超限、replay 不稳定、标签循环、lineage 歧义或 template 追平等 kill condition 都必须导致停止/降级，而非增加模型或搜索预算。
 
-- 来源为 LLVM test-suite 完整 TSVC；
-- 在 LLM 调用前自动筛选并冻结所有 eligible missed loops；
-- 纳入：correctness harness 有效、同一 loop 稳定 missed、目标 loop 热度 ≥20%、无已知 UB；
-- 排除规则和原因全部公开；
-- 主结果使用未参与 prompt/probe 调整的 held-out kernel families。
+## 12. 开源基座
 
-### 6.3 外部泛化与压力集
-
-- PolyBench/C 全量扫描后得到的 hot missed loops；
-- Blackscholes、Kmeans、LBM 及可复现 LLVM test-suite applications 中 3–5 个热点；
-- IR-OptSet 从 HPC/Multimedia/Embedded 按固定 hash 抽取 200–500 个含循环函数，只测静态鲁棒性；
-- RV64GCV 只接收 x86 阶段冻结 IR，不重新 prompt；QEMU 不用于性能结论。
-
-## 7. Baseline Contract
-
-在每个模型内部配对，冻结 `K`、输出 token、修复轮数和 compiler-query budget：
-
-1. LLVM canonical IR + `LoopVectorize`；
-2. Direct IR Translator：只给 function 和目标；
-3. Remark-only Translator：加 raw/precise remark；
-4. Certificate→Template：同一证书，确定性 IR 模板；
-5. ProbeTrans：certificate + SOC + gates。
-
-IntOpt-style intent prompting 和 IR-OptSet fine-tuned model可作为正式实验强基线，但 P0 不因复现成本阻塞核心 kill-gate。
-
-## 8. Metrics Contract
-
-主指标为 `APIR = Attributed Profitable IR Rewrite rate`，分母为所有 eligible inputs。分子必须同时满足 verifier、语义验证、目标循环由 missed 变为 vectorized、x86 实测超过冻结噪声阈值且 VAG 交互项 95% CI 为正。
-
-次指标包括 Certificate Flip Rate、blocker set-F1、查询次数、证书大小、各门控通过率、Correct Vectorization Unlock Rate（CVUR）、失败记 1.0× 的 fallback-inclusive geomean、semantic-strengthening violation rate 和成本。
-
-## 9. Kill Criteria
-
-1. 重认证后有效 calibration pairs <24；
-2. 证书不能 clean-process 重放，或 median query >16；
-3. 24 个 held-out TSVC pilot 中可安全实现证书 <6；
-4. ProbeTrans 的正确向量化解锁不超过 Remark-only；
-5. Template 与 ProbeTrans 的 CVUR/APIR 差距≤1个案例；
-6. 主要成功依赖未证明 attribute/metadata/flags；
-7. VAG 显示多数表面加速在关闭 LoopVectorize 后仍存在；
-8. 外部集不优于 Direct/Remark-only。
-
-## 10. Server Portability
-
-- 所有路径相对项目根目录；
-- 用 `environment.lock.json` 记录 LLVM、Alive2、Python、模型、CPU、GPU 与 git commit；
-- secrets 只通过环境变量；每个 run 生成不可变 manifest；
-- Windows 文献库和 ARIS 目录不成为服务器运行依赖。
+基座为 IR-OptSet。只复用其公开仓库实际提供的 extraction/preprocessing、LLVM wrapper、verify、Alive2 adapter、静态分析、LLM 和日志设施；ProbeTrans 的 probe registry、bounded search、lineage、function splicer、SOC 和 VAG 均需新实现。服务器运行只依赖项目内相对路径和冻结 commit。

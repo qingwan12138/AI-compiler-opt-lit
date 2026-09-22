@@ -7,7 +7,7 @@
 | IR-OptSet | NeurIPS 2025 D&B | LLVM IR 数据、分析/生成任务、验证与扩展工具链 | [MIT 代码](https://github.com/yilingqinghan/IR-OptSet)；可复用 LLVM wrapper、preprocess、verify、Alive2、mca、LLM modules | **唯一正式代码基座**；ProbeTrans 必须清楚列出新增模块 |
 | Meta LLM Compiler | 2024 | LLVM IR/assembly foundation model，code-size/pass tasks | 模型公开但有专用许可/访问要求 | 可作 backbone/基线，不是 ProbeTrans 工程基座 |
 | Compiler Generated Feedback | 2024 arXiv | LLVM IR、pass、instruction count feedback | 论文方法明确；未发现可直接继承的完整系统仓库 | “编译反馈给 LLM”已被覆盖，不能作创新 |
-| LLM-Vectorizer | CGO 2025 | scalar program→显式 SIMD，FSM multi-agent，Alive2 | 官方论文页未发现可直接复用完整代码 | LLM vectorization+verification 已覆盖；ProbeTrans 坚持 target-independent IR |
+| LLM-Vectorizer | CGO 2025 | scalar program→显式 SIMD，FSM multi-agent，Alive2 | 官方论文页未发现可直接复用完整代码 | LLM vectorization+verification 已覆盖；ProbeTrans 使用 target-aware but ISA-intrinsic-free IR |
 | VecTrans | 2025 arXiv | source→source 重构触发 auto-vectorization | 官方论文页未发现公开完整实现 | 源码层路线；ProbeTrans 区别必须是 IR 层证书条件化翻译 |
 | IR-OptSet paper | NeurIPS 2025 D&B | 170K IR、4.3M optimization annotations、验证/静态性能工具 | 数据 CC-BY-4.0；代码 MIT | IR-OptSet 样本多数无完整 runtime harness，不可作主要真实性能集 |
 | IntOpt | 2026 arXiv | intent formulation/refinement/realization 的一般 IR 优化 | 论文页未给公开代码 | explicit intent 已覆盖；certificate 必须是可重放 compiler intervention evidence，而非换名 intent |

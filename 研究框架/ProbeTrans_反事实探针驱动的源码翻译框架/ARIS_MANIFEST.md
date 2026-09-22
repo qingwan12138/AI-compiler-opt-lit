@@ -33,7 +33,7 @@
 | 2026-09-22 01:56 | /research-refine | refine-logs/REVIEW_SUMMARY.md | implementation | latest review summary |
 | 2026-09-22 01:56 | /research-refine | refine-logs/REFINEMENT_REPORT_20260922_015614.md | implementation | IR correction refinement history |
 | 2026-09-22 01:56 | /research-refine | refine-logs/REFINEMENT_REPORT.md | implementation | latest refinement report |
-| 2026-09-22 01:56 | /experiment-plan | refine-logs/PREEXPERIMENT_PROTOCOL_20260922_015614.md | implementation | execution-ready two-week P0 protocol |
+| 2026-09-22 01:56 | /experiment-plan | refine-logs/PREEXPERIMENT_PROTOCOL_20260922_015614.md | archived-design | superseded draft P0 protocol; not an implementation status |
 | 2026-09-22 01:56 | /experiment-plan | refine-logs/PREEXPERIMENT_PROTOCOL.md | implementation | latest P0 protocol |
 | 2026-09-22 01:56 | /experiment-plan | refine-logs/EXPERIMENT_PLAN_20260922_015614.md | implementation | claim-driven LLVM IR experiment plan |
 | 2026-09-22 01:56 | /experiment-plan | refine-logs/EXPERIMENT_PLAN.md | implementation | latest experiment plan |
@@ -41,7 +41,10 @@
 | 2026-09-22 01:56 | /experiment-plan | refine-logs/EXPERIMENT_TRACKER.md | implementation | latest run tracker |
 | 2026-09-22 01:56 | /research-refine-pipeline | refine-logs/PIPELINE_SUMMARY_20260922_015614.md | implementation | IR-v2 pipeline summary |
 | 2026-09-22 01:56 | /research-refine-pipeline | refine-logs/PIPELINE_SUMMARY.md | implementation | latest pipeline summary |
-| 2026-09-22 01:56 | /research-refine | refine-logs/REFINE_STATE_20260922_015614.json | implementation | completed IR-v2 state |
+| 2026-09-22 01:56 | /research-refine | refine-logs/REFINE_STATE_20260922_015614.json | archived-design | superseded state that incorrectly implied engineering completion |
 | 2026-09-22 01:56 | /research-refine | refine-logs/REFINE_STATE.json | implementation | latest refinement state |
 | 2026-09-22 01:56 | /research-refine-pipeline | idea-stage/EVIDENCE_MATRIX_20260922_015614.md | implementation | IR-v2 evidence and code-base matrix |
 | 2026-09-22 01:56 | /research-refine-pipeline | idea-stage/EVIDENCE_MATRIX.md | implementation | latest evidence matrix |
+| 2026-09-22 19:48 | implementation-readiness-review | P0_IMPLEMENTATION_SPEC.md | design | canonical P0 schemas, bounded search, lineage, gates, and error codes |
+| 2026-09-22 19:48 | implementation-readiness-review | REFINEMENT_CHANGELOG.md | design | changes, narrowed claims, remaining risks, and empirical questions |
+| 2026-09-22 19:48 | implementation-readiness-review | REFINE_STATE.json | design | separates design readiness from unstarted implementation and experiments |
