@@ -7,8 +7,10 @@
 发表时间：2026
 
 发表平台：CGO 2026 主会（IEEE/ACM International Symposium on Code Generation and Optimization）
+元数据核验来源：[CGO 2026 官方论文页](https://2026.cgo.org/details/cgo-2026-papers/5/GRANII-Selection-and-Ordering-of-Primitives-in-GRAph-Neural-Networks-using-Input-Ins)；[作者 PDF](https://charithmendis.com/assets/pdf/26-cgo-granii.pdf)
 
 论文链接或编号：[CGO 2026 官方论文页](https://2026.cgo.org/details/cgo-2026-papers/5/GRANII-Selection-and-Ordering-of-Primitives-in-GRAph-Neural-Networks-using-Input-Ins)；[作者公开 PDF](https://charithmendis.com/assets/pdf/26-cgo-granii.pdf)；DOI：论文中未明确说明。
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：图神经网络（GNN）、primitive 选择、primitive 排序、矩阵重结合、输入敏感优化、代价模型、XGBoost、稀疏-稠密计算
 

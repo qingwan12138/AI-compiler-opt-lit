@@ -6,9 +6,11 @@
 
 发表时间：2024
 
-发表平台：NeurIPS Workshop on Machine Learning for Systems
+发表平台：NeurIPS 2024 ML for Systems Workshop
 
-论文链接或编号：[Stanford MAST 论文页](https://mast.stanford.edu/pubs/warpdrive_an_agentic_workflow_for_ninja_gpu_transformations/)
+论文链接或编号：Workshop paper 32
+元数据核验来源：[Stanford MAST 作者机构页](https://mast.stanford.edu/pubs/warpdrive_an_agentic_workflow_for_ninja_gpu_transformations/)；[Workshop 正式论文 PDF](https://mlforsystems.org/assets/papers/neurips2024/paper32.pdf)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 PDF 来源：[ML for Systems 官方 PDF](https://mlforsystems.org/assets/papers/neurips2024/paper32.pdf)
 

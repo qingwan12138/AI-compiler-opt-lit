@@ -4,6 +4,8 @@
 作者：Yiqun Liu、Yingsheng Wu、Ruqi Yang、Enrong Zheng、Honglei Qiu、Sijun He、Tai Liang、Jingjing Wu、Yuhan Zhou、Yiwei Zhang、Dongyan Chen、Weihan Yi、Xinqi Li、Siqi Bao（Baidu）
 发表时间：2026-05-28；本次阅读日期：2026-09-05
 发表平台：arXiv 预印本，2605.29357v1（PDF 版本 v1）
+代码/数据/工件：作者公开仓库：[PassNet](https://github.com/PaddlePaddle/PassNet)
+元数据核验来源：[arXiv:2605.29357](https://arxiv.org/abs/2605.29357)
 关键词：图编译器、编译器 Pass 生成、Tensor Compiler、LLM、正确性与性能评测
 
 > 本文档为 Luna 阅读（2026-09-05）。事实依据为所给 v1 PDF；推测与研究建议单独标明。

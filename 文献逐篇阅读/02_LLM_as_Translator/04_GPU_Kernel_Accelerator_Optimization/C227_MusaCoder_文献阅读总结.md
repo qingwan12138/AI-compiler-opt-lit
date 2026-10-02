@@ -1,14 +1,16 @@
 # MusaCoder 文献阅读总结
 
-论文题目：**MusaCoder: Native GPU Kernel Generation with Full-Stack Training on Moore Threads GPUs**
+论文题目：**MusaCoder: Native GPU Kernel Generation with Full-Stack Training on Moore Threads GPU**
 
 作者：Kun Cheng、Songshuo Lu、Sicong Liao、Tankun Li、Yafei Zhang、Dong Yang、Qiheng Lv、Hua Wang、Zhi Chen、Yaohua Tang
 
 发表时间：2026 年
 
-发表平台：arXiv 预印本（arXiv:2606.04847v1；论文首页标注 2026-06-03）
+发表平台：arXiv 预印本（2026）
 
-论文链接或编号：DOI `10.48550/arXiv.2606.04847`；[arXiv 官方记录](https://arxiv.org/abs/2606.04847)
+论文链接或编号：arXiv:2606.04847
+元数据核验来源：[arXiv（正式标题）](https://arxiv.org/abs/2606.04847)；[MooreThreads 官方模型工件](https://huggingface.co/MooreThreads/MusaCoder-27B)
+代码/数据/工件：模型权重工件：[MusaCoder-27B](https://huggingface.co/MooreThreads/MusaCoder-27B)；源代码仓库待核验
 
 关键词：GPU kernel generation、CUDA、MUSA、LLM、SFT、RFT、GRPO、execution feedback、MooreEval、KernelBench
 

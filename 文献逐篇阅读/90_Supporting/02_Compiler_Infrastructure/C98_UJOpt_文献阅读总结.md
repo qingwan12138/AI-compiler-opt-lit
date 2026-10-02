@@ -6,9 +6,11 @@
 
 发表时间：2025
 
-发表平台：2025 International Conference on Supercomputing（ICS ’25）
+发表平台：ICS 2025
 
-论文链接或编号：[DOI 10.1145/3721145.3725778](https://doi.org/10.1145/3721145.3725778)；[ICS 2025 官方 PDF](https://hpcrl.github.io/ICS2025-webpage/program/Proceedings_ICS25/ics25-38.pdf)
+论文链接或编号：DOI 10.1145/3721145.3725778
+元数据核验来源：[ICS 官方论文 PDF](https://hpcrl.github.io/ICS2025-webpage/program/Proceedings_ICS25/ics25-38.pdf)；[ACM DOI](https://doi.org/10.1145/3721145.3725778)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：循环变换、循环交换、循环分块、unroll-and-jam、向量化、并行化、启发式、自动调优、Polly、LLVM
 

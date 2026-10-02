@@ -7,8 +7,10 @@
 发表时间：2026
 
 发表平台：OOPSLA 2026；论文正文版本为 arXiv:2608.20605，正式 DOI 10.1145/3839483
+元数据核验来源：[arXiv:2608.20605](https://arxiv.org/abs/2608.20605)；[ACM OOPSLA 论文记录](https://doi.org/10.1145/3839483)
 
 论文链接或编号：[arXiv:2608.20605](https://arxiv.org/abs/2608.20605)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：symbolic profiling、basic block、LLVM、TVM、ML kernel、auto-tuning
 

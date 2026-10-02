@@ -1,10 +1,12 @@
 # VERT 文献阅读总结
 
-论文题目：**VERT: Verified Equivalent Rust Transpilation with Large Language Models as Few-Shot Learners**
+论文题目：**VERT: Polyglot Verified Equivalent Rust Transpilation with Large Language Models**
 作者：Aidan Z.H. Yang，Yoshiki Takashima，Brandon Paulsen，Josiah Dodds，Daniel Kroening
 发表时间：2024；arXiv v2，2404.18852v2（2024-05-25）
-发表平台：官方 arXiv 预印本
-论文链接或编号：[arXiv:2404.18852](https://arxiv.org/abs/2404.18852)
+发表平台：ASE 2025 Research Papers, pp.1453–1463
+论文链接或编号：DOI 10.1109/ASE63991.2025.00123；arXiv:2404.18852
+元数据核验来源：[ASE 正式论文页](https://conf.researchr.org/details/ase-2025/ase-2025-papers/57/VERT-Polyglot-Verified-Equivalent-Rust-Transpilation-with-Large-Language-Models)；[IEEE DOI](https://doi.org/10.1109/ASE63991.2025.00123)；[arXiv](https://arxiv.org/abs/2404.18852)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 PDF：本 staging 目录 `VERT/paper.pdf`，26 页，`%PDF-` 签名有效，正文可抽取。
 
 关键词：Rust 转译、LLM、WebAssembly、语义等价、Kani、Verus、少样本修复

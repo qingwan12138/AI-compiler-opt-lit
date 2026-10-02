@@ -1,9 +1,15 @@
 # C54 Optimism in Equality Saturation 文献阅读总结
+发表平台：PLDI 2026 / PACMPL 10(PLDI), Article 224
+论文链接或编号：DOI 10.1145/3808302
+元数据核验来源：[PLDI 官方论文页](https://pldi26.sigplan.org/details/pldi-2026-papers/59/Optimism-in-Equality-Saturation)；[ACM DOI](https://doi.org/10.1145/3808302)；[作者代码工件](https://github.com/RArbore/pldi26-artifact)；[Zenodo 工件](https://zenodo.org/records/19581777)
+代码/数据/工件：作者代码：[PLDI artifact](https://github.com/RArbore/pldi26-artifact)；[Zenodo 工件](https://zenodo.org/records/19581777)
 
 论文题目：**Optimism in Equality Saturation**
 作者：Russel Arbore、Alvin Cheung、Max Willsey。
 发表：PLDI 2026，Proceedings of the ACM on Programming Languages 10(PLDI)，Article 224；DOI [10.1145/3808302](https://doi.org/10.1145/3808302)。首次公开于 2025-11，arXiv:2511.20782。
 来源：[PLDI 官方论文页](https://pldi26.sigplan.org/details/pldi-2026-papers/59/Optimism-in-Equality-Saturation)、[arXiv 记录](https://arxiv.org/abs/2511.20782)、[作者 camera-ready PDF](https://www.russelarbore.com/PLDI2026_OptimismInEqsat_CameraReady.pdf)。阅读最终稿 PDF 24 页。
+代码与工件：[作者代码仓库](https://github.com/RArbore/pldi26-artifact)；[Zenodo 工件记录](https://zenodo.org/records/19581777)。
+venue 核验来源：[PLDI 官方论文页](https://pldi26.sigplan.org/details/pldi-2026-papers/59/Optimism-in-Equality-Saturation)。发表信息：PLDI 2026，Proceedings of the ACM on Programming Languages 10(PLDI)，Article 224，DOI [10.1145/3808302](https://doi.org/10.1145/3808302)。
 
 ## 1. 研究背景
 

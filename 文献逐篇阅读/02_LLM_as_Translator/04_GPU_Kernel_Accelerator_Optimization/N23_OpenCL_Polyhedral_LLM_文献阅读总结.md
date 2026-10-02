@@ -1,4 +1,5 @@
 # OpenCL Polyhedral + LLM 文献阅读总结
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 论文题目：**Automatic Generation of OpenCL Code through Polyhedral Compilation with LLM**
 
@@ -6,7 +7,8 @@
 
 发表时间：2024
 
-发表平台：FedCSIS 2024
+发表平台：FedCSIS 2024；pp. 671–676；DOI: 10.15439/2024F6469
+元数据核验来源：[FedCSIS 2024 正式论文 PDF](https://annals-csis.org/Volume_39/drp/pdf/6469.pdf)
 
 关键词：OpenCL、Polyhedral Compilation、ChatGPT、Nussinov、GPU
 

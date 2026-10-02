@@ -6,9 +6,11 @@
 
 发表时间：2026
 
-发表平台：Scientific Reports，16:15379（2026）
+发表平台：Scientific Reports（2026）
 
-论文链接或编号：DOI `10.1038/s41598-026-41392-8`；开放 PDF：<https://www.nature.com/articles/s41598-026-41392-8.pdf>
+论文链接或编号：DOI 10.1038/s41598-026-41392-8
+元数据核验来源：[Scientific Reports DOI](https://doi.org/10.1038/s41598-026-41392-8)；[作者代码与数据仓库](https://github.com/thesaajii/TLM-MODEL)
+代码/数据/工件：作者代码与数据：[TLM-MODEL](https://github.com/thesaajii/TLM-MODEL)
 
 关键词：Tensor Language Model、tensor compilation、schedule generation、GPT-2、TVM、autotuning、LLM
 

@@ -6,9 +6,11 @@
 
 发表时间：2026
 
-发表平台：63rd ACM/IEEE Design Automation Conference（DAC 2026），Long Beach，California；论文首页同时给出 DAC 2026、ACM ISBN 979-8-4007-2254-7 和 DOI `10.1145/3770743.3803929`
+发表平台：DAC 2026
 
-论文链接或编号：[arXiv:2607.07164](https://arxiv.org/abs/2607.07164)；[DAC 2026 官方页面](https://dac.com/dac-2026-general-society-awards)；[DOI](https://doi.org/10.1145/3770743.3803929)
+论文链接或编号：DOI 10.1145/3770743.3803929；arXiv:2607.07164
+元数据核验来源：[ACM DOI](https://doi.org/10.1145/3770743.3803929)；[DAC official page](https://dac.com/dac-2026-general-society-awards)；[arXiv](https://arxiv.org/abs/2607.07164)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：逻辑等价检查（Logic Equivalence Checking, LEC）、miter、LUT mapping、SAT、XOR、形式验证、EDA、CNF
 

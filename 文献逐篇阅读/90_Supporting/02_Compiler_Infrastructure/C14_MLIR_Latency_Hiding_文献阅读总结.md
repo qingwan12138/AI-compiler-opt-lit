@@ -1,4 +1,5 @@
 # MLIR Latency Hiding 文献阅读总结
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 论文题目：**Analyzing Latency Hiding and Parallelism in an MLIR-based AI Kernel Compiler**
 
@@ -7,6 +8,7 @@
 发表时间：2026
 
 发表平台：arXiv:2602.20204
+元数据核验来源：[arXiv:2602.20204](https://arxiv.org/abs/2602.20204)
 
 关键词：MLIR、AI kernel、向量化、多线程、双缓冲、DMA、延迟隐藏
 

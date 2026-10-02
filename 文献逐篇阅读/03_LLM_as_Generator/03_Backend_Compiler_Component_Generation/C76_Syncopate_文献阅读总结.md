@@ -7,6 +7,8 @@
 发表时间：2026
 
 发表平台：20th USENIX Symposium on Operating Systems Design and Implementation (OSDI ’26)，Seattle，2026-07-13—15，pp. 331–347
+元数据核验来源：[USENIX OSDI 2026 官方论文页](https://www.usenix.org/conference/osdi26/presentation/qiang)；[官方 PDF](https://www.usenix.org/system/files/osdi26-qiang.pdf)
+代码/数据/工件：作者公开代码：[Syncopate](https://github.com/tie-pilot-qxw/syncopate)
 
 论文链接或编号：[USENIX 官方论文页](https://www.usenix.org/conference/osdi26/presentation/qiang)；[官方 PDF](https://www.usenix.org/system/files/osdi26-qiang.pdf)
 

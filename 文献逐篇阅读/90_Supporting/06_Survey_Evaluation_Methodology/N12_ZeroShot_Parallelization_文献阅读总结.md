@@ -6,9 +6,12 @@
 
 发表时间：2025
 
-发表平台：Journal of Systems and Software（论文 PDF 为 2025-01-24 预印本版本）
+发表平台：Journal of Systems and Software，Volume 230，Article 112543（2025）
+论文链接或编号：DOI [10.1016/j.jss.2025.112543](https://doi.org/10.1016/j.jss.2025.112543)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：自动并行化、OpenMP、零样本 LLM、PolyBench、数据竞争
+元数据核验来源：[Journal of Systems and Software DOI](https://doi.org/10.1016/j.jss.2025.112543)
 
 > 本文档基于 PDF 全文整理。
 

@@ -6,9 +6,11 @@
 
 发表时间：2025 年
 
-发表平台：2025 USENIX Annual Technical Conference（USENIX ATC ’25），Boston，pp. 647–663
+发表平台：USENIX ATC 2025, pp.647–663
 
-论文链接或编号：[USENIX 官方论文页](https://www.usenix.org/conference/atc25/presentation/wu-ruofan)；[官方 PDF](https://www.usenix.org/system/files/atc25-wu-ruofan.pdf)；DOI：论文中未明确说明。
+论文链接或编号：USENIX 官方论文记录（未见 DOI）
+元数据核验来源：[USENIX 正式论文页](https://www.usenix.org/conference/atc25/presentation/wu-ruofan)；[USENIX 官方 PDF](https://www.usenix.org/system/files/atc25-wu-ruofan.pdf)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：机器学习编译器、计算图优化、子图融合、代码生成、循环中心表示、GPU、动态形状、CUDA
 

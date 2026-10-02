@@ -1,11 +1,13 @@
 # 89. BinSum 文献阅读总结
 
-论文题目：**BinSum: Binary Code Summarization Benchmarking ChatGPT/GPT-4**
-作者：Guo, Z.,等人
+论文题目：**Binary Code Summarization: Benchmarking ChatGPT/GPT-4 and Other Large Language Models**
+作者：Xin Jin、Jonathan Larson、Weiwei Yang、Zhiqiang Lin
 发表时间：2024
 发表平台：arXiv
-论文链接或编号：暂无
+论文链接或编号：[arXiv:2312.09601](https://arxiv.org/abs/2312.09601)
 关键词：二进制代码理解, 大语言模型评测, 反编译, 指令集架构, 语义相似度指标
+代码/数据/工件：作者公开项目：[BinSum](https://github.com/xinjin95/binsum)（仓库说明数据集尚未发布）
+元数据核验来源：[arXiv 论文记录](https://arxiv.org/abs/2312.09601)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

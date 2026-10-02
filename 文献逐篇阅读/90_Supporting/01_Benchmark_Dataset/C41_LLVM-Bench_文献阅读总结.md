@@ -4,7 +4,9 @@
 作者：Zhao Tian、Yingquan Zhao、Chenyao Suo、Meng Wang、Junjie Chen
 发表时间：2026（PDF：arXiv:2607.00700v1，2026-07-01）
 发表平台：arXiv 预印本
+元数据核验来源：[arXiv:2607.00700](https://arxiv.org/abs/2607.00700)
 论文链接或编号：[arXiv:2607.00700](https://arxiv.org/abs/2607.00700)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：LLVM 维护、Issue 修复、基准、LLVM-Gym、补丁集成
 
 > 阅读标记：gpt-5.6-luna，2026-09-05；依据 PDF v1（12 页）。本文是编译器维护评测，不是生成代码性能优化论文。

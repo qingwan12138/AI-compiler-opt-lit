@@ -1,11 +1,13 @@
 # 79. PIE 文献阅读总结
 
 论文题目：**PIE: Learning Performance-Improving Code Edits**
-作者：Ying Sheng, Shankar P., Yang, L.,等人
-发表时间：2023
-发表平台：arXiv
-论文链接或编号：arXiv:2309.07697
+作者：Alexander Shypula、Aman Madaan、Yimeng Zeng、Uri Alon、Jacob Gardner、Milad Hashemi、Graham Neubig、Parthasarathy Ranganathan、Osbert Bastani、Amir Yazdanbakhsh
+发表时间：2024
+发表平台：International Conference on Learning Representations（ICLR 2024）
+论文链接或编号：[OpenReview](https://openreview.net/forum?id=ix7rLVHXyY)
 关键词：PIE, 性能优化, 代码改写, gem5, 数据集, LLM
+代码/数据/工件：作者公开代码：[PIE](https://github.com/LearningOpt/pie)
+元数据核验来源：[ICLR 2024 官方论文页](https://openreview.net/forum?id=ix7rLVHXyY)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

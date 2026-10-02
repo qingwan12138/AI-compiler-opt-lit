@@ -1,11 +1,13 @@
 # 80. SymRTLo 文献阅读总结
 
-论文题目：**SymRTLo: Enhancing RTL Optimization with LLMs and Symbolic Reasoning**
-作者：Yang, Z., He, S.,等人
+论文题目：**SymRTLO: Enhancing RTL Code Optimization with LLMs and Neuron-Inspired Symbolic Reasoning**
+作者：Yiting Wang、Wanghao Ye、Ping Guo、Yexiao He、Ziyao Wang、Bowie Tian、Shwai He、Guoheng Sun、Zheyu Shen、Sihan Chen、Ankur Srivastava、Qingfu Zhang、Gang Qu、Ang Li
 发表时间：2025
-发表平台：arXiv
-论文链接或编号：arXiv:2501.00000 (推测)
+发表平台：NeurIPS 2025
+论文链接或编号：[arXiv:2504.10369](https://arxiv.org/abs/2504.10369)
 关键词：SymRTLo, RTL优化, 神经符号, 形式验证, PPA, FSM
+代码/数据/工件：作者公开代码：[SymRTLo](https://github.com/NellyW8/SymRTLO)
+元数据核验来源：[arXiv 论文记录](https://arxiv.org/abs/2504.10369)；[作者主页](https://guo-ping.com/)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

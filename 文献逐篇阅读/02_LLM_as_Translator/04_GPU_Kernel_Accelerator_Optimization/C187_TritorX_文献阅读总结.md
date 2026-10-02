@@ -6,9 +6,11 @@
 
 发表时间：2026
 
-发表平台：Proceedings of Machine Learning and Systems 8，MLSys 2026 Industry Track
+发表平台：MLSys 2026, Proceedings of Machine Learning and Systems 8
 
-论文链接或编号：arXiv:2512.10977；正式版见 [MLSys 官方论文页](https://proceedings.mlsys.org/paper_files/paper/2026/hash/8c54e9bfed4119c873f575d1d1e2f0a0-Abstract-Conference.html)
+论文链接或编号：arXiv:2512.10977
+元数据核验来源：[MLSys 正式论文页](https://proceedings.mlsys.org/paper_files/paper/2026/hash/8c54e9bfed4119c873f575d1d1e2f0a0-Abstract-Conference.html)；[arXiv](https://arxiv.org/abs/2512.10977)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：TritorX、LLM、Triton、PyTorch ATen、MTIA、ASIC kernel generation、有限状态机、OpInfo、执行反馈
 

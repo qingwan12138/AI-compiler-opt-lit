@@ -6,9 +6,11 @@
 
 发表时间：2026 年
 
-发表平台：arXiv 预印本，v1，2026-09-29 提交
+发表平台：arXiv 预印本（2026）
 
-论文链接或编号：DOI `10.48550/arXiv.2609.36800`（arXiv-issued DOI pending registration）；[arXiv 官方记录](https://arxiv.org/abs/2609.36800)
+论文链接或编号：arXiv:2609.36800
+元数据核验来源：[arXiv](https://arxiv.org/abs/2609.36800)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：AI lowering、Triton、PTX、GPU compiler、LLM agent、Volta、formal verification、Blackwell
 

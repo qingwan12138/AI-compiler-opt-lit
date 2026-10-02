@@ -6,9 +6,11 @@
 
 发表时间：2025
 
-发表平台：35th International Conference on Field-Programmable Logic and Applications（FPL 2025），pp. 195–203；作者公开接受稿与 arXiv 版本均可获得。
+发表平台：FPL 2025, pp.195–203
 
-论文链接或编号：DOI [10.1109/FPL68686.2025.00036](https://doi.org/10.1109/FPL68686.2025.00036)；arXiv [2506.06817](https://arxiv.org/abs/2506.06817)；本地 PDF：[ASPO_FPL2025_paper.pdf](./ASPO_FPL2025_paper.pdf)
+论文链接或编号：DOI 10.1109/FPL68686.2025.00036；arXiv:2506.06817
+元数据核验来源：[IEEE DOI](https://doi.org/10.1109/FPL68686.2025.00036)；[arXiv](https://arxiv.org/abs/2506.06817)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：FPGA、RISC-V、软处理器、贝叶斯优化、约束感知优化、增量综合、设计空间探索
 

@@ -1,4 +1,6 @@
 # Dynamic (De)Allocations Translation Validation 文献阅读总结
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
+元数据核验来源：[论文/来源](https://arxiv.org/abs/2403.05302)
 
 论文题目：**Modeling Dynamic (De)Allocations of Local Memory for Translation Validation**
 

@@ -3,8 +3,10 @@
 论文题目：**Towards LLM-enhanced Compiler Optimization**  
 作者：Damian Garber、Tamim Burgstaller、Sebastian Lubos、Patrick Ratschiller、Alexander Felfernig  
 发表时间：2025（论文版权与 ConfWS’25 标注）；CEUR 页面发布时间为 2026-01-15  
-发表平台：27th International Workshop on Configuration（ConfWS’25），CEUR Workshop Proceedings，Vol-4149，paper5  
-论文链接或编号：[CEUR 官方 PDF](https://ceur-ws.org/Vol-4149/paper5.pdf)；DOI：论文中未明确说明。  
+发表平台：ConfWS 2025 / CEUR Workshop Proceedings 4149, paper 5
+论文链接或编号：未见明确 DOI
+元数据核验来源：[CEUR 官方论文 PDF](https://ceur-ws.org/Vol-4149/paper5.pdf)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 关键词：Compiler Autotuning、Optimization、Large Language Models、GCC、Phase Selection
 
 > 本笔记严格依据已下载并解析的 8 页正文；论文事实与阅读后的分析分开。本文将 LLM 的最终角色归为 SELECTOR：模型输出 GCC 优化选项，GCC 负责实际编译变换。

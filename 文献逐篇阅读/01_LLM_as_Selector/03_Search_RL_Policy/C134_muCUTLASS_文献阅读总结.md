@@ -1,10 +1,12 @@
 # μCUTLASS + SOL 文献阅读总结
 
 论文题目：**Improving Efficiency of GPU Kernel Optimization Agents using a Domain-Specific Language and Speed-of-Light Guidance**
-作者：Siva Kumar Sastry Hari、Vignesh Balaji、Sana Damani、Qijing Huang、Christos Kozyraki
+作者：Siva Kumar Sastry Hari、Vignesh Balaji、Sana Damani、Qijing Huang、Christos Kozyrakis
 发表时间：2026
 发表平台：arXiv 预印本 v1；PDF 标注为 Preprint，未明确说明正式会议或期刊接收
-论文链接或编号：[arXiv:2603.29010](https://arxiv.org/abs/2603.29010)；DOI：论文中未明确说明。
+论文链接或编号：[arXiv:2603.29010](https://arxiv.org/abs/2603.29010)；DOI：论文中未明确说明。代码仓库：未确认作者公开仓库，待核验。
+元数据核验来源：[论文/来源](https://arxiv.org/abs/2603.29010)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 建议分类：**SELECTOR / S3_Search_RL_Policy**。LLM 输出高层 kernel 候选规格、优化假设和搜索策略，µCUTLASS/CUTLASS 编译器负责把候选规格实例化为低层实现，符合本轮 candidate/policy 分区。
 关键词：LLM 编译器、GPU kernel 优化、µCUTLASS、DSL、CUTLASS、Speed-of-Light、MANTIS、预算调度、完整性检查
 

@@ -3,7 +3,8 @@
 - 论文题目：**CAKE: Compiler-Agent Co-Design for Frontier Kernel Evolution**
 - 作者：Zihao Ye、Yingyi Huang、Hongyi Jin、Bohan Hou、Junru Shao、Zhongming Yu、Jinqi Chen、Meghan Cowan、Shiyi Cao、Shanli Xing、Hanfeng Chen、Vinod Grover、Tianqi Chen、Luis Ceze
 - 首次公开：2026-08-12；arXiv:2608.12629（v1）
-- 发表渠道：arXiv 预印本
+- 发表渠道：arXiv 预印本（arXiv:2608.12629）
+- 代码仓库：未发现 CAKE 完整系统的作者官方仓库；相关 CAKE 内核实现可在 [FlashInfer](https://github.com/flashinfer-ai/flashinfer) 查看
 - 权威页面：<https://arxiv.org/abs/2608.12629>
 - 关键词：GPU kernel、CAKE IR、编译器与agent协同、Blackwell、typed schedule、验证器、代价模型
 

@@ -7,6 +7,8 @@
 发表时间：2026
 
 发表平台：CGO 2026，DOI: 10.1109/CGO68049.2026.11395198
+代码/数据/工件：作者工件：[STENSO Zenodo artifact](https://zenodo.org/records/17638077)
+元数据核验来源：[CGO 2026 官方议程及预印本](https://2026.cgo.org/details/cgo-2026-papers/45/Tensor-Program-Superoptimization-through-Cost-Guided-Symbolic-Program-Synthesis)；[DOI](https://doi.org/10.1109/CGO68049.2026.11395198)
 
 关键词：张量程序、超级优化、符号执行、程序合成、代价模型、分支定界
 

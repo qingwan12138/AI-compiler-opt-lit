@@ -1,10 +1,12 @@
 # PerfRL 文献阅读总结
 
 论文题目：**PerfRL: A Small Language Model Framework for Code Optimization**
-作者：未明确列出（arXiv 2025预印本）
-发表时间：2025
+作者：Shukai Duan、Nikos Kanakaris、Xiongye Xiao、Heng Ping、Chenyu Zhou、Nesreen K. Ahmed、Guixiang Ma、Mihai Capota、Theodore L. Willke、Shahin Nazarian、Paul Bogdan
+发表时间：2023（arXiv:2312.05657；后续版本更新于 2025）。
 发表平台：arXiv
-论文链接或编号：arXiv 2025预印本
+论文链接或编号：[arXiv:2312.05657](https://arxiv.org/abs/2312.05657)；作者公开代码仓库待核验。
+元数据核验来源：[论文/来源](https://arxiv.org/abs/2312.05657)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：小语言模型；强化学习；代码优化；单元测试反馈；RRHF；PIE数据集；CodeT5
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。

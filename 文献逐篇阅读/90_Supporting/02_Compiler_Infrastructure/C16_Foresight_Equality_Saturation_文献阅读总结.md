@@ -7,6 +7,8 @@
 发表时间：2026
 
 发表平台：CC 2026；DOI: 10.1145/3771775.3786266
+代码/数据/工件：作者主仓库：[Foresight](https://github.com/jonathanvdc/foresight)；[CC 2026 Zenodo 评测工件](https://zenodo.org/records/17955956)
+元数据核验来源：[ACM CC 2026 论文 DOI](https://doi.org/10.1145/3771775.3786266)
 
 关键词：Equality Saturation、e-graph、并行重写、饱和策略、元数据、Foresight
 

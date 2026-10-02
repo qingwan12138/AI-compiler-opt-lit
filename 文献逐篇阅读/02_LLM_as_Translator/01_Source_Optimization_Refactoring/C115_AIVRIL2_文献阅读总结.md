@@ -6,9 +6,11 @@
 
 发表时间：2025（DATE 2025；arXiv 首次公开于 2024-11-21）
 
-发表平台：Design, Automation & Test in Europe Conference (DATE 2025)，正式 DOI 为 `10.23919/DATE64628.2025.10992789`。
+发表平台：DATE 2025
 
-论文链接或编号：[arXiv:2412.04485](https://arxiv.org/abs/2412.04485)；[DATE 2025 官方 session 目录](https://past.date-conference.com/proceedings-archive/2025/START.pdf)；[DOI](https://doi.org/10.23919/DATE64628.2025.10992789)
+论文链接或编号：DOI 10.23919/DATE64628.2025.10992789；arXiv:2412.04485
+元数据核验来源：[IEEE DOI](https://doi.org/10.23919/DATE64628.2025.10992789)；[DATE 官方 proceedings archive](https://past.date-conference.com/proceedings-archive/2025/START.pdf)；[arXiv](https://arxiv.org/abs/2412.04485)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：大语言模型、RTL 生成、电子设计自动化、 多智能体、语法修正、功能验证、Verilog、VHDL
 

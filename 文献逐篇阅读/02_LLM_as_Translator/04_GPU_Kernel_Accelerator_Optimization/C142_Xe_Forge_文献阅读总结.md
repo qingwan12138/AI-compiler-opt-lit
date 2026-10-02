@@ -4,7 +4,9 @@
 作者：Marcin Spoczynski、Daniel Fleischer、Moshe Berchansky、Gabriela Ben-Melech Stan、Shira Guskin、Weilin Xu、Adam Siemieniuk、Alexander Heinecke  
 发表时间：2026（arXiv:2605.26118v1，16 Apr 2026）  
 发表平台：arXiv，cs.DC  
-论文链接或编号：https://arxiv.org/abs/2605.26118  
+论文链接或编号：[arXiv:2605.26118](https://arxiv.org/abs/2605.26118)；作者公开代码仓库：[IntelLabs/Xe-Forge](https://github.com/IntelLabs/Xe-Forge)。
+元数据核验来源：[论文/来源](https://arxiv.org/abs/2605.26118)；[论文/来源](https://github.com/IntelLabs/Xe-Forge)；[论文/来源](https://arxiv.org/abs/2605.26118v1)
+代码/数据/工件：Intel Labs 官方代码仓库：[Xe-Forge](https://github.com/IntelLabs/Xe-Forge)
 关键词：GPU kernel optimization、Triton、Intel GPU、LLM、代码生成
 
 ## 1. 研究背景

@@ -1,4 +1,5 @@
 # BRIDGE 文献阅读总结
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 论文题目：**Lifting Optimized Binaries to Canonical Compiler IR via Structure-Aware Retrieval and Iterative Verification**
 
@@ -6,7 +7,8 @@
 
 发表时间：2026
 
-发表平台：ACL 2026 Long Papers
+发表平台：ACL 2026 Long Papers；ACL Anthology ID 2026.acl-long.527；pp. 11498–11516；DOI: 10.18653/v1/2026.acl-long.527
+元数据核验来源：[ACL Anthology 正式论文页](https://aclanthology.org/2026.acl-long.527/)
 
 关键词：二进制提升、LLVM IR、结构感知 RAG、伪探针、迭代验证
 

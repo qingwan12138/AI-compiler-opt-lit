@@ -1,10 +1,12 @@
 # 24. Tensor Program Optimization for the RISC-V Vector Extension Using Probabilistic Programs 文献阅读总结
 
 论文题目：**Tensor Program Optimization for the RISC-V Vector Extension Using Probabilistic Programs**
-作者：论文未明确标注完整机构，见 arXiv 条目
+作者：Federico Nicolás Peccia、Frederik Haxel、Oliver Bringmann
 发表时间：2025年
-发表平台：arXiv
+发表平台：2025 IEEE/ACM International Conference on Computer-Aided Design（ICCAD 2025）；pp. 1–9；DOI: 10.1109/ICCAD66269.2025.11241007
+元数据核验来源：[作者 publications 页面](https://fpecc.github.io/publications/)；[ICCAD 2025 官方技术议程](https://confcats-event-sessions.s3.us-east-1.amazonaws.com/iccad25/uploads/ICCAD_2025_Program_v20.pdf)；[IEEE DOI](https://doi.org/10.1109/ICCAD66269.2025.11241007)；[arXiv:2507.01457](https://arxiv.org/abs/2507.01457)
 论文链接或编号：arXiv（待补全完整编号）
+代码/数据/工件：论文引用的预训练模块仓库（非完整实现）：[GNN_RL_Pretrain](https://github.com/Modern-Compilers-Lab/GNN_RL_Pretrain)；论文完整实现待核验
 关键词：RVV tensor program 优化、TVM MetaSchedule、probabilistic program、硬件感知调度搜索、FPGA RVV SoC
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。

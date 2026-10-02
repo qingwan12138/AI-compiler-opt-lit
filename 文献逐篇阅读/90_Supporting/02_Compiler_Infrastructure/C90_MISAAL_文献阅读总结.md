@@ -6,9 +6,11 @@
 
 发表时间：2025 年
 
-发表平台：PLDI 2025，Proceedings of the ACM on Programming Languages，第 9 卷，Article 198，24 页
+发表平台：PLDI 2025 / PACMPL 9(PLDI), Article 198
 
-论文链接或编号：DOI [10.1145/3729301](https://doi.org/10.1145/3729301)；[PLDI 2025 官方论文页](https://pldi25.sigplan.org/details/pldi-2025-papers/52/MISAAL-Synthesis-Based-Automatic-Generation-of-Efficient-and-Retargetable-Semantics-)
+论文链接或编号：DOI 10.1145/3729301
+元数据核验来源：[PLDI 官方论文页](https://pldi25.sigplan.org/details/pldi-2025-papers/52/MISAAL-Synthesis-Based-Automatic-Generation-of-Efficient-and-Retargetable-Semantics-)；[ACM DOI](https://doi.org/10.1145/3729301)
+代码/数据/工件：作者公开代码仓库：[RafaeNoor/MISAAL](https://github.com/RafaeNoor/MISAAL)。
 
 关键词：程序综合、编译器代码生成、形式语义、重写规则、等价饱和、向量指令、可重定向编译器、多硬件
 

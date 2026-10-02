@@ -1,10 +1,12 @@
 # 21. A Performance Analysis of Autovectorization on RVV RISC-V 文献阅读总结
 
 论文题目：**A Performance Analysis of Autovectorization on RVV RISC-V**
-作者：因源材料受限，作者名待确认（IEEE Xplore 条目）
+作者：Lorenz Carpentieri、Mohammad Vazir Panah、Biagio Cosenza
 发表时间：2025年
-发表平台：未核验 / IEEE 会议或期刊（具体 venue 未确认）
+发表平台：2025 33rd Euromicro International Conference on Parallel, Distributed and Network-Based Processing（PDP 2025）；DOI: 10.1109/PDP66500.2025.00026
+元数据核验来源：[IEEE Xplore](https://ieeexplore.ieee.org/document/10974828)；[作者公开 PDF](https://www.cosenza.eu/papers/CarpentieriPDP25.pdf)
 论文链接或编号：https://ieeexplore.ieee.org/document/10974828
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：RISC-V向量扩展、自动向量化、性能分析、编译器后端、HPC
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。

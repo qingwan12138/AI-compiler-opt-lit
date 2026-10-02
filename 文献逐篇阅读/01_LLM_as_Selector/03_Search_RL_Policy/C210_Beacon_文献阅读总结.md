@@ -3,8 +3,10 @@
 论文题目：**Beacon: LLM Multi-Agent Driven Hardware Design Space Exploration for Heterogeneous Multi-Chiplet Deep Learning Accelerators**
 作者：Boyu Li、Zongwei Zhu、Qianyue Cao、Xi Li、Xuehai Zhou
 发表时间：2026；arXiv 首次公开 2026-08-31。
-发表平台：arXiv 预印本；PDF 未给出正式会议/期刊。
-论文链接或编号：[arXiv:2608.30932](https://arxiv.org/abs/2608.30932)；DOI：未找到。
+发表平台：arXiv 预印本（2026）
+论文链接或编号：arXiv:2608.30932
+元数据核验来源：[arXiv](https://arxiv.org/abs/2608.30932)
+代码/数据/工件：未找到可确认的作者代码仓库或工件；匿名第三方目录不足以确认仓库归属
 PDF：`Beacon_2608.30932.pdf`，14 页，`%PDF-` 签名有效，pypdf 可解析。
 代码：Code_Status=NOT_FOUND；Code_URL=NOT_FOUND；Code_Checked_At=2026-09-23。
 

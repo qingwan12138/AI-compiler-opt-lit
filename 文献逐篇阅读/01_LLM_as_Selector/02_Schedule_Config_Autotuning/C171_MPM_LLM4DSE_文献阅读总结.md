@@ -3,8 +3,10 @@
 论文题目：**MPM-LLM4DSE: Reaching the Pareto Frontier in HLS with Multimodal Learning and LLM-Driven Exploration**  
 作者：Lei Xu、Shanshan Wang、Chenglong Xiao  
 发表时间：2026；arXiv 首次公开于 2026-01-08，论文首页注明 accepted for DATE 2026  
-发表平台：2026 Design, Automation and Test in Europe Conference（DATE 2026）  
-论文链接或编号：[arXiv:2601.04801](https://arxiv.org/abs/2601.04801)；正式 DOI：`10.23919/DATE69613.2026.11539388`  
+发表平台：DATE 2026
+论文链接或编号：DOI 10.23919/DATE69613.2026.11539388；arXiv:2601.04801
+元数据核验来源：[arXiv（明确列出代码链接）](https://arxiv.org/abs/2601.04801)；[作者代码仓库](https://github.com/wslcccc/MPM-LLM4DSE)；[DOI](https://doi.org/10.23919/DATE69613.2026.11539388)
+代码/数据/工件：作者代码与模型：[MPM-LLM4DSE](https://github.com/wslcccc/MPM-LLM4DSE)
 关键词：高层次综合（High-Level Synthesis, HLS）、设计空间探索（Design Space Exploration, DSE）、多模态图学习、LLM、pragma 配置、QoR 预测
 
 ## 1. 研究背景

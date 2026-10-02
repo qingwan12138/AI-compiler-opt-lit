@@ -1,14 +1,16 @@
 # FoundationLLMCompiler 文献阅读总结
 
-论文题目：**Foundation Language Models for Compiler Optimization**
+论文题目：**LLM Compiler: Foundation Language Models for Compiler Optimization**
 
-作者：未确认（ACM会议论文，获得Session Best Paper奖）
+作者：Chris Cummins、Volker Seeker、Dejan Grubisic、Baptiste Roziere、Jonas Gehring、Gabriel Synnaeve、Hugh Leather
 
 发表时间：2025年
 
-发表平台：ACM会议（年份具体会议名称需从原文确认，获得Session Best Paper奖）
+发表平台：Proceedings of the 34th ACM SIGPLAN International Conference on Compiler Construction（CC ’25），pp. 141–153。
 
-论文链接或编号：ACM DOI（具体编号需从原文确认）
+论文链接或编号：[ACM DOI 10.1145/3708493.3712691](https://doi.org/10.1145/3708493.3712691)；CC 2025 官方会议页。工件： [Meta LLM Compiler 7B](https://huggingface.co/facebook/llm-compiler-7b)、[13B FTD](https://huggingface.co/facebook/llm-compiler-13b-ftd)。此为 07 的正式会议扩展/发表版本。
+元数据核验来源：[论文/来源](https://doi.org/10.1145/3708493.3712691)；[论文/来源](https://huggingface.co/facebook/llm-compiler-7b)；[论文/来源](https://huggingface.co/facebook/llm-compiler-13b-ftd)
+代码/数据/工件：官方模型工件：[LLM Compiler 7B](https://huggingface.co/facebook/llm-compiler-7b)；[13B FTD](https://huggingface.co/facebook/llm-compiler-13b-ftd)；未发现对应源码仓库
 
 关键词：LLM Foundation Model、Compiler Optimization、Session Best Paper
 

@@ -6,9 +6,11 @@
 
 发表时间：首次公开 2025；PDF 为 arXiv:2510.16384v2（2026-06-09，47 页，ACM 投稿稿）
 
-发表平台：arXiv；PDF 首页标注 Manuscript submitted to ACM，正式会议/期刊未明确说明
+发表平台：ACM Transactions on Software Engineering and Methodology（TOSEM），2026；ACM DOI 页面显示 2026-06-12 在线发表。
 
-论文链接或编号：[arXiv:2510.16384](https://arxiv.org/abs/2510.16384)，arXiv-issued DOI：10.48550/arXiv.2510.16384
+论文链接或编号：[ACM DOI 10.1145/3820167](https://doi.org/10.1145/3820167)；[arXiv:2510.16384](https://arxiv.org/abs/2510.16384)。未确认作者公开代码仓库，待核验。
+元数据核验来源：[论文/来源](https://doi.org/10.1145/3820167)；[论文/来源](https://arxiv.org/abs/2510.16384)；[论文/来源](https://arxiv.org/abs/2510.16384v2)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：代码优化、LLM、静态程序分析、Semgrep、可复用优化规则
 

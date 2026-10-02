@@ -1,11 +1,13 @@
 # 59. Rectifier 文献阅读总结
 
 论文题目：**Rectifier: Code Translation with Corrector via LLMs**
-作者：Han Xu, et al.
+作者：Xin Yin、Chao Ni、Tien N. Nguyen、Shaohua Wang、Xiaohu Yang
 发表时间：2024
 发表平台：arXiv
-论文链接或编号：arXiv:2403.12345
+论文链接或编号：[arXiv:2407.07472](https://arxiv.org/abs/2407.07472)
 关键词：代码翻译纠错, 跨模型修复, 错误分类, 编译错误
+代码/数据/工件：作者公开代码：[Rectifier](https://github.com/vinci-grape/Rectifier)
+元数据核验来源：[arXiv 论文记录](https://arxiv.org/abs/2407.07472)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

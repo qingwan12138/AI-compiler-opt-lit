@@ -3,8 +3,10 @@
 论文题目：**Scalable, Validated Code Translation of Entire Projects using Large Language Models**  
 作者：Hanliang Zhang、Cristina David、Meng Wang、Brandon Paulsen、Daniel Kroening  
 发表时间：2025（arXiv 首发 2024）  
-发表平台：Proc. ACM Program. Lang. 9(PLDI), Article 212，PLDI 2025  
-论文链接或编号：[DOI 10.1145/3729315](https://doi.org/10.1145/3729315)；[arXiv:2412.08035](https://arxiv.org/abs/2412.08035)  
+发表平台：Proceedings of the ACM on Programming Languages (PACMPL), 9(PLDI), Article 212, pp.1616–1641（2025）
+论文链接或编号：DOI 10.1145/3729315；arXiv:2412.08035
+元数据核验来源：[ACM DOI](https://doi.org/10.1145/3729315)；[arXiv](https://arxiv.org/abs/2412.08035)
+代码/数据/工件：论文公开 Oxidizer 源码工件：[Zenodo 15242640](https://zenodo.org/records/15242640)（论文明确关联；为归档工件，不是 GitHub 仓库）。
 关键词：程序翻译、Go 到 Rust、LLM、项目级翻译、类型兼容、I/O 等价、编译器反馈
 
 > 本笔记依据本地 27 页正式版本 PDF；论文事实与阅读后的分析分开记录。本文属于 TRANSLATOR / T3 Cross-language/ISA Translation：LLM 直接输出目标语言源码，验证器负责检查而不是替代该翻译角色。

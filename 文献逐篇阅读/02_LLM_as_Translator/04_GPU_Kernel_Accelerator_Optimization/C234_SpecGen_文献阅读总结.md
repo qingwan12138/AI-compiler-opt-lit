@@ -3,7 +3,8 @@
 - 论文题目：**SpecGen: Accelerating Agentic Kernel Optimization with Speculative Generation**
 - 作者：Jihu Guo、Sitian Lu、Tenghui Ma、Wei Gao、Zhisheng Ye、Xingcheng Zhang、Dahua Lin
 - 首次公开：2026-06-16；arXiv:2606.17518（v1）
-- 发表渠道：arXiv 预印本；未核到正式会议/期刊版本
+- 发表渠道：arXiv 预印本（arXiv:2606.17518）；截至 2026-10-03 未核到正式会议/期刊版本
+- 代码仓库：截至 2026-10-03 未检索到作者公布的专用公开仓库
 - 权威页面：<https://arxiv.org/abs/2606.17518>
 - 关键词：GPU kernel、Triton/CUDA、推理前缀、投机生成、弹性 GPU 调度、KV cache
 

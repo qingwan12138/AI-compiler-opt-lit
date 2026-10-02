@@ -1,12 +1,14 @@
 # CITROEN 文献阅读总结
+代码/数据/工件：作者公开代码与数据：[LLVMTuner](https://github.com/gloaming2dawn/LLVMTuner)
+元数据核验来源：[论文/来源](https://doi.org/10.1109/IPDPS64566.2025.00054)；[论文/来源](https://github.com/gloaming2dawn/LLVMTuner)
 
 论文题目：**Leveraging Compilation Statistics for Compiler Phase Ordering**
 
 作者：Jiayu Zhao、Chunwei Xia、Zheng Wang
 
-发表时间：2025
+发表时间：2025（在线发表 2025-07-23）。
 
-发表平台：IEEE IPDPS 2025
+发表平台：2025 IEEE International Parallel and Distributed Processing Symposium（IPDPS ’25），pp. 533–545；DOI [10.1109/IPDPS64566.2025.00054](https://doi.org/10.1109/IPDPS64566.2025.00054)。作者研究主页列出的代码与数据工件：[gloaming2dawn/LLVMTuner](https://github.com/gloaming2dawn/LLVMTuner)。
 
 关键词：编译阶段排序、编译统计、贝叶斯优化、Gaussian Process、多模块调优
 

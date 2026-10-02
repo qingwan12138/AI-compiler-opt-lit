@@ -3,8 +3,10 @@
 论文题目：**LIFT: LLM-Based Pragma Insertion for HLS via GNN Supervised Fine-Tuning**  
 作者：Neha Prakriya、Zijian Ding、Yizhou Sun、Jason Cong  
 发表时间：2025（arXiv 首次公开，2025-04-29）  
-发表平台：arXiv，cs.LG  
-论文链接或编号：[arXiv:2504.21187](https://arxiv.org/abs/2504.21187)  
+发表平台：arXiv 预印本（2025）
+论文链接或编号：arXiv:2504.21187
+元数据核验来源：[arXiv](https://arxiv.org/abs/2504.21187)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 关键词：大语言模型（LLM）、高层次综合（HLS）、pragma 插入、图神经网络（GNN）、设计空间探索（DSE）、LoRA、结构监督
 
 > 本笔记依据本地完整 PDF（10 页）正文整理；论文事实与阅读后的分析分开描述。本文在 Taxonomy v2 中建议归类为 `SELECTOR / S1_Pass_Phase_Flag_Selection`：LLM 输出的是已有 HLS 工具执行的 pragma 配置，而不是变换后的源程序。

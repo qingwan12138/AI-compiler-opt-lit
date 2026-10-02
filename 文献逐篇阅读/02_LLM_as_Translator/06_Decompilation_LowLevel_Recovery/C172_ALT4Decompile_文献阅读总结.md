@@ -3,8 +3,10 @@
 论文题目：**ALT4Decompile: Inferring C-aligned Abstract Loop Tree for LLM-Based Binary Decompilation**  
 作者：Yongpan Wang, Puzhuo Liu, Xin Xu, Siyuan Li, Yaowen Zheng, Xiaodong Gu, Beijun Shen  
 发表时间：2026（arXiv v2；v1 首次公开于 2025）  
-发表平台：IEEE Transactions on Dependable and Secure Computing（PDF 题头）；arXiv:2509.14646  
-论文链接或编号：[arXiv](https://arxiv.org/abs/2509.14646)，DOI `10.48550/arXiv.2509.14646`  
+发表平台：arXiv 预印本（2025；尚未核实正式期刊发表）
+论文链接或编号：arXiv:2509.14646v2
+元数据核验来源：[arXiv（代码/数据链接）](https://arxiv.org/abs/2509.14646)；[作者代码与数据仓库](https://github.com/wang-yongpan/ALT4Decompile)
+代码/数据/工件：作者代码与数据：[ALT4Decompile](https://github.com/wang-yongpan/ALT4Decompile)
 关键词：二进制反编译、LLM、C-aligned Abstract Loop Tree、控制流图、可重新执行、程序分析
 
 > 本文档只依据本地 v2 PDF 正文；论文事实与阅读后的分析分开描述。

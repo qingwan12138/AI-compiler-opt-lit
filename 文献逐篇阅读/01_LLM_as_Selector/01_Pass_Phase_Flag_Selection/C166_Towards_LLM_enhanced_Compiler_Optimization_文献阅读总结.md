@@ -6,9 +6,11 @@
 
 发表时间：2025（ConfWS 2025；CEUR-WS 卷页面标注 2026-01-15 发布）
 
-发表平台：Proceedings of the 27th International Workshop on Configuration (ConfWS 2025)，与 ECAI 2025 同期；CEUR Workshop Proceedings Vol-4149，pp. 62–69
+发表平台：ConfWS 2025, CEUR-WS 4149, pp.62–69
 
-论文链接或编号：[CEUR PDF](https://ceur-ws.org/Vol-4149/paper5.pdf)；DOI：论文中未明确说明；arXiv：论文中未明确说明
+论文链接或编号：CEUR-WS Vol-4149, paper 5
+元数据核验来源：[CEUR-WS 正式论文 PDF](https://ceur-ws.org/Vol-4149/paper5.pdf)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：Compiler Autotuning、Optimization、Large Language Models、GCC compiler flags
 

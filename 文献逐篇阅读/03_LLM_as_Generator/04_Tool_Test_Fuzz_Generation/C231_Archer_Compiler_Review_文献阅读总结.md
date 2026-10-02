@@ -5,6 +5,7 @@
 - 发表时间：2026
 - 发表平台：arXiv 预印本（arXiv:2607.01808，2026-07-02）
 - 论文链接或编号：<https://arxiv.org/abs/2607.01808>
+- 代码仓库：[Archer 官方仓库](https://github.com/cuhk-s3/Archer)
 - 关键词：LLVM、编译器优化审查、LLM agent、语义 obligation、Alive2、LLUBI、确定性验证
 
 > 本笔记依据 arXiv v1 PDF（12 页）逐页阅读。论文事实与阅读后的分析分开记录。

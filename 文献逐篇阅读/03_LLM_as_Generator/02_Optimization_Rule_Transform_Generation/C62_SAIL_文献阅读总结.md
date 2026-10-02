@@ -7,6 +7,8 @@
 发表时间：2026
 
 发表平台：Proceedings of the ACM on Programming Languages, Volume 10, Issue PLDI, Article 230
+元数据核验来源：[ACM PACMPL 论文记录](https://doi.org/10.1145/3808308)；[作者论文 PDF](https://guqiuhan.github.io/assets/pdf/SAIL.pdf)
+代码/数据/工件：作者公开项目仓库：[SAIL](https://github.com/uiuc-focal-lab/SAIL)
 
 论文链接或编号：DOI 10.1145/3808308；[ACM 正式记录](https://doi.org/10.1145/3808308)；[作者 PDF](https://guqiuhan.github.io/assets/pdf/SAIL.pdf)
 

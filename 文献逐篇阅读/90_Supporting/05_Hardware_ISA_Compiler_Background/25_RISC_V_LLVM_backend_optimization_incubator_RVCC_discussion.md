@@ -7,8 +7,10 @@
 发表时间：2025年
 
 发表平台：LLVM Discourse社区讨论（RFC提案 + 多轮回复讨论）
+元数据核验来源：[LLVM Discourse RFC](https://discourse.llvm.org/t/risc-v-compiler-capstone/)
 
 论文链接或编号：LLVM Discourse RFC Thread（https://discourse.llvm.org/t/rfc-risc-v-compiler-capstone/）
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：RISC-V、LLVM后端、编译器孵化器、验证基础设施、性能回归测试、社区治理、staging repository
 

@@ -6,9 +6,11 @@
 
 发表时间：2026 年 7 月
 
-发表平台：ACL 2026（Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics，Volume 1: Long Papers），第 646–673 页
+发表平台：ACL 2026 Main Conference
 
-论文链接或编号：[DOI: 10.18653/v1/2026.acl-long.28](https://doi.org/10.18653/v1/2026.acl-long.28)；[ACL Anthology](https://aclanthology.org/2026.acl-long.28/)
+论文链接或编号：ACL Anthology 2026.acl-long.28；DOI 10.18653/v1/2026.acl-long.28
+元数据核验来源：[ACL Anthology 正式论文页](https://aclanthology.org/2026.acl-long.28/)；[作者实现仓库](https://github.com/qsdrqs/sactor)
+代码/数据/工件：作者实现：[sactor](https://github.com/qsdrqs/sactor)
 
 关键词：C-to-Rust、源代码翻译、静态分析、FFI、编译器反馈、接口规范、idiomatic Rust
 

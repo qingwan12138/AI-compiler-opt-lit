@@ -6,9 +6,11 @@
 
 发表时间：2025（PDF 首页标注为 NeurIPS 2025 Workshop；arXiv v2，2025-12-02）
 
-发表平台：NeurIPS 2025 Workshop: Fourth Workshop on Deep Learning for Code；arXiv:2509.07506v2
+发表平台：arXiv 预印本（2025）
 
-论文链接或编号：[arXiv:2509.07506](https://arxiv.org/abs/2509.07506)
+论文链接或编号：arXiv:2509.07506
+元数据核验来源：[arXiv](https://arxiv.org/abs/2509.07506)；[作者代码仓库](https://github.com/Anjiang-Wei/Astra)
+代码/数据/工件：作者公开代码：[Astra](https://github.com/Anjiang-Wei/Astra)
 
 关键词：GPU kernel 优化、CUDA、LLM agent、多智能体、SGLang、性能反馈、正确性测试
 

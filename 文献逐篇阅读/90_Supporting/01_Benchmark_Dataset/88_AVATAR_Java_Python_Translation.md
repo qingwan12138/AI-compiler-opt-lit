@@ -1,11 +1,13 @@
 # 88. AVATAR 文献阅读总结
 
 论文题目：**AVATAR: A Parallel Corpus for Java-Python Program Translation**
-作者：Shi, W.,等人
+作者：Wasi Uddin Ahmad、Md Golam Rahman Tushar、Saikat Chakraborty、Kai-Wei Chang
 发表时间：2023
-发表平台：EMNLP 2023
-论文链接或编号：暂无
+发表平台：Findings of the Association for Computational Linguistics: ACL 2023，页 2268–2281
+论文链接或编号：DOI [10.18653/v1/2023.findings-acl.143](https://doi.org/10.18653/v1/2023.findings-acl.143)；[ACL Anthology](https://aclanthology.org/2023.findings-acl.143/)
 关键词：程序翻译数据集, Java-Python平行语料, 功能正确性评测, 代码迁移学习
+代码/数据/工件：作者官方代码与数据：[AVATAR](https://github.com/wasiahmad/AVATAR)
+元数据核验来源：[ACL Anthology 正式论文页](https://aclanthology.org/2023.findings-acl.143/)；[作者项目页](https://web.cs.ucla.edu/~kwchang/bibliography/ahmad2021avatar/)；[10.18653/v1/2023.findings-acl.143](https://doi.org/10.18653/v1/2023.findings-acl.143)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

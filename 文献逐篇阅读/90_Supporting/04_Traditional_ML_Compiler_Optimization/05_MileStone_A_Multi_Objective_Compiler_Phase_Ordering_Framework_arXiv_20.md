@@ -1,14 +1,16 @@
 # MilesStone 文献阅读总结
 
-论文题目：**MileStone: A Multi-Objective Compiler Phase Ordering Framework via Graph Neural Network and Deep Reinforcement Learning**
+论文题目：**MileStone: A Multi-Objective Compiler Phase Ordering Framework for Graph-based IR-Level Optimization**
 
-作者：未在现有材料中明确列出（arXiv预印本）
+作者：Amirhosein Sadr、Mehran Alidoost Nia
 
-发表时间：2025-2026年（arXiv预印本）
+发表时间：2026（arXiv 首次提交 2026-05-22）
 
 发表平台：arXiv预印本
 
-论文链接或编号：arXiv ID需从原文确认
+论文链接或编号：[arXiv:2605.23435](https://arxiv.org/abs/2605.23435)；公开仓库未确认，待核验。
+元数据核验来源：[论文/来源](https://arxiv.org/abs/2605.23435)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：多目标优化、编译阶段排序、GNN、深度强化学习、CDFG、Pareto最优、能耗优化
 

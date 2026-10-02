@@ -1,10 +1,12 @@
 # Compiler Feedback 文献阅读总结
 
 论文题目：**Compiler generated feedback for Large Language Models**
-作者：未明确列出（arXiv 2024预印本）
+作者：Dejan Grubisic、Chris Cummins、Volker Seeker、Hugh Leather
 发表时间：2024
 发表平台：arXiv
-论文链接或编号：arXiv 2024预印本
+论文链接或编号：[arXiv:2403.14714](https://arxiv.org/abs/2403.14714)；代码仓库未确认。
+元数据核验来源：[论文/来源](https://arxiv.org/abs/2403.14714)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：编译器反馈；LLM代码生成；迭代优化；Pass预测；指令数优化
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。

@@ -2,13 +2,15 @@
 
 论文题目：**Meta Large Language Model Compiler: Foundation Models of Compiler Optimization**
 
-作者：Chris Cummins、Volker Seeker、Dejan Grubisic等（Meta AI）
+作者：Chris Cummins、Volker Seeker、Dejan Grubisic、Baptiste Roziere、Jonas Gehring、Gabriel Synnaeve、Hugh Leather
 
 发表时间：2024年
 
 发表平台：arXiv预印本
 
-论文链接或编号：arXiv ID需从原文确认
+论文链接或编号：[arXiv:2407.02524](https://arxiv.org/abs/2407.02524)；作者公开模型工件：[Meta LLM Compiler 7B](https://huggingface.co/facebook/llm-compiler-7b)。
+元数据核验来源：[论文/来源](https://arxiv.org/abs/2407.02524)；[论文/来源](https://huggingface.co/facebook/llm-compiler-7b)
+代码/数据/工件：官方模型工件：[Meta LLM Compiler 7B](https://huggingface.co/facebook/llm-compiler-7b)；[Meta Hugging Face collection](https://huggingface.co/collections/facebook/llm-compiler-667c5b05557fe99a9edd25cb)；未发现对应源码仓库
 
 关键词：LLM Compiler Foundation Model、IR表示学习、Flag Tuning、Disassembly、PassListEval
 

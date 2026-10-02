@@ -6,9 +6,11 @@
 
 发表时间：2025
 
-发表平台：ICML 2025，Proceedings of Machine Learning Research，Volume 267，pp. 66155–66177
+发表平台：ICML 2025, Proceedings of Machine Learning Research 267, pp.66155–66177
 
-论文链接或编号：[PMLR 正式页面](https://proceedings.mlr.press/v267/wei25j.html)，正式 PDF：[wei25j.pdf](https://raw.githubusercontent.com/mlresearch/v267/main/assets/wei25j.pdf)
+论文链接或编号：arXiv:2501.01589
+元数据核验来源：[PMLR 正式论文页](https://proceedings.mlr.press/v267/wei25j.html)；[PMLR 官方 PDF](https://raw.githubusercontent.com/mlresearch/v267/main/assets/wei25j.pdf)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：LLM agent、generative optimization、parallel programming、Legion mapper、DSL、AutoGuide、runtime feedback、mapping strategy
 

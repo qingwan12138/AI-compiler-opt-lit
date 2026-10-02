@@ -3,8 +3,10 @@
 论文题目：**LUMINA: LLM-Guided GPU Architecture Exploration via Bottleneck Analysis**
 作者：Tao Zhang、Rui Ma、Shuotao Xu、Yongqiang Xiong、Peng Cheng
 发表时间：2026；arXiv v2 2026-03-18。
-发表平台：arXiv 预印本；本 PDF 未给出正式会议录。
-论文链接或编号：[arXiv:2603.05904](https://arxiv.org/abs/2603.05904)；DOI：未找到。
+发表平台：arXiv 预印本（2026）
+论文链接或编号：arXiv:2603.05904
+元数据核验来源：[arXiv](https://arxiv.org/abs/2603.05904)；[作者出版物页](https://cp5555.github.io/publications.html)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 PDF：`LUMINA_2603.05904.pdf`，7 页，`%PDF-` 签名有效，pypdf 可解析。
 代码：Code_Status=NOT_FOUND；Code_URL=NOT_FOUND；Code_Checked_At=2026-09-23。
 

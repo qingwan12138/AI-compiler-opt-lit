@@ -1,11 +1,13 @@
 # 84. Kevin 文献阅读总结
 
 论文题目：**Kevin: Multi-Turn RL for Generating CUDA Kernels**
-作者：Liu, J.,等人
-发表时间：2025
-发表平台：arXiv
-论文链接或编号：暂无
+作者：Carlo Baronio、Pietro Marsella、Ben Pan、Simon Guo、Silas Alberti
+发表时间：2026
+发表平台：International Conference on Learning Representations（ICLR 2026）；arXiv 预印本
+论文链接或编号：[arXiv:2507.11948](https://arxiv.org/abs/2507.11948)；[ICLR 2026 官方论文页](https://proceedings.iclr.cc/paper_files/paper/2026/hash/86ba836d4c5dd859d795a172911745e2-Abstract-Conference.html)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：多轮强化学习, GPU kernel生成, 奖励归因, CUDA优化, 大语言模型
+元数据核验来源：[ICLR 2026 官方论文页](https://proceedings.iclr.cc/paper_files/paper/2026/hash/86ba836d4c5dd859d795a172911745e2-Abstract-Conference.html)；[arXiv:2507.11948](https://arxiv.org/abs/2507.11948)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

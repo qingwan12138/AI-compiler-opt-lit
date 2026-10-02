@@ -1,4 +1,5 @@
 # OML-vect 文献阅读总结
+代码/数据/工件：作者公开实现及 artifact：[CAPS-UMU/onnx-mlir-caps](https://github.com/CAPS-UMU/onnx-mlir-caps/tree/oml-vect-cgo-2026)，位于 `oml-vect-cgo-2026` 分支。
 
 论文题目：**Enabling Automatic Compiler-Driven Vectorization of Transformers**
 
@@ -7,6 +8,7 @@
 发表时间：2026
 
 发表平台：CGO 2026，DOI: 10.1109/CGO68049.2026.11395226
+元数据核验来源：[CGO 2026 官方议程](https://2026.cgo.org/details/cgo-2026-papers/29/Enabling-Automatic-Compiler-Driven-Vectorization-of-Transformers)；[DOI](https://doi.org/10.1109/CGO68049.2026.11395226)
 
 关键词：RISC-V、自动向量化、MLIR、ONNX-MLIR、归约识别、数据布局
 

@@ -1,10 +1,12 @@
 # VecTrans 文献阅读总结
 
-论文题目：**VecTrans: Enhancing Compiler Auto-Vectorization through LLM-Assisted Code Transformations**
-作者：未明确列出（arXiv 2025预印本）
+论文题目：**VecTrans: LLM Transformation Framework for Better Auto-vectorization on High-performance CPU**
+作者：Zhongchun Zheng、Long Cheng、Lu Li、Rodrigo C. O. Rocha、Tianyi Liu、Wei Wei、Xianwei Zhang、Yaoqing Gao
 发表时间：2025
-发表平台：arXiv
-论文链接或编号：arXiv 2025预印本
+发表平台：arXiv 预印本；作者主页标为 CGO 2026 submission，尚未据此确认正式接收发表。
+论文链接或编号：[arXiv:2503.19449](https://arxiv.org/abs/2503.19449)。作者主页公布的开源工件：[openEuler AI4C / LLM4Compiler](https://github.com/openeuler-mirror/AI4C/tree/master/LLM4Compiler)。
+元数据核验来源：[论文/来源](https://arxiv.org/abs/2503.19449)；[论文/来源](https://github.com/openeuler-mirror/AI4C/tree/master/LLM4Compiler)
+代码/数据/工件：作者项目代码：[openEuler AI4C / LLM4Compiler](https://github.com/openeuler-mirror/AI4C/tree/master/LLM4Compiler)
 关键词：自动向量化；LLM辅助优化；代码变换；编译验证；TSVC
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。

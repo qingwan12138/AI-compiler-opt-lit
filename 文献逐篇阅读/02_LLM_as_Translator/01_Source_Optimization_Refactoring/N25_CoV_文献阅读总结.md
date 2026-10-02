@@ -1,4 +1,5 @@
 # CoV 文献阅读总结
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 论文题目：**Compiler-Runtime Co-operative Chain of Verification for LLM-Based Code Optimization**
 
@@ -6,7 +7,8 @@
 
 发表时间：2026
 
-发表平台：CGO 2026
+发表平台：CGO 2026；DOI: 10.1109/CGO68049.2026.11395240
+元数据核验来源：[IEEE Xplore 正式论文页](https://ieeexplore.ieee.org/abstract/document/11395240)
 
 关键词：LLM 向量化、Alive2、运行时验证、投机执行、LLVM
 

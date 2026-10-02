@@ -8,7 +8,9 @@
 
 发表平台：官方 arXiv 预印本，cs.CR
 
-论文链接或编号：[arXiv:2504.08967](https://arxiv.org/abs/2504.08967)，[PDF](https://arxiv.org/pdf/2504.08967)，DOI：10.48550/arXiv.2504.08967
+论文链接或编号：[arXiv:2504.08967](https://arxiv.org/abs/2504.08967)，[PDF](https://arxiv.org/pdf/2504.08967)，DOI：10.48550/arXiv.2504.08967。作者公开代码仓库未确认，待核验。
+元数据核验来源：[论文/来源](https://arxiv.org/abs/2504.08967)；[论文/来源](https://arxiv.org/pdf/2504.08967)；[论文/来源](https://doi.org/10.48550/arXiv.2504.08967)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：编译器 fuzzing、SYCL、DPC++、大语言模型（LLM）、检索增强生成（RAG）、差分测试、跨架构
 

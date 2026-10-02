@@ -6,9 +6,11 @@
 
 发表时间：2026
 
-发表平台：ASE ’26（第 41 届 IEEE/ACM International Conference on Automated Software Engineering；论文正文标注会议时间为 2026-10-12 至 2026-10-16）
+发表平台：ASE 2026 Research Papers（已列入正式论文页；会议尚未举行）
 
-论文链接或编号：arXiv:2609.03592；DOI: 10.1145/3832783.3837504
+论文链接或编号：DOI 10.1145/3832783.3837504；arXiv:2609.03592
+元数据核验来源：[ASE 官方作者/论文页](https://conf.researchr.org/profile/ase-2026/mathieuacher)；[arXiv](https://arxiv.org/abs/2609.03592)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：Large Language Models、Transformation Rules、Comby、Ast-Grep、GritQL、Program Repair、API Migration
 

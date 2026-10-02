@@ -6,7 +6,9 @@
 
 发表时间：2026
 
-发表平台：ACL 2026 Long Papers
+发表平台：ACL 2026 Long Papers；ACL Anthology ID 2026.acl-long.140；pp. 3089–3117；DOI: 10.18653/v1/2026.acl-long.140
+代码/数据/工件：作者公开代码与数据：[TRACE](https://github.com/Albert-Gong/TRACE)
+元数据核验来源：[ACL Anthology 正式论文页](https://aclanthology.org/2026.acl-long.140/)
 
 关键词：LLM 代码翻译、执行效率、压力测试、跨语言迁移、benchmark
 

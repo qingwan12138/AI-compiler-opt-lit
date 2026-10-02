@@ -3,9 +3,13 @@
 论文题目：**Semantic Reification: A New Paradigm for Random Program Generation**
 作者：Kavya Chopra、Cong Li、Thodoris Sotiropoulos、Zhendong Su
 发表时间：2026
-发表平台：Proceedings of the ACM on Programming Languages, Volume 10, PLDI, Article 190，June 2026
-论文链接或编号：DOI [10.1145/3808268](https://doi.org/10.1145/3808268)；作者公开 PDF [reify_pldi26.pdf](https://connglli.github.io/pdfs/reify_pldi26.pdf)
+发表平台：PLDI 2026 / PACMPL 10(PLDI), Article 190
+论文链接或编号：DOI 10.1145/3808268
+元数据核验来源：[PLDI 官方论文页](https://pldi26.sigplan.org/details/pldi-2026-papers/25/Semantic-Reification-A-New-Paradigm-for-Random-Program-Generation)；[ACM DOI](https://doi.org/10.1145/3808268)；[Zenodo 工件](https://zenodo.org/records/19880827)
+代码/数据/工件：作者工件：[Zenodo 19880827](https://zenodo.org/records/19880827)
 
+研究工件：[Zenodo Artifact](https://zenodo.org/records/19880827)。
+来源：[PLDI 2026 官方论文页](https://pldi26.sigplan.org/details/pldi-2026-papers/25/Semantic-Reification-A-New-Paradigm-for-Random-Program-Generation)；[Zenodo 工件说明](https://zenodo.org/records/19880827)。
 关键词：随机程序生成、编译器测试、语义重ification、符号执行、SMT、CFG、LLVM、GCC
 
 > 本文档依据 24 页论文正文整理。论文事实与阅读后的分析分开描述。

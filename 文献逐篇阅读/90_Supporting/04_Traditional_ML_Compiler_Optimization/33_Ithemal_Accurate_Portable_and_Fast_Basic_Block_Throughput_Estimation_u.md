@@ -4,6 +4,8 @@
 作者：Charitha Mendis, Alex Renda, Saman Amarasinghe, Michael Carbin
 发表时间：2019
 发表平台：ICML 2019
+元数据核验来源：[ICML 2019 论文 arXiv 记录](https://arxiv.org/abs/1808.07412)
+代码/数据/工件：作者公开实现：[Ithemal](https://github.com/ithemal/Ithemal)
 论文链接或编号：ICML 2019
 关键词：基本块吞吐量预测；深度神经网络；机器码分析；性能建模
 

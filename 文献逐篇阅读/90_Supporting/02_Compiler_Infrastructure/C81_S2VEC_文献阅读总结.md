@@ -7,8 +7,10 @@
 发表时间：2026
 
 发表平台：40th ACM International Conference on Supercomputing（ICS 2026），pp. 119–131，正式 proceedings 论文
+元数据核验来源：[ACM ICS 2026 DOI](https://doi.org/10.1145/3797905.3807866)；[作者 PDF](https://web.tecnico.ulisboa.pt/~ist14359/wordpress/nfvr_pubs/ics26.pdf)
 
 论文链接或编号：DOI [10.1145/3797905.3807866](https://doi.org/10.1145/3797905.3807866)；作者公开 PDF：[ics26.pdf](https://web.tecnico.ulisboa.pt/~ist14359/wordpress/nfvr_pubs/ics26.pdf)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：Compiler、LLVM、Intermediate Representations、Stream Specialization、SIMD、Vectorization
 

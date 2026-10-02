@@ -6,9 +6,11 @@
 
 发表时间：2025
 
-发表平台：2025 IEEE International Symposium on High-Performance Computer Architecture（HPCA 2025），pp. 188–203
+发表平台：HPCA 2025, pp.188–203
 
-论文链接或编号：DOI [10.1109/HPCA61900.2025.00025](https://doi.org/10.1109/HPCA61900.2025.00025)
+论文链接或编号：DOI 10.1109/HPCA61900.2025.00025
+元数据核验来源：[IEEE DOI](https://doi.org/10.1109/HPCA61900.2025.00025)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 PDF：`MOKA_HPCA2025_To_Cross_or_Not_to_Cross_Pages_for_Prefetching.pdf`
 

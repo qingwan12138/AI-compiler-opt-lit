@@ -4,6 +4,8 @@
 作者：Nuno Lopes, David Menendez, Santosh Nagarakatte, John Regehr
 发表时间：2015
 发表平台：PLDI 2015
+代码/数据/工件：作者公开仓库：[Alive](https://github.com/nunoplopes/alive)
+元数据核验来源：[PLDI 2015 作者公开论文 PDF](http://www.cs.utah.edu/~regehr/papers/pldi15.pdf)
 论文链接或编号：DOI未提供（PLDI 2015）
 关键词：LLVM InstCombine；形式验证；DSL；SMT；peephole优化
 

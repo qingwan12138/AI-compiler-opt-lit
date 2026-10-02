@@ -4,7 +4,9 @@
 作者：Annabelle Sujun Tang、Christopher Priebe、Lianhui Qin、Hadi Esmaeilzadeh
 发表时间：2026（PDF：arXiv:2602.01935v2，2026-05-21）
 发表平台：arXiv 预印本
-论文链接或编号：[arXiv:2602.01935](https://arxiv.org/abs/2602.01935)
+论文链接或编号：[arXiv:2602.01935](https://arxiv.org/abs/2602.01935)；作者公开代码仓库未确认。
+元数据核验来源：[论文/来源](https://arxiv.org/abs/2602.01935)；[论文/来源](https://arxiv.org/abs/2602.01935v2)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：多模型协作、MCTS、TVM、张量编译、成本感知搜索
 
 > 阅读标记：gpt-5.6-luna，2026-09-05；依据 PDF v2（32 页）。本文事实与阅读分析分开。

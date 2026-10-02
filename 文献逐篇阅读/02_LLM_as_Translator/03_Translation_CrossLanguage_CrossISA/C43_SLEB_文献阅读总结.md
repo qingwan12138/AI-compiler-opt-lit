@@ -1,4 +1,5 @@
 # C43 SLEB 文献阅读总结
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 论文题目：**Accelerating Sparse Algebra with Program Synthesis**
 
@@ -7,6 +8,7 @@
 发表时间：2026 年；正式会议论文与首次公开均为 2026 年。
 
 发表平台：ACM SIGPLAN International Conference on Compiler Construction（CC 2026）主会；DOI 10.1145/3771775.3786281。
+元数据核验来源：[ACM CC 2026 论文 DOI](https://doi.org/10.1145/3771775.3786281)；[CC 2026 官方议程](https://conf.researchr.org/details/CC-2026/calls/14/Accelerating-Sparse-Algebra-with-Program-Synthesis)
 
 论文链接：[CC 2026 官方论文页](https://conf.researchr.org/details/CC-2026/calls/14/Accelerating-Sparse-Algebra-with-Program-Synthesis)、[DOI](https://doi.org/10.1145/3771775.3786281)、[作者 PDF](https://josewesley.com/archive/sleb.pdf)
 

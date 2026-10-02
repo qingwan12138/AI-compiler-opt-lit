@@ -4,7 +4,9 @@
 作者：Jiameng Bai、Ruoyi Xu、Sai Wu、Dingyu Yang、Junbo Zhao、Gang Chen
 发表时间：2025
 发表平台：IJCAI 2025
+元数据核验来源：[IJCAI 2025 正式论文页](https://doi.org/10.24963/ijcai.2025/814)；[IJCAI 2025 Paper 814](https://www.ijcai.org/proceedings/2025/814)
 论文链接或编号：[IJCAI 2025 Paper 814](https://www.ijcai.org/proceedings/2025/814)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：项目级性能优化、运行时剖析、程序结构图、LLM agent、源码重写
 
 > 阅读标记：gpt-5.6-luna，2026-09-05；依据 IJCAI-25 PDF（10 页）。POLO 是源码项目级优化，不能冒充 LLVM Pass 优化。

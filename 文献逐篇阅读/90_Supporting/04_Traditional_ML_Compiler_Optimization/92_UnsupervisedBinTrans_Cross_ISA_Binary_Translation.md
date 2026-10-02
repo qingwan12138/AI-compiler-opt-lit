@@ -3,8 +3,10 @@
 论文题目：**Unsupervised Binary Code Translation for Vulnerability Discovery**
 作者：Wang, H.,等人
 发表时间：2023
-发表平台：EMNLP 2023
+发表平台：EMNLP 2023 Findings；pp. 14581–14592；[ACL Anthology ID 2023.findings-emnlp.976](https://aclanthology.org/2023.findings-emnlp.971/)
+元数据核验来源：[ACL Anthology 正式论文页](https://aclanthology.org/2023.findings-emnlp.971/)
 论文链接或编号：暂无
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：无监督学习, 跨ISA二进制翻译, 漏洞发现, 指令级翻译, 表示迁移
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。

@@ -1,11 +1,13 @@
 # 83. QiMeng-xpiler 文献阅读总结
 
-论文题目：**QiMeng-xpiler: Transcompiling Tensor Programs with Neural-Symbolic Approach**
-作者：Zhou, L.,等人
+论文题目：**QiMeng-Xpiler: Transcompiling Tensor Programs for Deep Learning Systems with a Neural-Symbolic Approach**
+作者：Shouyang Dong、Yuanbo Wen、Jun Bi、Di Huang、Jiaming Guo、Jianxing Xu、Ruibai Xu、Xinkai Song、Yifan Hao、Ling Li、Xuehai Zhou、Tianshi Chen、Qi Guo、Yunji Chen
 发表时间：2025
-发表平台：arXiv
-论文链接或编号：暂无
+发表平台：19th USENIX Symposium on Operating Systems Design and Implementation（OSDI 2025）
+论文链接或编号：[USENIX 正式论文](https://www.usenix.org/conference/osdi25/presentation/dong)；arXiv [2505.02146](https://arxiv.org/abs/2505.02146)
 关键词：QiMeng-xpiler, 张量转编译, 神经符号, autotuning, 跨平台
+代码/数据/工件：作者公开代码：[QiMeng-Xpiler](https://github.com/QiMeng-IPRC/QiMeng-Xpiler)
+元数据核验来源：[USENIX OSDI 2025 论文页](https://www.usenix.org/conference/osdi25/presentation/dong)；[2505.02146](https://arxiv.org/abs/2505.02146)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

@@ -1,4 +1,5 @@
 # E-Path 文献阅读总结
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 论文题目：**E-Path: Equality Saturation for Control-Flow Graphs**
 
@@ -7,6 +8,7 @@
 发表时间：2026
 
 发表平台：arXiv:2605.28694；PDF 中会议与 DOI 字段仍为模板占位符，正式渠道未明确
+元数据核验来源：[arXiv:2605.28694](https://arxiv.org/abs/2605.28694)
 
 关键词：Control-Flow Graph、Equality Saturation、E-Sequence、LICM、非破坏式优化
 

@@ -4,8 +4,10 @@
 作者：Shailja Thakur, et al.
 发表时间：2023
 发表平台：arXiv
-论文链接或编号：arXiv:2311.12345
+论文链接或编号：[arXiv:2311.04887](https://arxiv.org/abs/2311.04887)
 关键词：AutoChip, HDL生成, 编译器反馈, Verilog, 迭代修正
+代码/数据/工件：作者公开代码：[AutoChip](https://github.com/shailja-thakur/AutoChip)
+元数据核验来源：[arXiv 论文记录](https://arxiv.org/abs/2311.04887)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

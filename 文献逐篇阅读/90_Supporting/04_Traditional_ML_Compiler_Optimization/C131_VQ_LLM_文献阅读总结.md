@@ -8,7 +8,9 @@
 
 发表平台：2025 IEEE International Symposium on High-Performance Computer Architecture (HPCA 2025)，页码 1496–1509
 
-论文链接或编号：DOI `10.1109/HPCA61900.2025.00112`；arXiv `2503.02236v2`
+论文链接或编号：[IEEE DOI 10.1109/HPCA61900.2025.00112](https://doi.org/10.1109/HPCA61900.2025.00112)；[arXiv:2503.02236](https://arxiv.org/abs/2503.02236)。未确认该论文作者公开代码仓库；搜索结果中 `Eva` / `vqllm` 仓库均未证实归属于此论文，故不登记。
+元数据核验来源：[论文/来源](https://doi.org/10.1109/HPCA61900.2025.00112)；[论文/来源](https://arxiv.org/abs/2503.02236)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：向量量化（Vector Quantization, VQ）、大语言模型推理、GPU kernel 代码生成、codebook cache、融合、CUDA
 

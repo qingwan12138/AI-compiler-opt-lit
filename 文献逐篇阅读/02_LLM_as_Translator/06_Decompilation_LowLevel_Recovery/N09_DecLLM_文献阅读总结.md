@@ -6,9 +6,12 @@
 
 发表时间：2025
 
-发表平台：Proceedings of the ACM on Software Engineering（ISSTA 2025），Article ISSTA081
+发表平台：Proceedings of the ACM on Software Engineering，Volume 2，Issue ISSTA，页 1841–1864
+论文链接或编号：DOI [10.1145/3728958](https://doi.org/10.1145/3728958)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：反编译、可重编译代码、LLM 修复、编译反馈、动态测试、CodeQL
+元数据核验来源：[ACM DOI 正式论文页](https://doi.org/10.1145/3728958)；[Lingnan Scholars 记录](https://scholars.ln.edu.hk/en/publications/decllm-llm-augmented-recompilable-decompilation-for-enabling-prog/)
 
 > 本文档基于 PDF 全文整理。
 

@@ -1,4 +1,5 @@
 # EggMind 文献阅读总结
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 论文题目：**LLM-Guided Strategy Synthesis for Scalable Equality Saturation**
 
@@ -7,6 +8,7 @@
 发表时间：2026
 
 发表平台：arXiv:2604.17364
+元数据核验来源：[arXiv:2604.17364](https://arxiv.org/abs/2604.17364)
 
 关键词：EggMind、Equality Saturation、EqSatL、LLM agent、策略合成、e-graph
 

@@ -1,10 +1,12 @@
 # 16. IntOpt: Beyond Pass-by-Pass Optimization: Intent-Driven IR Optimization with Large Language Models. arXiv 2026.
 
 论文题目：**Beyond Pass-by-Pass Optimization: Intent-Driven IR Optimization with Large Language Models**
-作者：作者信息待确认（arXiv预印本）
+作者：Lei Qiu、Zi Yang、Fang Lyu、Ming Zhong、Huimin Cui、Xiaobing Feng
 发表时间：2026年
 发表平台：arXiv预印本
-论文链接或编号：arXiv eprint（待确认具体编号）
+论文链接或编号：[arXiv:2602.18511](https://arxiv.org/abs/2602.18511)；正式发表/代码仓库待确认。
+元数据核验来源：[论文/来源](https://arxiv.org/abs/2602.18511)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：意图驱动优化、LLM IR优化、三阶段框架、结构化优化策略、Alive2验证
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。

@@ -6,9 +6,11 @@
 
 发表时间：2025（arXiv v1：2025-12-22）
 
-发表平台：arXiv；论文 PDF 末页未给出正式会议名称，arXiv 页面评论注明 accepted at NeurIPS 2025 ML for Systems Workshop。
+发表平台：arXiv 预印本；OpenReview 显示为 NeurIPS 2025 投稿稿，未核实接收
 
-论文链接或编号：[arXiv:2512.19250](https://arxiv.org/abs/2512.19250)；[PDF](https://arxiv.org/pdf/2512.19250)；arXiv DOI：`10.48550/arXiv.2512.19250`
+论文链接或编号：arXiv:2512.19250
+元数据核验来源：[arXiv](https://arxiv.org/abs/2512.19250)；[OpenReview 投稿稿](https://openreview.net/pdf?id=gQ3pomz6UN)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：small language model、auto-parallelization、heterogeneous systems、LLVM Polly、TVM、Triton、Tree of Thoughts、compiler feedback、sanitizer。
 

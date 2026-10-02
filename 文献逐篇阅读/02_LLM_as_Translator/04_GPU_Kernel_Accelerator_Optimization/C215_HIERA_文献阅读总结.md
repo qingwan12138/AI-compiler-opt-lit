@@ -6,9 +6,11 @@
 
 发表时间：2026（arXiv v1，2026-08-21）
 
-发表平台：arXiv，cs.DC/cs.AI
+发表平台：arXiv 预印本（2026）
 
-论文链接或编号：DOI `10.48550/arXiv.2608.21157`；arXiv:`2608.21157`
+论文链接或编号：arXiv:2608.21157
+元数据核验来源：[arXiv](https://arxiv.org/abs/2608.21157)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：GPU kernel optimization、LLM agent、implementation-space planning、CUDA、KernelBench、profiling feedback
 

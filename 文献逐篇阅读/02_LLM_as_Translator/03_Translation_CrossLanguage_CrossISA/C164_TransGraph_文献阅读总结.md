@@ -3,8 +3,10 @@
 论文题目：**Can We Translate Code Better with LLMs and Call Graph Analysis?**  
 作者：Yang Luo  
 发表时间：2025  
-发表平台：IJCAI-25 Main Track，Proceedings of the Thirty-Fourth International Joint Conference on Artificial Intelligence，7625–7633  
-论文链接或编号：DOI [10.24963/ijcai.2025/848](https://doi.org/10.24963/ijcai.2025/848)；正式 PDF：[IJCAI PDF](https://www.ijcai.org/proceedings/2025/0848.pdf)  
+发表平台：IJCAI 2025 Main Track, pp.7625–7633
+论文链接或编号：DOI 10.24963/ijcai.2025/848
+元数据核验来源：[IJCAI 正式论文 PDF](https://www.ijcai.org/proceedings/2025/0848.pdf)；[IJCAI DOI](https://doi.org/10.24963/ijcai.2025/848)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 关键词：代码翻译、LLM、调用图、Language Server Protocol、Debug Adapter Protocol、动态测试、运行时错误定位
 
 > 本笔记只依据本轮 staging 中保存的 9 页正式 PDF；“论文中未明确说明”表示正文未给出对应信息。

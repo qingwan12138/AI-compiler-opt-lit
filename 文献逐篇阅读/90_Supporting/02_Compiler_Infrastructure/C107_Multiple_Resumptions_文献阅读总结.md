@@ -3,8 +3,10 @@
 论文题目：**Multiple Resumptions and Local Mutable State, Directly**  
 作者：Serkan Muhcu、Philipp Schuster、Michel Steuwer、Jonathan Immanuel Brachthäuser  
 发表时间：2025 年 8 月  
-发表平台：Proceedings of the ACM on Programming Languages，ICFP 2025，Article 260  
-论文链接或编号：[DOI 10.1145/3747529](https://doi.org/10.1145/3747529)；[ICFP 2025 论文主页](https://icfp25.sigplan.org/details/icfp-2025-papers/25/Multiple-Resumptions-and-Local-Mutable-State-Directly)  
+发表平台：ICFP 2025 / PACMPL 9, Article 260
+论文链接或编号：DOI 10.1145/3747529
+元数据核验来源：[ACM DOI](https://doi.org/10.1145/3747529)；[ICFP 官方论文页](https://icfp25.sigplan.org/details/icfp-2025-papers/25/Multiple-Resumptions-and-Local-Mutable-State-Directly)
+代码/数据/工件：论文实现对应 Effekt 的 LLVM 后端，源码在官方项目仓库：[effekt-lang/effekt](https://github.com/effekt-lang/effekt)；论文与后端的关联见[项目说明](https://effekt-lang.org/evolution)。
 关键词：代数效应、效果处理器、multi-shot continuation、多次恢复、局部可变状态、栈切换、无垃圾引用计数、LLVM、Effekt
 
 > 材料说明：本笔记依据作者版 PDF 全文（30 页）生成。本文是编译器/运行时系统论文，不是大语言模型或强化学习论文；没有将其扩展解释为 LLM 已参与编译。

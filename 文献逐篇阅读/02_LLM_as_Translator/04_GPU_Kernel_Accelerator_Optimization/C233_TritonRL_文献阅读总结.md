@@ -4,15 +4,17 @@
 
 作者：Jiin Woo, Shaowei Zhu, Allen Nie, Zhen Jia, Yida Wang, Youngsuk Park
 
-发表时间：2025 首次公开；下载 PDF 为 arXiv:2510.17891v2（2026-02-09）
+发表时间：2026（COLM 2026）；首次公开于 2025-10-18，PDF 为 arXiv:2510.17891v2（2026-02-09）
 
-发表平台：arXiv 预印本；正文未给出正式 proceedings DOI
+发表平台：COLM 2026（官方会议信息及作者主页确认）；arXiv:2510.17891 为预印本版本
 
-论文链接或编号：[arXiv:2510.17891](https://arxiv.org/abs/2510.17891)
+论文链接或编号：[arXiv:2510.17891](https://arxiv.org/abs/2510.17891)；[COLM 2026 收录列表](https://colm.eventhosts.cc/Conferences/2026/AcceptedPapers)
+
+代码仓库：截至 2026-10-03 未检索到作者公布的专用公开仓库。
 
 关键词：Triton、8B LLM、SFT、GRPO、RLVR、hierarchical reward decomposition、reward hacking
 
-> 本文事实依据下载的 31 页 arXiv v2 PDF；PDF 首页写明 Preprint. February 10, 2026，不据此改写为正式会议版本。
+> 本文技术细节依据下载的 31 页 arXiv v2 PDF；发表渠道已按 COLM 2026 官方会议信息及作者主页复核。
 
 ## 1. 研究背景
 

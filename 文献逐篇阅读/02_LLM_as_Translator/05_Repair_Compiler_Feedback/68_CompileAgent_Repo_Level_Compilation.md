@@ -1,11 +1,13 @@
 # 68. CompileAgent 文献阅读总结
 
-论文题目：**CompileAgent: Automated Repository-Level Compilation with LLM Agent**
-作者：Pengyu Nie, et al.
+论文题目：**CompileAgent: Automated Real-World Repo-Level Compilation with Tool-Integrated LLM-based Agent System**
+作者：Li Hu、Guoqiang Chen、Xiuwei Shang、Shaoyin Cheng、Benlong Wu、Gangyang Li、Xu Zhu、Weiming Zhang、Nenghai Yu
 发表时间：2025
-发表平台：ACL 2025
-论文链接或编号：ACL 2025
+发表平台：Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics（ACL 2025），页 2078–2091
+论文链接或编号：[ACL Anthology 2025.acl-long.103](https://aclanthology.org/2025.acl-long.103/)；arXiv [2505.04254](https://arxiv.org/abs/2505.04254)
 关键词：仓库级编译, LLM Agent, 编译错误修复, 构建系统, CompileAgentBench
+代码/数据/工件：作者公开代码：[AutoCompiler](https://github.com/Ch3nYe/AutoCompiler)
+元数据核验来源：[ACL Anthology 正式论文页](https://aclanthology.org/2025.acl-long.103/)；[2505.04254](https://arxiv.org/abs/2505.04254)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

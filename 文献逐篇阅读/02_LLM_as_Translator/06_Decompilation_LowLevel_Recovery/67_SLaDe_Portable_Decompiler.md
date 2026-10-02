@@ -1,11 +1,13 @@
 # 67. SLaDe 文献阅读总结
 
-论文题目：**SLaDe: A Portable Small Language Model Decompiler**
-作者：Zhuo Zhang, et al.
+论文题目：**SLaDe: A Portable Small Language Model Decompiler for Optimized Assembly**
+作者：Jordi Armengol-Estapé、Jackson Woodruff、Chris Cummins、Michael F. P. O’Boyle
 发表时间：2024
-发表平台：arXiv
-论文链接或编号：arXiv:2408.12345
+发表平台：IEEE/ACM International Symposium on Code Generation and Optimization（CGO 2024），页 67–80
+论文链接或编号：DOI [10.1109/CGO57630.2024.10444788](https://doi.org/10.1109/CGO57630.2024.10444788)；arXiv [2305.12520](https://arxiv.org/abs/2305.12520)
 关键词：小型反编译, Seq2Seq, 类型推断, 跨ISA, ExeBench
+代码/数据/工件：CGO 2024 作者工件：[SLaDe Zenodo artifact](https://zenodo.org/records/10205121)
+元数据核验来源：[作者存档论文](https://www.pure.ed.ac.uk/ws/portalfiles/portal/565826105/Armengol-EstapeEtalCGO24SLaDe.pdf)；[作者 Zenodo 工件](https://zenodo.org/records/10205121)；[10.1109/CGO57630.2024.10444788](https://doi.org/10.1109/CGO57630.2024.10444788)；[2305.12520](https://arxiv.org/abs/2305.12520)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

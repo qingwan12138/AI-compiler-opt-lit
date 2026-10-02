@@ -6,9 +6,11 @@
 
 发表时间：2026（ACM TODAES online publication 2026-06-14；本次正文 PDF 为同一工作的 arXiv v3，2025-10-15）
 
-发表平台：ACM Transactions on Design Automation of Electronic Systems，31(6)，Article 1--25；作者同时提供 arXiv 版本，标题在 arXiv v3 中仍显示为 Intelligent4DSE: Optimizing High-Level Synthesis Design Space Exploration with Graph Neural Networks and Large Language Models。
+发表平台：ACM Transactions on Design Automation of Electronic Systems (TODAES), 31(6)（2026）
 
-论文链接或编号：DOI [10.1145/3805806](https://doi.org/10.1145/3805806)；arXiv:2504.19649；本次使用 [arXiv v3 PDF](https://arxiv.org/pdf/2504.19649) 作为 ACM 正式版 PDF 的可读同工作版本。
+论文链接或编号：DOI 10.1145/3805806；arXiv:2504.19649
+元数据核验来源：[ACM DOI](https://doi.org/10.1145/3805806)；[arXiv](https://arxiv.org/abs/2504.19649)
+代码/数据/工件：未找到可确认的作者代码仓库或工件；arXiv 上 Intelligent4DSE 是同一工作的版本
 
 关键词：HLS、DSE、ECoGNN、QoR prediction、LLM-enhanced meta-heuristic、Pareto frontier、pragma configuration
 

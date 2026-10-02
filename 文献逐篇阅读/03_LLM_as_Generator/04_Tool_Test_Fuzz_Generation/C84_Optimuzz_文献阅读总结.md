@@ -7,6 +7,8 @@
 发表时间：2025 年 6 月
 
 发表平台：Proceedings of the ACM on Programming Languages, Volume 9, Issue PLDI, Article 172（PLDI 2025）
+元数据核验来源：[PLDI 2025 官方论文页](https://pldi25.sigplan.org/details/pldi-2025-papers/26/Optimization-Directed-Compiler-Fuzzing-for-Continuous-Translation-Validation)；[ACM DOI](https://doi.org/10.1145/3729275)；[Zenodo 工件](https://doi.org/10.5281/zenodo.15037303)；[作者 PDF](https://prosys.kaist.ac.kr/publications/pldi25.pdf)
+代码/数据/工件：官方研究工件：[Optimuzz Zenodo](https://doi.org/10.5281/zenodo.15037303)；[项目页](https://prosys.kaist.ac.kr/optimuzz/)
 
 论文链接或编号：[PLDI 官方论文页](https://pldi25.sigplan.org/details/pldi-2025-papers/26/Optimization-Directed-Compiler-Fuzzing-for-Continuous-Translation-Validation)；[DOI](https://doi.org/10.1145/3729275)；[作者 PDF](https://prosys.kaist.ac.kr/publications/pldi25.pdf)
 

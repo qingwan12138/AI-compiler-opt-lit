@@ -1,11 +1,13 @@
 # 82. MCTS RTL 文献阅读总结
 
-论文题目：**Make Every Move Count: LLM-Based RTL Code Generation Using MCTS**
-作者：Liu, M.,等人
+论文题目：**Make Every Move Count: LLM-based High-Quality RTL Code Generation Using MCTS**
+作者：Matthew DeLorenzo、Animesh Basak Chowdhury、Vasudev Gohil、Shailja Thakur、Ramesh Karri、Siddharth Garg、Jeyavijayan Rajendran
 发表时间：2024
-发表平台：arXiv
-论文链接或编号：暂无
+发表平台：arXiv 预印本
+论文链接或编号：[arXiv:2402.03289](https://arxiv.org/abs/2402.03289)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：MCTS, RTL生成, PPA感知, 蒙特卡洛树搜索, 搜索引导解码
+元数据核验来源：[arXiv 论文记录](https://arxiv.org/abs/2402.03289)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

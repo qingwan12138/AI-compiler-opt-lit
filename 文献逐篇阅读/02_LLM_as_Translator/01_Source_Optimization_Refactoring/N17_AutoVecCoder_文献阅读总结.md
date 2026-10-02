@@ -6,9 +6,12 @@
 
 发表时间：2026
 
-发表平台：Findings of ACL 2026
+发表平台：Findings of the Association for Computational Linguistics: ACL 2026，页 31942–31959
+论文链接或编号：DOI [10.18653/v1/2026.findings-acl.1598](https://doi.org/10.18653/v1/2026.findings-acl.1598)；[ACL Anthology](https://aclanthology.org/2026.findings-acl.1598/)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：显式向量化、SIMD Intrinsic、RAG、GRPO、性能奖励
+元数据核验来源：[ACL Anthology 正式论文页](https://aclanthology.org/2026.findings-acl.1598/)；[10.18653/v1/2026.findings-acl.1598](https://doi.org/10.18653/v1/2026.findings-acl.1598)
 
 > 本文档基于 PDF 全文整理。
 

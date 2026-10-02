@@ -6,9 +6,12 @@
 
 发表时间：2025
 
-发表平台：ASE 2025
+发表平台：Proceedings of the 40th IEEE/ACM International Conference on Automated Software Engineering（ASE 2025），页 1718–1730
+论文链接或编号：DOI [10.1109/ASE63991.2025.00144](https://doi.org/10.1109/ASE63991.2025.00144)
 
 关键词：深度学习编译器、TorchDynamo、图断裂、多智能体、代码修复
+代码/数据/工件：作者公开代码：[GraphGlue](https://github.com/Jamesswang/GraphGlue)
+元数据核验来源：[Nankai University 作者单位新闻](https://cs.nankai.edu.cn/info/1038/3530.htm)；[IEEE DOI](https://doi.org/10.1109/ASE63991.2025.00144)
 
 > 本文档基于 PDF 全文整理。
 

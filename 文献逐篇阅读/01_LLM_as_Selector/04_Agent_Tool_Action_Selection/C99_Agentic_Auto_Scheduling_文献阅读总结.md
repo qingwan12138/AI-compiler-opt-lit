@@ -6,10 +6,14 @@
 
 发表时间：2025
 
-发表平台：2025 34th International Conference on Parallel Architectures and Compilation Techniques (PACT 2025)，论文正文同时提供 arXiv v2。
+发表平台：PACT 2025, pp.186–200
 
-论文链接或编号：DOI [10.1109/PACT65351.2025.00027](https://doi.org/10.1109/PACT65351.2025.00027)；arXiv [2511.00592](https://arxiv.org/abs/2511.00592)；PACT 2025 官方程序：[pact2025.github.io/program](https://pact2025.github.io/program/)。
+论文链接或编号：DOI 10.1109/PACT65351.2025.00027；arXiv:2511.00592
+元数据核验来源：[PACT 官方程序](https://pact2025.github.io/program/)；[IEEE DOI](https://doi.org/10.1109/PACT65351.2025.00027)；[Zenodo 工件](https://zenodo.org/records/16812384)
+代码/数据/工件：作者工件：[Zenodo 16812384](https://zenodo.org/records/16812384)
 
+研究工件：[PACT 2025 Artifact（Zenodo）](https://zenodo.org/records/16812384)。
+来源：[PACT 2025 官方程序](https://pact2025.github.io/program/)；[Artifact 记录及可下载实验包](https://zenodo.org/records/16812384)。
 关键词：编译器优化、循环变换、多面体编译、LLM、智能体、Tiramisu、PolyBench、经验反馈
 
 > 本文档基于 staging 中已核验的 19 页 PDF 正文，论文事实、阅读分析和后续建议分开描述。该条目仅为 batch-6/slot-3 交付物，未分配正式 Paper_ID，也未修改 taxonomy 或正式索引。

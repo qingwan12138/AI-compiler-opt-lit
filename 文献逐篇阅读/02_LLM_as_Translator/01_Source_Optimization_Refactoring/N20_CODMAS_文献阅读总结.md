@@ -1,4 +1,5 @@
 # CODMAS 文献阅读总结
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 论文题目：**CODMAS: A Dialectic Multi-Agent Collaborative Framework for Structured RTL Optimization**
 
@@ -7,6 +8,7 @@
 发表时间：2026
 
 发表平台：EACL 2026 Industry Track
+元数据核验来源：[ACL Anthology EACL Industry Track](https://aclanthology.org/2026.eacl-industry.57/)
 
 关键词：RTL 优化、多智能体、PPA、Verilog、Yosys
 

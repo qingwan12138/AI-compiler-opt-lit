@@ -6,7 +6,9 @@
 
 发表时间：2026
 
-发表平台：ASPLOS 2026
+发表平台：ASPLOS 2026；DOI: 10.1145/3779212.3790184
+代码/数据/工件：作者 artifact 仓库：[LPO artifact](https://github.com/uw-pluverse/lpo-artifact)
+元数据核验来源：[作者机构论文页](https://cs.uwaterloo.ca/~cnsun/public/publication/asplos26/)；[ACM 论文 PDF](https://cs.uwaterloo.ca/~cnsun/public/publication/asplos26/asplos26.pdf)
 
 关键词：LLM、peephole optimization、LLVM、Alive2、闭环验证、missed optimization
 

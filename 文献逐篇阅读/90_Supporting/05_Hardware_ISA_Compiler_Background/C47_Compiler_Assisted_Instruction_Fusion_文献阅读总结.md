@@ -7,8 +7,10 @@
 发表时间：2026
 
 发表平台：CGO 2026 主会，pp. 726–739
+元数据核验来源：[CGO 2026 官方论文页](https://2026.cgo.org/details/cgo-2026-papers/34/Compiler-Assisted-Instruction-Fusion)；[IEEE DOI](https://doi.org/10.1109/CGO68049.2026.11394845)
 
 论文链接或编号：DOI `10.1109/CGO68049.2026.11394845`；[CGO 官方论文页](https://2026.cgo.org/details/cgo-2026-papers/34/Compiler-Assisted-Instruction-Fusion)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：编译器辅助指令融合、LLVM、RISC-V、内存操作重排、别名分析、微架构
 

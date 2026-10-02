@@ -7,6 +7,8 @@
 发表时间：2026
 
 发表平台：PLDI 2026，Proceedings of the ACM on Programming Languages，Vol. 10，Article 205，25 页
+元数据核验来源：[Stanford Compilers Lab 论文页](https://compilers.stanford.edu/publications/pldi26relations/)；[ACM DOI](https://doi.org/10.1145/3808283)
+代码/数据/工件：作者 Zenodo 论文工件：[PluS](https://doi.org/10.5281/zenodo.19635976)
 
 论文链接或编号：DOI [10.1145/3808283](https://doi.org/10.1145/3808283)
 

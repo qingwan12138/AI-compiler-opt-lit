@@ -6,9 +6,11 @@
 
 发表时间：2026（arXiv v1 于 2025-12-30 发布；论文 PDF 标注为 HPCA 2026 accepted paper）
 
-发表平台：2026 IEEE International Symposium on High-Performance Computer Architecture（HPCA 2026）；作者公开的一手正文为 arXiv 版本
+发表平台：HPCA 2026（arXiv 正文标注 accepted；未核实正式 DOI）
 
-论文链接或编号：[arXiv:2512.23969](https://arxiv.org/abs/2512.23969)，DOI：10.48550/arXiv.2512.23969
+论文链接或编号：arXiv:2512.23969
+元数据核验来源：[arXiv 论文记录](https://arxiv.org/abs/2512.23969)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：SPHINCS+、GPU 编译期优化、CUDA、PTX、自动调优、Tree Fusion、CUDA Graph、后量子密码
 

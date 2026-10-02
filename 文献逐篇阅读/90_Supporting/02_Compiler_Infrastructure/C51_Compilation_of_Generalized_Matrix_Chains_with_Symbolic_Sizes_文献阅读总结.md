@@ -7,8 +7,10 @@
 发表时间：2026（首次公开：2025-11-25，arXiv:2511.20198）
 
 发表平台：2026 IEEE/ACM International Symposium on Code Generation and Optimization（CGO 2026）主会，pp. 466–478
+元数据核验来源：[CGO 2026 官方作者/论文索引](https://2026.cgo.org/people-index)；[IEEE DOI](https://doi.org/10.1109/CGO68049.2026.11395236)；[arXiv:2511.20198](https://arxiv.org/abs/2511.20198)
 
 论文链接或编号：[DOI 10.1109/CGO68049.2026.11395236](https://doi.org/10.1109/CGO68049.2026.11395236)，[arXiv:2511.20198](https://arxiv.org/abs/2511.20198)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：广义矩阵链、符号尺寸、多版本编译、代码生成、运行时分派、线性代数
 

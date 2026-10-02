@@ -1,4 +1,8 @@
 # C55 PolyUFC: Polyhedral Compilation Meets Roofline Analysis for Uncore Frequency Capping 文献阅读总结
+发表平台：发表渠道待核验（本轮未找到可确认的正式出版记录）
+论文链接或编号：论文编号待核验
+元数据核验来源：本地收录论文 PDF；外部正式来源待核验
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 论文题目：**PolyUFC: Polyhedral Compilation Meets Roofline Analysis for Uncore Frequency Capping**  
 作者：Nilesh Rajendra Shah、M V V S Manoj Kumar、Dhairya Baxi、Ramakrishna Upadrasta。  

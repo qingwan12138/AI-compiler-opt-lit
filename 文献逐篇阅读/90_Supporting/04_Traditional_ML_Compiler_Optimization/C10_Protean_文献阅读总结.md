@@ -1,12 +1,14 @@
 # Protean Compiler 文献阅读总结
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
+元数据核验来源：[论文/来源](https://doi.org/10.1145/3831596)
 
 论文题目：**Protean Compiler: An Agile Framework to Drive Fine-grain Phase Ordering**
 
-作者：Amir H. Ashouri 等
+作者：Amir H. Ashouri、Shayan Shirahmad Gale Bagi、Kavin Satheeskumar、Tejas Srikanth、Jonathan Zhao、Ibrahim Saidoun、Ziwen Wang、Bryan Chan、Tomasz S. Czajkowski
 
-发表时间：2026
+发表时间：2026（arXiv 首次提交 2026-02-05；ACM TACO 正式版本 2026-08）。
 
-发表平台：ACM Transactions on Architecture and Code Optimization（TACO，2026 年 6 月接收）
+发表平台：ACM Transactions on Architecture and Code Optimization（TACO），23(3), 2026, pp. 1–26；DOI [10.1145/3831596](https://doi.org/10.1145/3831596)。arXiv v3 标注为该接收版本的预印本。
 
 关键词：LLVM、细粒度 phase ordering、IR2Score、Simulated Annealing、模块级优化、AArch64
 

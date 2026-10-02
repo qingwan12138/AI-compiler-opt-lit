@@ -6,10 +6,14 @@
 
 发表时间：2026；ASPLOS ’26，Volume 2，pp. 749–763
 
-发表平台：Proceedings of the 31st ACM International Conference on Architectural Support for Programming Languages and Operating Systems（ASPLOS 2026）
+发表平台：Proceedings of the 31st ACM International Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS 2026), Volume 2, pp. 749–763
 
-论文链接或编号：[DOI 10.1145/3779212.3790162](https://doi.org/10.1145/3779212.3790162)
+论文链接或编号：DOI 10.1145/3779212.3790162
+元数据核验来源：[ACM DOI](https://doi.org/10.1145/3779212.3790162)；[作者代码仓库](https://github.com/isamore-group/ISAMORE)
+代码/数据/工件：作者代码：[ISAMORE](https://github.com/isamore-group/ISAMORE)
 
+代码仓库：[公开仓库](https://github.com/isamore-group/ISAMORE)
+来源：[ISAMORE 仓库 README（明确对应 ASPLOS 2026 论文）](https://github.com/isamore-group/ISAMORE)；[作者项目论文列表](https://aps.ericlyun.me/publications/)。
 关键词：ISAMORE、自定义指令、RISC-V、e-graph、等式饱和、反统一、硬件/软件协同
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。论文事实与阅读后的研究思考分开描述。正文证据来自 15 页正式论文 PDF；章节、表图编号以论文原文为准。

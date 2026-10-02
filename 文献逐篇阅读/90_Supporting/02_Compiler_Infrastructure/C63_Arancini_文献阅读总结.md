@@ -1,4 +1,6 @@
 # Arancini 文献阅读总结
+元数据核验来源：[ACM DOI](https://doi.org/10.1145/3779212.3790127)；[TU Delft 作者机构典藏](https://repository.tudelft.nl/record/uuid:f1956019-43ad-4101-85cc-f3b36e2c9dfc)
+代码/数据/工件：作者 artifact：[Arancini Zenodo](https://zenodo.org/records/18257168)；[作者团队仓库](https://github.com/binary-translation/arancini-exploration)
 
 论文题目：**Arancini: A Hybrid Binary Translator for Weak Memory Model Architectures**
 

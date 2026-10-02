@@ -1,11 +1,13 @@
 # 58. LEGO 文献阅读总结
 
-论文题目：**LEGO-Compiler: Enhancing Neural Compilation Through Composability**
-作者：Yifan Zhang, et al.
+论文题目：**LEGO-Compiler: Enhancing Neural Compilation Through Translation Composability**
+作者：Shuoming Zhang、Jiacheng Zhao、Chunwei Xia、Zheng Wang、Yunji Chen、Xiaobing Feng、Huimin Cui
 发表时间：2025
-发表平台：arXiv
-论文链接或编号：arXiv:2501.12345
+发表平台：CCF Transactions on High Performance Computing（2026，online first）
+论文链接或编号：DOI [10.1007/s42514-025-00272-9](https://doi.org/10.1007/s42514-025-00272-9)；arXiv [2505.20356](https://arxiv.org/abs/2505.20356)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：可组合神经编译, 分块翻译, 多阶段workflow, 外部验证, ExeBench
+元数据核验来源：[University of Leeds White Rose Research Online（刊物、在线发表日及 DOI）](https://eprints.whiterose.ac.uk/id/eprint/243239/)；[10.1007/s42514-025-00272-9](https://doi.org/10.1007/s42514-025-00272-9)；[2505.20356](https://arxiv.org/abs/2505.20356)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

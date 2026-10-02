@@ -7,8 +7,10 @@
 发表时间：2025 年 3 月（CGO ’25 proceedings）
 
 发表平台：Proceedings of the 23rd ACM/IEEE International Symposium on Code Generation and Optimization（CGO ’25），pp. 614–627
+元数据核验来源：[CGO 2025 官方论文页](https://2025.cgo.org/details/cgo-2025-papers/48/Towards-Efficient-Compiler-Auto-tuning-Leveraging-Synergistic-Search-Spaces)；[ACM DOI](https://doi.org/10.1145/3696443.3708961)
 
 论文链接或编号：[DOI 10.1145/3696443.3708961](https://doi.org/10.1145/3696443.3708961)；[CGO 2025 官方论文页](https://2025.cgo.org/details/cgo-2025-papers/48/Towards-Efficient-Compiler-Auto-tuning-Leveraging-Synergistic-Search-Spaces)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：编译器自动调优、LLVM pass、协同 pass 对、K-means、监督学习、GEAN、遗传算法、强化学习
 

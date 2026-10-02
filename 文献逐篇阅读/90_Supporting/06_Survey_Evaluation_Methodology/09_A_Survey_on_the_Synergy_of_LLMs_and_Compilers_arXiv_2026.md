@@ -1,10 +1,12 @@
 # LLM-Compiler Survey 文献阅读总结
 
-论文题目：**A Survey on the Synergy of Large Language Models and Compilers: A Comprehensive Taxonomy and Future Directions**
-作者：Chen Y. 等人
+论文题目：**The New Compiler Stack: A Survey on the Synergy of LLMs and Compilers**
+作者：Shuoming Zhang、Jiacheng Zhao、Qiuchu Yu、Chunwei Xia、Zheng Wang、Xiaobing Feng、Huimin Cui
 发表时间：2026年
 发表平台：arXiv预印本
-论文链接或编号：arXiv:2603.XXXXX
+论文链接或编号：[arXiv:2601.02045](https://arxiv.org/abs/2601.02045)；代码仓库未确认。
+元数据核验来源：[论文/来源](https://arxiv.org/abs/2601.02045)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：LLM-Compiler Survey、Taxonomy、Code Generation、Compilation Optimization、Code Analysis、Training Paradigm、Abstraction Level
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。

@@ -6,9 +6,11 @@
 
 发表时间：2025
 
-发表平台：2025 ACM/IEEE Symposium on Machine Learning for CAD（MLCAD 2025），IEEE，9 页
+发表平台：MLCAD 2025, pp.1–9
 
-论文链接或编号：DOI `10.1109/MLCAD65511.2025.11189222`
+论文链接或编号：DOI 10.1109/MLCAD65511.2025.11189222
+元数据核验来源：[IEEE DOI](https://doi.org/10.1109/MLCAD65511.2025.11189222)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：RTL 数据通路、LLM、e-graph、等价饱和、rewrite rule、PPA 优化
 

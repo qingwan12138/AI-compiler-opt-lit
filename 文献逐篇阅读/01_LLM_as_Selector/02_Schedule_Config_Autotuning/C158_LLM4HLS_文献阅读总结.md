@@ -6,9 +6,11 @@
 
 发表时间：2025
 
-发表平台：ACM Transactions on Design Automation of Electronic Systems，Vol. 30，No. 5，Article 78，2025 年 9 月
+发表平台：ACM Transactions on Design Automation of Electronic Systems (TODAES), 30(5), Article 78（2025）
 
-论文链接或编号：DOI [10.1145/3747291](https://doi.org/10.1145/3747291)
+论文链接或编号：DOI 10.1145/3747291
+元数据核验来源：[ACM DOI](https://doi.org/10.1145/3747291)；[CUHK 作者机构页](https://research.cuhk.edu.hk/en/publications/high-level-synthesis-directives-design-optimization-via-large-lan/)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：高层次综合（High-Level Synthesis, HLS）、FPGA、综合 directives、设计空间探索（Design Space Exploration, DSE）、贝叶斯优化、Gaussian Process、Pareto 优化、PPA、LLM
 

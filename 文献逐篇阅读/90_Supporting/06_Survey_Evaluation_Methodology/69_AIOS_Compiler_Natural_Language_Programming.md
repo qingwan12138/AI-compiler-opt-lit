@@ -1,11 +1,13 @@
 # 69. AIOS 文献阅读总结
 
-论文题目：**AIOS: LLM as Interpreter for Natural Language Programming**
-作者：Yingqiang Ge, et al.
+论文题目：**AIOS Compiler: LLM as Interpreter for Natural Language Programming and Flow Programming of AI Agents**
+作者：Shuyuan Xu、Zelong Li、Kai Mei、Yongfeng Zhang
 发表时间：2024
 发表平台：arXiv
-论文链接或编号：arXiv:2407.12345
+论文链接或编号：[arXiv:2405.06907](https://arxiv.org/abs/2405.06907)
 关键词：自然语言编程, LLM解释器, Agent编排, 伪代码执行
+代码/数据/工件：作者公开代码：[CoRE](https://github.com/agiresearch/CoRE)；[AIOS 项目仓库](https://github.com/agiresearch/AIOS)
+元数据核验来源：[arXiv 论文记录](https://arxiv.org/abs/2405.06907)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

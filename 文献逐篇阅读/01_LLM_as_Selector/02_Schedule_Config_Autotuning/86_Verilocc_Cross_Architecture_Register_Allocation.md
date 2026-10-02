@@ -1,11 +1,13 @@
 # 86. Verilocc 文献阅读总结
 
-论文题目：**Verilocc: Cross-Architecture Register Allocation via LLM**
-作者：Liu, S.,等人
+论文题目：**VERILOCC: End-to-End Cross-Architecture Register Allocation via LLM**
+作者：Lesheng Jin、Zhenyuan Ruan、Haohui Mai、Jingbo Shang
 发表时间：2025
-发表平台：arXiv
-论文链接或编号：暂无
+发表平台：Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing（EMNLP 2025），页 30252–30262
+论文链接或编号：[ACL Anthology 2025.emnlp-main.1538](https://aclanthology.org/2025.emnlp-main.1538/)；arXiv [2506.17506](https://arxiv.org/abs/2506.17506)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：跨架构寄存器分配, LLM微调, 验证器引导, NVIDIA GPU, AMD GPU
+元数据核验来源：[ACL Anthology 正式论文页](https://aclanthology.org/2025.emnlp-main.1538/)；[2506.17506](https://arxiv.org/abs/2506.17506)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

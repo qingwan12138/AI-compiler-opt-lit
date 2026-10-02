@@ -1,10 +1,12 @@
 # LLMs for Compiler Opt 文献阅读总结
 
 论文题目：**Large Language Models for Compiler Optimization**
-作者：Chris Cummins, Volker Seeker, Dejan Grubisic, Mostafa Elhoushi, Yousef Shaqrah, Baptiste Roziere, Jonas Gehring, Gabriel Synnaeve, Hugh Leather
-发表时间：2023
+作者：Chris Cummins、Volker Seeker、Dejan Grubisic、Mostafa Elhoushi、Youwei Liang、Baptiste Roziere、Jonas Gehring、Fabian Gloeckle、Kim Hazelwood、Gabriel Synnaeve、Hugh Leather
+发表时间：2023（arXiv 首次提交 2023-09-11）
 发表平台：arXiv
-论文链接或编号：arXiv 2023
+论文链接或编号：[arXiv:2309.07062](https://arxiv.org/abs/2309.07062)；代码/模型工件：未确认与本文对应的作者公开代码仓库（Meta 后续 LLM Compiler 模型工件不等同于本文仓库），待核验。
+元数据核验来源：[论文/来源](https://arxiv.org/abs/2309.07062)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：LLM；LLVM；Pass排序；代码尺寸优化；指令数预测；IR生成
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。

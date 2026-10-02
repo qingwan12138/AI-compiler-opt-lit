@@ -1,11 +1,13 @@
 # 66. CUDA-L1 文献阅读总结
 
 论文题目：**CUDA-L1: Improving CUDA Optimization via Contrastive Reinforcement Learning**
-作者：Nadav Rotem, et al.
+作者：Xiaoya Li、Xiaofei Sun、Albert Wang、Jiwei Li、Chris Shum
 发表时间：2025
-发表平台：arXiv
-论文链接或编号：arXiv:2505.12345
+发表平台：International Conference on Learning Representations（ICLR 2026）；arXiv 预印本
+论文链接或编号：[arXiv:2507.14111](https://arxiv.org/abs/2507.14111)
 关键词：对比强化学习, CUDA kernel优化, 真实速度奖励, GPU跨架构迁移, KernelBench
+代码/数据/工件：作者公开代码：[CUDA-L1](https://github.com/deepreinforce-ai/CUDA-L1)
+元数据核验来源：[ICLR 2026 官方论文页](https://proceedings.iclr.cc/paper_files/paper/2026/hash/c94bbbef466ab1b2cfa100e41413b3a8-Abstract-Conference.html)；[arXiv 记录](https://arxiv.org/abs/2507.14111)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

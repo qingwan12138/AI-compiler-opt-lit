@@ -9,8 +9,10 @@
 发表平台：Proceedings of the ACM on Software Engineering（FSE 2024），Article 29
 
 论文链接或编号：DOI 10.1145/3643755；arXiv:2402.07138
+代码/数据/工件：论文配套工件页：[PyCraft replication site](https://pycrafttool.github.io/)；其工具链接至作者公开仓库：[PyCraftTool/PyCraft](https://github.com/PyCraftTool/PyCraft)。
 
 关键词：代码变换、Transformation by Example、LLM、静态分析、动态验证
+元数据核验来源：[ACM 正式论文页](https://doi.org/10.1145/3643755)；[arXiv 论文记录](https://arxiv.org/abs/2402.07138)
 
 > 本文档基于 PDF 全文整理。
 

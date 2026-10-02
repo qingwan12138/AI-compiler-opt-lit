@@ -3,8 +3,10 @@
 论文题目：**TimelyHLS: LLM-Based Timing-Aware and Architecture-Specific FPGA HLS Optimization**
 作者：Nowfel Mashnoor、Mohammad Akyash、Hadi Kamali、Kimia Azar
 发表时间：2025
-发表平台：arXiv cs.CR，v1，2025-07-23
-论文链接或编号：[arXiv:2507.17962](https://arxiv.org/abs/2507.17962)；DOI 10.48550/arXiv.2507.17962
+发表平台：arXiv 预印本（2025）
+论文链接或编号：arXiv:2507.17962
+元数据核验来源：[arXiv](https://arxiv.org/abs/2507.17962)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 关键词：FPGA、LLM、HLS、timing closure、RAG、pragma
 
 ## 1. 研究背景

@@ -6,9 +6,11 @@
 
 发表时间：2025
 
-发表平台：2025 IEEE International Conference on LLM-Aided Design (ICLAD 2025)，论文第 188–194 页；本地 PDF 为 arXiv v2。arXiv 页面同时标注该版本曾提交同行评审，正式会议元数据仍需进一步核验。
+发表平台：ICLAD 2025, pp.188–194
 
-论文链接或编号：arXiv:2503.12721；arXiv-issued DOI: 10.48550/arXiv.2503.12721；<https://arxiv.org/abs/2503.12721>
+论文链接或编号：DOI 10.1109/ICLAD65226.2025.00028；arXiv:2503.12721
+元数据核验来源：[ICLAD 正式接收论文清单](https://iclad.ai/lad25-accepted-papers)；[IEEE DOI](https://doi.org/10.1109/ICLAD65226.2025.00028)；[arXiv](https://arxiv.org/abs/2503.12721)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：大语言模型、推理模型、高层次综合、HLS、pragma、设计空间探索、整数线性规划、硬件优化、agent
 

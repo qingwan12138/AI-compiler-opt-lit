@@ -6,9 +6,11 @@
 
 发表时间：2026
 
-发表平台：arXiv preprint，arXiv:2607.24714（PDF 首页标注 v1，2026-07-27）
+发表平台：arXiv 预印本（2026）
 
-论文链接或编号：DOI `10.48550/arXiv.2607.24714`；<https://arxiv.org/abs/2607.24714>
+论文链接或编号：arXiv:2607.24714
+元数据核验来源：[arXiv](https://arxiv.org/abs/2607.24714)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：trapped-ion quantum computing、shuttling compiler、large language model、compiler generation、architecture-aware routing、Claude Code
 

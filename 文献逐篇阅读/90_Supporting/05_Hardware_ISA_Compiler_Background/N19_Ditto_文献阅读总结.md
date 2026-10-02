@@ -1,4 +1,5 @@
 # Ditto 文献阅读总结
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 论文题目：**Compiling Code LLMs into Lightweight Executables**
 
@@ -6,7 +7,8 @@
 
 发表时间：2026
 
-发表平台：Proceedings of the ACM on Software Engineering（FSE 2026），Article FSE189
+发表平台：Proceedings of the ACM on Software Engineering（FSE 2026）；第3卷，pp. 4299–4322；DOI: 10.1145/3808196
+元数据核验来源：[ACM DOI 正式出版页](https://doi.org/10.1145/3808196)；[arXiv:2603.29813](https://arxiv.org/abs/2603.29813)
 
 关键词：Code LLM 部署、量化、LLVM Pass、GEMV、BLAS、边缘推理
 

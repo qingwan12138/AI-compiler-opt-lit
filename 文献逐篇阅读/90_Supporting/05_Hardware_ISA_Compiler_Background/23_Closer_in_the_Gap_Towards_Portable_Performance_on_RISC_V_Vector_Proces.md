@@ -3,7 +3,9 @@
 论文题目：**Closer in the Gap: Towards Portable Performance on RISC-V Vector Processors**
 作者：论文未明确标注完整机构，见 arXiv 条目
 发表时间：2026年（arXiv 预印本）
-发表平台：arXiv
+发表平台：arXiv:2605.10860
+元数据核验来源：[arXiv:2605.10860](https://arxiv.org/abs/2605.10860)；[作者项目仓库](https://github.com/KTH-ScaLab/rvv-evaluation)
+代码/数据/工件：作者项目仓库：[rvv-evaluation](https://github.com/KTH-ScaLab/rvv-evaluation)
 论文链接或编号：arXiv（待补全完整编号）
 关键词：RVV 性能可移植性、编译器代码生成、性能计数器校准、microbenchmark、GCC vs Clang、RVV cost model
 

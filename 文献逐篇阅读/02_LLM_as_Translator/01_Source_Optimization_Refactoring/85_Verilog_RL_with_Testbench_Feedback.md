@@ -1,11 +1,13 @@
 # 85. Verilog RL 文献阅读总结
 
-论文题目：**Insights from Verification: Training Verilog LLM with Reinforcement Learning**
-作者：Zhao, Y.,等人
-发表时间：2025
-发表平台：arXiv
-论文链接或编号：暂无
+论文题目：**Insights from Verification: Training a Verilog Generation LLM with Reinforcement Learning with Testbench Feedback**
+作者：Ning Wang、Bingkun Yao、Jie Zhou、Yuchen Hu、Xi Wang、Nan Guan、Zhe Jiang
+发表时间：2026
+发表平台：Design Automation Conference（DAC 2026）；arXiv 预印本
+论文链接或编号：[arXiv:2504.15804](https://arxiv.org/abs/2504.15804)
 关键词：验证反馈, Verilog生成, 直接偏好优化, DPO, 硬件设计语言
+代码/数据/工件：匿名评审论文工件：[VeriPrefer](https://anonymous.4open.science/r/VeriPrefer-E88B)
+元数据核验来源：[arXiv 论文记录](https://arxiv.org/abs/2504.15804)；[作者单位研究成果页](https://scholars.cityu.edu.hk/en/persons/nwang227/)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

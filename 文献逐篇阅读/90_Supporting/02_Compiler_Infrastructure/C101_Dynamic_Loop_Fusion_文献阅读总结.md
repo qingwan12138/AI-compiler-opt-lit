@@ -6,9 +6,11 @@
 
 发表时间：2025
 
-发表平台：2025 ACM/SIGDA International Symposium on Field-Programmable Gate Arrays（FPGA ’25），第 211–222 页
+发表平台：FPGA 2025, pp.211–222
 
-论文链接或编号：[DOI 10.1145/3706628.3708871](https://doi.org/10.1145/3706628.3708871)；[官方作者存档页面](https://eprints.gla.ac.uk/346086/)；[PDF](https://eprints.gla.ac.uk/346086/1/346086.pdf)
+论文链接或编号：DOI 10.1145/3706628.3708871
+元数据核验来源：[ACM DOI](https://doi.org/10.1145/3706628.3708871)；[作者机构存档](https://eprints.gla.ac.uk/346086/)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：High-Level Synthesis、动态循环融合、动态内存消歧、LLVM IR、FPGA、decoupled access/execute（解耦访问/执行）
 

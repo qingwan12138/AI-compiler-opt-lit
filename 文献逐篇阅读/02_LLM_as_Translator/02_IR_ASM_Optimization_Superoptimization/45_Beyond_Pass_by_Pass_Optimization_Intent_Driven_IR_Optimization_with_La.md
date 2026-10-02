@@ -1,10 +1,12 @@
 # IntOpt (Duplicate Copy) 文献阅读总结
 
 论文题目：**Beyond Pass-by-Pass Optimization: Intent-Driven IR Optimization with Large Language Models (IntOpt)**
-作者：未明确列出（arXiv 2025预印本）
-发表时间：2025
+作者：Lei Qiu、Zi Yang、Fang Lyu、Ming Zhong、Huimin Cui、Xiaobing Feng
+发表时间：2026（arXiv 首次提交 2026-02-19）。
 发表平台：arXiv
-论文链接或编号：arXiv:2602.18511
+论文链接或编号：[arXiv:2602.18511](https://arxiv.org/abs/2602.18511)；与编号 16 为同一篇论文的重复记录；代码仓库未确认。
+元数据核验来源：[论文/来源](https://arxiv.org/abs/2602.18511)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：意图驱动优化；IR优化；LLM；LLVM；优化策略
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。

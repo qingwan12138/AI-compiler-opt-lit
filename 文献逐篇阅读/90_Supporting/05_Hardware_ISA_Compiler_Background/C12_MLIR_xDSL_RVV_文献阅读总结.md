@@ -1,4 +1,5 @@
 # MLIR-xDSL RVV Lowering 文献阅读总结
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 论文题目：**Enabling RISC-V Vector Code Generation in MLIR through Custom xDSL Lowerings**
 
@@ -7,6 +8,7 @@
 发表时间：2026
 
 发表平台：arXiv:2603.17800
+元数据核验来源：[arXiv:2603.17800](https://arxiv.org/abs/2603.17800)
 
 关键词：RISC-V、RVV、MLIR、xDSL、GEMM、微内核
 

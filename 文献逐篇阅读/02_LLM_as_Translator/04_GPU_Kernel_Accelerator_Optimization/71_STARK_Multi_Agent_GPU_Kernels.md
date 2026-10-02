@@ -1,11 +1,13 @@
 # 71. STARK 文献阅读总结
 
-论文题目：**STARK: A Strategic Team of Agents for Refining Kernels**
-作者：Zhenyu Li, et al.
-发表时间：2025
-发表平台：arXiv
-论文链接或编号：arXiv:2504.12345
+论文题目：**STARK: Strategic Team of Agents for Refining Kernels**
+作者：Juncheng Dong、Yang Yang、Tao Liu、Yang Wang、Feng Qi、Vahid Tarokh、Kaushik Rangadurai、Shuang Yang
+发表时间：2026
+发表平台：International Conference on Learning Representations（ICLR 2026）；arXiv 预印本
+论文链接或编号：[arXiv:2510.16996](https://arxiv.org/abs/2510.16996)；[OpenReview: nWaZTH1JMx](https://openreview.net/forum?id=nWaZTH1JMx)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：多智能体协作, GPU kernel优化, 角色分工, 战略搜索, profiling反馈
+元数据核验来源：[OpenReview ICLR 2026 会议论文页](https://openreview.net/forum?id=nWaZTH1JMx)；[arXiv:2510.16996](https://arxiv.org/abs/2510.16996)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

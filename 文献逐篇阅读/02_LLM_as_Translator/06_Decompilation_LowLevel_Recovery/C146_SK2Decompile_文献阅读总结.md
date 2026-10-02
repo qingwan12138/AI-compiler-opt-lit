@@ -6,10 +6,14 @@
 
 发表时间：2026（论文 PDF 为 arXiv:2509.22114v1，提交日期 2025-09-26；官方会议页面标为 ICLR 2026）
 
-发表平台：International Conference on Learning Representations (ICLR) 2026
+发表平台：ICLR 2026
 
-论文链接或编号：[arXiv:2509.22114](https://arxiv.org/abs/2509.22114)；本地完整 PDF：`paper.pdf`
+论文链接或编号：arXiv:2509.22114
+元数据核验来源：[ICLR/OpenReview 论文来源](https://openreview.net/)；[匿名论文仓库](https://github.com/anonymous-git-paper/sk2decompile)；[作者相关项目仓库](https://github.com/albertan017/LLM4Decompile/tree/main/sk2decompile)；[arXiv](https://arxiv.org/abs/2509.22114)
+代码/数据/工件：论文所列匿名仓库：[sk2decompile](https://github.com/anonymous-git-paper/sk2decompile)；相关作者项目组件：[LLM4Decompile/sk2decompile](https://github.com/albertan017/LLM4Decompile/tree/main/sk2decompile)（作者归属关系分别标注）
 
+代码仓库：[SK²Decompile 官方匿名仓库](https://github.com/anonymous-git-paper/sk2decompile)；作者项目仓库也已发布对应模型/脚本：[LLM4Decompile/sk2decompile](https://github.com/albertan017/LLM4Decompile/tree/main/sk2decompile)。
+来源：[ICLR OpenReview 录用稿中给出的匿名代码地址](https://openreview.net/pdf/35435c73fb909ee84c1d913d71d150b6897c5963.pdf)；[作者仓库公告](https://github.com/albertan017/LLM4Decompile)。
 关键词：二进制反编译、LLM、结构恢复、标识符命名、中间表示、强化学习、编译器反馈
 
 > 本笔记依据本 staging 目录中的 18 页 PDF（arXiv v1）逐页阅读。论文事实、阅读分析和后续建议分开描述；未在 PDF 中明确给出的信息不作推断。

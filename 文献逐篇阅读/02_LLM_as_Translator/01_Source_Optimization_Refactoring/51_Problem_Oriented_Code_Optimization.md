@@ -1,10 +1,12 @@
 # Problem-Oriented 文献阅读总结
 
-论文题目：**A Problem-Oriented Perspective for Code Optimization**
-作者：未明确列出（arXiv 2024预印本）
-发表时间：2024
-发表平台：arXiv
-论文链接或编号：arXiv:2406.11935
+论文题目：**A Problem-Oriented Perspective and Anchor Verification for Code Optimization**
+作者：Tong Ye、Tengfei Ma、Lingfei Wu、Xuhong Zhang、Shouling Ji、Wenhai Wang
+发表时间：2026
+发表平台：International Conference on Learning Representations (ICLR 2026), conference paper
+论文链接或编号：arXiv:2406.11935；ICLR 2026 OpenReview paper HGaUV3jjvo
+元数据核验来源：[ICLR 2026 正式论文页](https://proceedings.iclr.cc/paper_files/paper/2026/hash/4f5aa418348643f2041a55bba9afa7dc-Abstract-Conference.html)；[arXiv 论文记录](https://arxiv.org/abs/2406.11935)；[OpenReview 正式论文 PDF](https://openreview.net/pdf?id=HGaUV3jjvo)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：问题导向优化；代码优化；LLM4Code；锚点验证；训练数据组织
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。

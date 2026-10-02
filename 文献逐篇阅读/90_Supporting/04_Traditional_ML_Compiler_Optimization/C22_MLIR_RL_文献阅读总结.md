@@ -1,12 +1,14 @@
 # MLIR RL 文献阅读总结
+代码/数据/工件：作者代码：[MLIR-RL](https://github.com/Modern-Compilers-Lab/MLIR-RL)；[Zenodo 作者工件](https://doi.org/10.5281/zenodo.17987133)
+元数据核验来源：[论文/来源](https://doi.org/10.1109/CGO68049.2026.11394838)；[论文/来源](https://arxiv.org/abs/2409.11068)；[论文/来源](https://github.com/Modern-Compilers-Lab/MLIR-RL)
 
 论文题目：**A Reinforcement Learning Environment for Automatic Code Optimization in the MLIR Compiler**
 
 作者：Mohammed Tirichine、Nassim Ameur、Nazim Bendib、Iheb Nassim Aouadj、Djad Bouchama、Rafik Bouloudene、Riyadh Baghdadi
 
-发表时间：首次公开于 2024 年；当前 PDF 为 arXiv v2（2025-12-20），正式发表于 CGO 2026
+发表时间：首次公开于 2024 年；正式发表于 CGO 2026，pp. 696–710。
 
-发表平台：CGO 2026；DOI: 10.1109/CGO68049.2026.11394838；arXiv:2409.11068
+发表平台：CGO 2026；[DOI 10.1109/CGO68049.2026.11394838](https://doi.org/10.1109/CGO68049.2026.11394838)；[arXiv:2409.11068](https://arxiv.org/abs/2409.11068)。作者公开代码：[Modern-Compilers-Lab/MLIR-RL](https://github.com/Modern-Compilers-Lab/MLIR-RL)；Artifact：Zenodo DOI 10.5281/zenodo.17987133。
 
 关键词：MLIR、强化学习、自动代码优化、循环变换、多离散动作空间、PPO、编译器反馈
 

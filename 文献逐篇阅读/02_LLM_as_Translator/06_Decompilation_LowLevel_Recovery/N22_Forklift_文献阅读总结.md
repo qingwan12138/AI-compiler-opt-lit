@@ -7,6 +7,8 @@
 发表时间：2024
 
 发表平台：COLM 2024
+代码/数据/工件：作者公开仓库：[Forklift](https://github.com/jordiae/forklift)
+元数据核验来源：[COLM 2024 OpenReview 论文页](https://openreview.net/forum?id=LWfDcI6txJ)
 
 关键词：神经 Lifter、汇编、LLVM IR、跨 ISA、增量学习
 

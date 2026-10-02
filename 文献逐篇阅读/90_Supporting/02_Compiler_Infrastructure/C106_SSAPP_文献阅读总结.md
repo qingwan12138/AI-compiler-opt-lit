@@ -3,8 +3,10 @@
 论文题目：**Compiler-Assisted Crash Consistency for PMEM**  
 作者：Yun Joon Soh，Sihang Liu，Steven Swanson，Jishen Zhao  
 发表时间：2025  
-发表平台：2025 ACM SIGPLAN International Symposium on Memory Management（ISMM ’25）  
-论文链接或编号：[DOI 10.1145/3735950.3735955](https://doi.org/10.1145/3735950.3735955)；[作者提供的 camera-ready PDF](https://www.sihangliu.com/docs/SSAPP_ISMM25_Camera_Ready.pdf)  
+发表平台：ISMM 2025, pp.41–55
+论文链接或编号：DOI 10.1145/3735950.3735955
+元数据核验来源：[ACM DOI](https://doi.org/10.1145/3735950.3735955)；[作者 camera-ready PDF](https://www.sihangliu.com/docs/SSAPP_ISMM25_Camera_Ready.pdf)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 关键词：Persistent Memory（持久内存）、Crash Consistency（崩溃一致性）、Compiler-based Transformation（编译器变换）、Automatic Recovery（自动恢复）、LLVM IR、Lock-free Data Structure
 
 > 本笔记依据 15 页一手 PDF 正文整理。论文不是大语言模型论文，不涉及 SFT、提示词或 LLM；以下将论文事实与阅读后的分析分开。

@@ -7,6 +7,8 @@
 发表时间：2026
 
 发表平台：CGO 2026 主会，pp. 28–43
+元数据核验来源：[Stanford Compilers Lab 论文/项目页](https://compilers.stanford.edu/publications/cgo26scorch/)；[作者 PDF](https://fredrikbk.com/publications/scorch.pdf)；[CGO 官方论文页](https://2026.cgo.org/details/cgo-2026-papers/52/Fast-Autoscheduling-for-Sparse-ML-Frameworks)
+代码/数据/工件：作者公开实现：[Scorch](https://github.com/bobbyyyan/scorch)
 
 论文链接或编号：DOI `10.1109/CGO68049.2026.11394842`；[CGO 官方论文页](https://2026.cgo.org/details/cgo-2026-papers/52/Fast-Autoscheduling-for-Sparse-ML-Frameworks)
 

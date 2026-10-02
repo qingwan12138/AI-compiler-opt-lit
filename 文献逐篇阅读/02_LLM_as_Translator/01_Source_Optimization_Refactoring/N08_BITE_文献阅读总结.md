@@ -6,11 +6,13 @@
 
 发表时间：2025
 
-发表平台：ACL 2025 Long Papers
+发表平台：Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics（ACL 2025），页 28563–28576
 
-论文链接或编号：ACL Anthology 2025.acl-long.1388
+论文链接或编号：DOI [10.18653/v1/2025.acl-long.1387](https://doi.org/10.18653/v1/2025.acl-long.1387)；[ACL Anthology 2025.acl-long.1387](https://aclanthology.org/2025.acl-long.1387/)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：代码加速、双向树编辑、渐进学习、指令微调、多语言基准
+元数据核验来源：[ACL Anthology 正式论文页](https://aclanthology.org/2025.acl-long.1387/)；[10.18653/v1/2025.acl-long.1387](https://doi.org/10.18653/v1/2025.acl-long.1387)
 
 > 本文档基于 PDF 全文整理。
 

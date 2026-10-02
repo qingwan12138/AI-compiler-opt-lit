@@ -8,7 +8,9 @@
 
 发表平台：ML For Systems Workshop at Neural Information Processing Systems (NeurIPS 2025)，属于 NeurIPS 2025 相关 workshop，不是 NeurIPS 主会论文。
 
-论文链接或编号：OpenReview forum ID `7H9qWe8lLO`；官方 PDF：<https://mlforsystems.org/assets/papers/neurips2025/paper40.pdf>。论文正文未给出 DOI 或 arXiv ID。
+论文链接或编号：[OpenReview 官方条目](https://openreview.net/forum?id=7H9qWe8lLO)；[ML for Systems Workshop 官方 PDF](https://mlforsystems.org/assets/papers/neurips2025/paper40.pdf)。论文正文未给出 DOI 或 arXiv ID。代码仓库：未在论文或作者官方页面确认，待核验；名称相近的 AutoSparse 仓库对应另一篇 ICCD 论文，不作为本篇代码。
+元数据核验来源：[论文/来源](https://openreview.net/forum?id=7H9qWe8lLO)；[论文/来源](https://mlforsystems.org/assets/papers/neurips2025/paper40.pdf)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：LLM-guided autoscheduling、稀疏机器学习、FuseFlow、fusion、dataflow order、MLIR、operational intensity
 

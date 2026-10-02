@@ -7,8 +7,10 @@
 发表时间：2026年
 
 发表平台：PLDI 2026，Proceedings of the ACM on Programming Languages，第10卷，Article 172；Distinguished Paper Award
+元数据核验来源：[作者主页正式发表记录](https://web.ist.utl.pt/nuno.lopes/pubs.php?id=byte-type-pldi26)；[DOI](https://doi.org/10.1145/3808250)
 
 论文链接或编号：DOI 10.1145/3808250
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：LLVM IR、undef、poison、原始内存、byte type、freezing load、Alive2、translation validation
 

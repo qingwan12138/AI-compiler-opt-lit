@@ -6,10 +6,13 @@
 
 发表时间：2026
 
-发表平台：ICS Workshops ’26，2026 International Conference on Supercomputing Workshops，ACM，pp. 70–74
+发表平台：ICS Workshops 2026, pp.70–74
 
-论文链接或编号：DOI `10.1145/3774895.3812200`
+论文链接或编号：DOI 10.1145/3774895.3812200
+元数据核验来源：[White Rose 正式机构记录](https://eprints.whiterose.ac.uk/id/eprint/244127/)；[ACM DOI](https://doi.org/10.1145/3774895.3812200)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
+来源补充：[University of Leeds White Rose Research Online 正式发表记录及 ACM 出版链接](https://eprints.whiterose.ac.uk/id/eprint/244127/)。
 关键词：LLM code translation、GPU kernels、Triton、polyhedral analysis
 
 > 本文档依据 5 页 ACM 论文正文撰写。论文事实、阅读后的分析和后续建议分开描述。

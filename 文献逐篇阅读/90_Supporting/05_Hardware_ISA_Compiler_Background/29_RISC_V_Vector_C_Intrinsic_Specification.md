@@ -3,7 +3,9 @@
 论文题目：**RISC-V Vector C Intrinsic Specification v1.0**
 作者：RISC-V International（RISC-V国际基金会批准）
 发表时间：RISC-V Ratified Specifications Library
-发表平台：RISC-V国际基金会官方程碑规范文档
+发表平台：RISC-V Ratified Specifications Library，Vector C Intrinsic Specification v1.0（2025-04-25 ratified）
+元数据核验来源：[RISC-V 官方 ratified specification](https://docs.riscv.org/reference/vector-c-intrinsics/v1.0/index.html)；[规范项目仓库](https://github.com/riscv-non-isa/riscv-rvv-intrinsic-doc)
+代码/数据/工件：规范项目仓库：[RISC-V Vector C Intrinsic](https://github.com/riscv-non-isa/riscv-rvv-intrinsic-doc)
 论文链接或编号：RISC-V Ratified Specifications Library
 关键词：RVV intrinsic规范；向量长度无关编程；API标准；语义定义；交叉编译
 

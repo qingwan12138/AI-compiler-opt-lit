@@ -1,9 +1,11 @@
 # C37 Magellan 文献阅读总结
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 论文题目：**Magellan: Autonomous Discovery of Novel Compiler Optimization Heuristics with AlphaEvolve**
 作者：Hongzheng Chen、Alexander Novikov、Ngân (NV) Vũ、Hanna Alam、Zhiru Zhang、Aiden Grossman、Mircea Trofin、Amir Yazdanbakhsh（Google/Google DeepMind/Cornell）
 发表时间：2026-01-28；本次阅读日期：2026-09-05
 发表平台：C4ML@CGO 2026 Workshop（作者声明录用；非 CGO 主会）；arXiv:2601.21096v1（PDF v1）
+元数据核验来源：[arXiv:2601.21096](https://arxiv.org/abs/2601.21096)；[C4ML@CGO 2026 官方议程](https://sites.google.com/view/c4ml)
 关键词：编译器启发式、AlphaEvolve、LLM coding agent、演化搜索、自动调参、LLVM/XLA
 
 > 本文档为 Luna 阅读（2026-09-05）。

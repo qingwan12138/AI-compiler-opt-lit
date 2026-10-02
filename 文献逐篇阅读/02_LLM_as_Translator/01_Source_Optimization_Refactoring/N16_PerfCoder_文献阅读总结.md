@@ -2,13 +2,16 @@
 
 论文题目：**PerfCoder: Large Language Models for Interpretable Code Performance Optimization**
 
-作者：Jiuding Yang、Shengyao Lu、Hongxuan Liu、Di Niu、Shayan Shirahmad Gale Bagi、Zahra Fazel、Tomasz Czajkowski
+作者：Jiuding Yang、Shengyao Lu、Hongxuan Liu、Shayan Shirahmad Gale Bagi、Zahra Fazel、Tomasz Czajkowski、Di Niu
 
 发表时间：2026
 
-发表平台：Findings of ACL 2026
+发表平台：Findings of the Association for Computational Linguistics: ACL 2026，页 13807–13823
+论文链接或编号：DOI [10.18653/v1/2026.findings-acl.675](https://doi.org/10.18653/v1/2026.findings-acl.675)；[ACL Anthology](https://aclanthology.org/2026.findings-acl.675/)
 
 关键词：代码性能优化、可解释策略、PIE、GRPO、规划器
+代码/数据/工件：作者公开代码：[PerfCoder](https://github.com/XpastaX/PerfCoder)
+元数据核验来源：[ACL Anthology 正式论文页](https://aclanthology.org/2026.findings-acl.675/)；[10.18653/v1/2026.findings-acl.675](https://doi.org/10.18653/v1/2026.findings-acl.675)
 
 > 本文档基于 PDF 全文整理。
 

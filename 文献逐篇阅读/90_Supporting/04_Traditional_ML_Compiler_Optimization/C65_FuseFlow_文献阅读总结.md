@@ -7,6 +7,8 @@
 发表时间：2026
 
 发表平台：ASPLOS 2026 Volume 2，23 页，DOI: 10.1145/3779212.3790165
+元数据核验来源：[ACM DOI](https://doi.org/10.1145/3779212.3790165)；[作者公开 PDF](https://fredrikbk.com/publications/fuseflow.pdf)
+代码/数据/工件：作者代码/artifact 仓库：[FuseFlow](https://github.com/lrubens/fuseflow-artifact)；[Figshare artifact](https://doi.org/10.6084/m9.figshare.30890834)
 
 论文链接或编号：[DOI](https://doi.org/10.1145/3779212.3790165)；[作者 PDF](https://fredrikbk.com/publications/fuseflow.pdf)
 

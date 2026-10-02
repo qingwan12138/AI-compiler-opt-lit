@@ -6,10 +6,14 @@
 
 发表时间：2025 年
 
-发表平台：PPoPP 2025 主会（The 30th ACM SIGPLAN Annual Symposium on Principles and Practice of Parallel Programming），第 16–28 页
+发表平台：PPoPP 2025, pp.16–28；另有 JPDC 213 (2026), Article 105264 的同主题期刊记录（与会议论文的版本关系未确认）
 
-论文链接或编号：DOI [10.1145/3710848.3710881](https://doi.org/10.1145/3710848.3710881)
+论文链接或编号：DOI 10.1145/3710848.3710881；JPDC DOI 10.1016/j.jpdc.2026.105264
+元数据核验来源：[ACM DOI](https://doi.org/10.1145/3710848.3710881)；[JPDC 出版社记录](https://doi.org/10.1016/j.jpdc.2026.105264)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
+版本说明：目录所列 PPoPP 2025 会议论文与 JPDC 2026 论文为同主题不同版本；出版社记录显示期刊版题为 *N:M sparsity-oriented graph reordering for accelerating GNNs on GPU sparse tensor cores*，JPDC 213, Article 105264，DOI [10.1016/j.jpdc.2026.105264](https://doi.org/10.1016/j.jpdc.2026.105264)。
+来源：[PPoPP 2025 作者机构记录](https://www.pnnl.gov/publications/accelerating-gnns-gpu-sparse-tensor-cores-through-nm-sparsity-oriented-graph)；[JPDC 官方卷期目录](https://www.sciencedirect.com/journal/journal-of-parallel-and-distributed-computing/vol/213/suppl/C)。
 关键词：GNN、图重排序、N:M 稀疏、V:N:M 稀疏、GPU、Sparse Tensor Core、SpMM、CUDA
 
 > 本文档依据论文正文 PDF 撰写。论文事实与阅读后的研究思考分开描述。本文是传统 GPU/编译运行时优化系统，不是 LLM 编译器论文。

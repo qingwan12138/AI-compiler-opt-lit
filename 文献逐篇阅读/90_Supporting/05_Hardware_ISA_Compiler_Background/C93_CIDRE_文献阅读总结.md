@@ -6,9 +6,11 @@
 
 发表时间：2025
 
-发表平台：2025 IEEE/ACM International Conference on Computer-Aided Design（ICCAD 2025）；PDF 为接收稿，首页注明 DOI。
+发表平台：ICCAD 2025
 
-论文链接或编号：DOI `10.1109/ICCAD66269.2025.11240781`；arXiv: `2509.15782`
+论文链接或编号：DOI 10.1109/ICCAD66269.2025.11240781；arXiv:2509.15782
+元数据核验来源：[IEEE DOI](https://doi.org/10.1109/ICCAD66269.2025.11240781)；[arXiv](https://arxiv.org/abs/2509.15782)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：RISC-V、ASIP、custom instruction、microarchitecture-aware optimization、instruction selection、nML、Synopsys ASIP Designer
 

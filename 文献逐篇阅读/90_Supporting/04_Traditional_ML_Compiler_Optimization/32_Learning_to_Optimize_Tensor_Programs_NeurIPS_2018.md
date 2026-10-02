@@ -4,6 +4,8 @@
 作者：Tianqi Chen, Lianmin Zheng, Eddie Yan, Ziheng Jiang, Thierry Moreau, Luis Ceze, Carlos Guestrin, Arvind Krishnamurthy
 发表时间：2018
 发表平台：NeurIPS 2018
+元数据核验来源：[NeurIPS 2018 论文页](https://papers.neurips.cc/paper/7599-learning-to-optimize-tensor-programs)；[arXiv](https://arxiv.org/abs/1805.08166)
+代码/数据/工件：[Apache TVM（AutoTVM / tensor-program optimization implementation）](https://github.com/apache/tvm)
 论文链接或编号：NeurIPS 2018
 关键词：张量程序优化；学习型代价模型；迁移学习；自动调优
 

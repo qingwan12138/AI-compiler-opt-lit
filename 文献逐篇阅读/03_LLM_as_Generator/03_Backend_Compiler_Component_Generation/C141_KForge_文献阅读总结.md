@@ -8,7 +8,9 @@
 
 发表平台：Machine Learning for Architecture and Systems Workshop (MLArchSys)，与 ISCA 2026 联合举办；论文正文首页说明为该 workshop 接收论文。
 
-论文链接或编号：[arXiv:2606.02963](https://arxiv.org/abs/2606.02963)
+论文链接或编号：[arXiv:2606.02963](https://arxiv.org/abs/2606.02963)。作者/机构公开代码仓库：未确认，待核验。
+元数据核验来源：[论文/来源](https://arxiv.org/abs/2606.02963)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：LLM、kernel generation、program synthesis、GPU/AI accelerator、cross-platform、Triton、CUDA、profiling feedback、agentic system
 

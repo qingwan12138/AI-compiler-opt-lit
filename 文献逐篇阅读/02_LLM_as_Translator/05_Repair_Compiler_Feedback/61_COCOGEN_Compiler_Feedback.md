@@ -1,11 +1,13 @@
 # 61. COCOGEN 文献阅读总结
 
-论文题目：**COCOGEN: Iterative Refinement with Compiler Feedback for Code Generation**
-作者：Shengyi He, et al.
+论文题目：**Iterative Refinement of Project-Level Code Context for Precise Code Generation with Compiler Feedback**
+作者：Zhangqian Bi、Yao Wan、Zheng Wang、Hongyu Zhang、Batu Guan、Fangxin Lu、Zili Zhang、Yulei Sui、Hai Jin、Xuanhua Shi
 发表时间：2024
-发表平台：ACL 2024 Findings
-论文链接或编号：ACL 2024 Findings
+发表平台：Findings of the Association for Computational Linguistics: ACL 2024，页 2336–2353
+论文链接或编号：DOI [10.18653/v1/2024.findings-acl.138](https://doi.org/10.18653/v1/2024.findings-acl.138)；arXiv [2403.16792](https://arxiv.org/abs/2403.16792)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：编译反馈, 仓库级上下文, 迭代修复, 静态分析, 代码生成
+元数据核验来源：[ACL Anthology 正式论文页](https://aclanthology.org/2024.findings-acl.138/)；[10.18653/v1/2024.findings-acl.138](https://doi.org/10.18653/v1/2024.findings-acl.138)；[2403.16792](https://arxiv.org/abs/2403.16792)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

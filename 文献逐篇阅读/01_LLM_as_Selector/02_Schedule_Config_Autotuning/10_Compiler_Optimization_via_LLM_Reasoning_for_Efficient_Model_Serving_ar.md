@@ -1,10 +1,12 @@
 # ReasoningCompiler 文献阅读总结
 
 论文题目：**Compiler Optimization via LLM Reasoning for Efficient Model Serving**
-作者：Li Y. 等人
+作者：Sujun Tang、Christopher Priebe、Rohan Mahapatra、Lianhui Qin、Hadi Esmaeilzadeh
 发表时间：2025年
-发表平台：arXiv预印本
-论文链接或编号：arXiv:2502.XXXXX
+发表平台：NeurIPS 2025 主会论文；arXiv 预印本版本。
+论文链接或编号：[NeurIPS 2025 官方论文页](https://papers.neurips.cc/paper_files/paper/2025/hash/99e49b207cb4f5c3b4c3b7da0261e8af-Abstract-Conference.html)；[arXiv:2506.01374](https://arxiv.org/abs/2506.01374)；代码仓库：待核验。
+元数据核验来源：[论文/来源](https://papers.neurips.cc/paper_files/paper/2025/hash/99e49b207cb4f5c3b4c3b7da0261e8af-Abstract-Conference.html)；[论文/来源](https://arxiv.org/abs/2506.01374)
+代码/数据/工件：作者公开实现：[Anna-Bele/REASONING_COMPILER](https://github.com/Anna-Bele/REASONING_COMPILER)（旧地址 `LLM_MCTS_Search` 已重定向至此仓库）。
 关键词：LLM Reasoning、MCTS、Tensor Program Optimization、Tiling/Fusion/Layout、Model Serving、Sample Efficiency
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。

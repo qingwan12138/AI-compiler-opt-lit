@@ -4,7 +4,9 @@
 作者：Zhang H. 等人
 发表时间：2026年
 发表平台：CGO 2026（International Symposium on Code Generation and Optimization）
+元数据核验来源：[CGO 2026 官方议程及预印本链接](https://2026.cgo.org/details/cgo-2026-papers/37/LLM-VeriOpt-Verification-Guided-Reinforcement-Learning-for-LLM-Based-Compiler-Optimi)；[DOI](https://doi.org/10.1109/CGO68049.2026.11395239)
 论文链接或编号：CGO 2026 Accepted
+代码/数据/工件：作者公开评测工件：[carrotProgrammer/llmveriopt-AE](https://github.com/carrotProgrammer/llmveriopt-AE)。
 关键词：LLM Compiler、Verification-Guided RL、GRPO、Alive2、IR Optimization、Semantic Equivalence
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。

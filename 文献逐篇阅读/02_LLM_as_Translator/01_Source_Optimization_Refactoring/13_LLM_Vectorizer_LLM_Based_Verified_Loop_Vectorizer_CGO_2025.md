@@ -3,8 +3,10 @@
 论文题目：**LLM-Vectorizer: LLM-Based Verified Loop Vectorizer**
 作者：未知（论文第一作者及其合作者）
 发表时间：2025年
-发表平台：CGO 2025（International Symposium on Code Generation and Optimization）
+发表平台：CGO 2025；pp. 137–149；DOI: 10.1145/3696443.3708929
+元数据核验来源：[ACM CGO 2025 正式论文页](https://doi.org/10.1145/3696443.3708929)；[arXiv:2406.04693](https://arxiv.org/abs/2406.04693)；[Microsoft Research 作者页（列为 OOPSLA 2024，存在 venue 记录冲突）](https://www.microsoft.com/en-us/research/publication/llm-vectorizer-llm-based-verified-loop-vectorizer/)
 论文链接或编号：CGO 2025会议论文
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：LLM Vectorization、FSM Agent、Alive2 Verification、SIMD Intrinsic、TSVC Benchmark
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。

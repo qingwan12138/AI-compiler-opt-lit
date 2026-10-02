@@ -6,9 +6,11 @@
 
 发表时间：2025 年（论文正文标注 PACT 2025；University of Edinburgh Research Explorer 记录的正式出版日期为 2025-12-16）
 
-发表平台：2025 34th International Conference on Parallel Architectures and Compilation Techniques（PACT），IEEE，pp. 216–228
+发表平台：PACT 2025, pp.216–228
 
-论文链接或编号：[DOI 10.1109/PACT65351.2025.00029](https://doi.org/10.1109/PACT65351.2025.00029)；一手核验来源：[PACT 2025 官方技术日程](https://pact2025.github.io/program/)；[University of Edinburgh Research Explorer 条目](https://www.research.ed.ac.uk/en/publications/guess-measure-amp-edit-using-lowering-to-lift-tensor-code/)；作者公开 PDF：`Guess_Measure_Edit_PACT2025.pdf`
+论文链接或编号：DOI 10.1109/PACT65351.2025.00029
+元数据核验来源：[IEEE DOI](https://doi.org/10.1109/PACT65351.2025.00029)；[PACT 官方日程](https://pact2025.github.io/program/)；[Edinburgh 作者机构页](https://www.research.ed.ac.uk/en/publications/guess-measure-amp-edit-using-lowering-to-lift-tensor-code/)
+代码/数据/工件：作者公开实现 KONRUL：[JWesleySM/konrul](https://github.com/JWesleySM/konrul)；模型卡：[KONRUL Guesser](https://huggingface.co/jwesleysm/konrul-guesser)。
 
 关键词：代码提升（lifting）、语言模型、程序相似度、引导式编辑、einsum、LLVM IR、张量程序、异构硬件
 

@@ -4,7 +4,9 @@
 作者：Barke, S.,等人
 发表时间：2024
 发表平台：arXiv
+元数据核验来源：[arXiv:2406.03003](https://arxiv.org/abs/2406.03003)；[NeurIPS 2024 作者公开论文 PDF](https://people.eecs.berkeley.edu/~sseshia/pubdir/llmlift-neurips24.pdf)
 论文链接或编号：暂无
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：可验证代码转编译, lifting编译器, 等价性证明, 形式验证, 大语言模型
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。

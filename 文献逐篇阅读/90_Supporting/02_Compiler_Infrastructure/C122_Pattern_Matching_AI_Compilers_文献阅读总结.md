@@ -6,9 +6,11 @@
 
 发表时间：2025
 
-发表平台：第 23 届 ACM/IEEE International Symposium on Code Generation and Optimization（CGO ’25），18 页。
+发表平台：CGO 2025
 
-论文链接或编号：[DOI 10.1145/3696443.3708934](https://doi.org/10.1145/3696443.3708934)；[arXiv:2412.13398](https://arxiv.org/abs/2412.13398)
+论文链接或编号：DOI 10.1145/3696443.3708934；arXiv:2412.13398
+元数据核验来源：[ACM DOI](https://doi.org/10.1145/3696443.3708934)；[arXiv](https://arxiv.org/abs/2412.13398)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：AI 编译器、张量计算图、子图匹配、重写规则、PyPM、DLCB、Coq、形式化语义、GPU 内核
 

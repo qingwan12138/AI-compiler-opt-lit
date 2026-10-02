@@ -6,9 +6,11 @@
 
 发表时间：2026（Research Square 预印本，Posted Date: 2026-06-08）
 
-发表平台：Research Square；论文明确是 Research Article 预印本，尚未说明同行评审会议或期刊录用信息。
+发表平台：Research Square 预印本（2026）
 
-论文链接或编号：DOI [10.21203/rs.3.rs-9831666/v1](https://doi.org/10.21203/rs.3.rs-9831666/v1)
+论文链接或编号：DOI 10.21203/rs.3.rs-9831666/v1
+元数据核验来源：[Research Square DOI](https://doi.org/10.21203/rs.3.rs-9831666/v1)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：编译器优化、编译 flag、Small Language Model、GCC、Gimple IR、SW64
 

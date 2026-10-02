@@ -7,6 +7,8 @@
 发表时间：2026
 
 发表平台：Proceedings of the ACM on Programming Languages, Volume 10, OOPSLA1, Article 142, April 2026
+元数据核验来源：[ACM PACMPL 论文记录](https://doi.org/10.1145/3798250)
+代码/数据/工件：Zenodo 论文工件：[CLower](https://doi.org/10.5281/zenodo.18503229)
 
 论文链接或编号：DOI 10.1145/3798250
 

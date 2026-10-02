@@ -6,9 +6,11 @@
 
 发表时间：2026 年 7 月 25 日（PDF 标注 arXiv v1）
 
-发表平台：arXiv，分类标注为 cs.AI
+发表平台：arXiv 预印本（2026）
 
-论文链接或编号：arXiv:2607.23089，https://arxiv.org/abs/2607.23089
+论文链接或编号：arXiv:2607.23089
+元数据核验来源：[arXiv](https://arxiv.org/abs/2607.23089)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：Triton kernel、LLM agent、编译器诊断、IR attribution、Ascend NPU、性能优化、profiling
 

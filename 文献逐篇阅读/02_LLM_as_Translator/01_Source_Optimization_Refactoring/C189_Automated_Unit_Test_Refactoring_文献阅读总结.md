@@ -3,8 +3,10 @@
 论文题目：**Automated Unit Test Refactoring**
 作者：Yi Gao、Xing Hu、Xiaohu Yang、Xin Xia
 发表时间：2025
-发表平台：Proceedings of the ACM on Software Engineering, Vol. 2, FSE, Article FSE033
+发表平台：Proceedings of the ACM on Software Engineering, 2(FSE), Article FSE033
 论文链接或编号：DOI 10.1145/3715750；arXiv:2409.16739
+元数据核验来源：[ACM DOI](https://doi.org/10.1145/3715750)；[arXiv](https://arxiv.org/abs/2409.16739)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 关键词：测试异味、单元测试重构、LLM、DSL、Java、Chain-of-Thought
 
 > 本笔记依据 staging 中 21 页 PDF 正文；事实与阅读后的分析分开。

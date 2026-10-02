@@ -8,7 +8,9 @@
 
 发表平台：2025 International Conference on Supercomputing（ICS ’25）
 
-论文链接或编号：DOI 10.1145/3721145.3725766；arXiv:2506.01880
+论文链接或编号：[DOI 10.1145/3721145.3725766](https://doi.org/10.1145/3721145.3725766)；[arXiv:2506.01880](https://arxiv.org/abs/2506.01880)。检索到的 `facebookresearch/Pearl` 是通用 RL 库，不能确认为本论文代码，故不登记为论文仓库。
+元数据核验来源：[论文/来源](https://doi.org/10.1145/3721145.3725766)；[论文/来源](https://arxiv.org/abs/2506.01880)
+代码/数据/工件：论文引用的相关预训练模块：[Modern-Compilers-Lab/GNN_RL_Pretrain](https://github.com/Modern-Compilers-Lab/GNN_RL_Pretrain)；目前只能确认该模块，完整 Pearl 实现仍待核验。
 
 关键词：深度强化学习、多面体优化、循环嵌套、Tiramisu、图注意力网络、PPO
 

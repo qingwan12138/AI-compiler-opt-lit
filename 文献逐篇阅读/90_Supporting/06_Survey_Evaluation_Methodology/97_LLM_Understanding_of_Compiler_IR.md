@@ -3,7 +3,9 @@
 论文题目：**Can LLMs Understand Intermediate Representations in Compilers?**
 作者：Li, Z.,等人
 发表时间：2025
-发表平台：arXiv
+发表平台：Proceedings of the 42nd International Conference on Machine Learning (ICML 2025), PMLR 267, pp. 27851–27872
+代码/数据/工件：作者公开代码与数据：[LLM4IR](https://github.com/hjiang13/LLM4IR)
+元数据核验来源：[PMLR 正式论文页](https://proceedings.mlr.press/v267/jiang25p.html)
 论文链接或编号：暂无
 关键词：编译器中间表示, LLM理解边界, 控制流图重建, IR反编译, 执行推理
 

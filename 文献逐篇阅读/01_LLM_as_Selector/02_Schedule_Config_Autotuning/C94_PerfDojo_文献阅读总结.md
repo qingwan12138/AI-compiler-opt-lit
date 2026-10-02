@@ -6,9 +6,11 @@
 
 发表时间：2025
 
-发表平台：The International Conference for High Performance Computing, Networking, Storage and Analysis（SC ’25），pp. 137–151
+发表平台：SC 2025, pp.137–151
 
-论文链接或编号：DOI [10.1145/3712285.3759900](https://doi.org/10.1145/3712285.3759900)；arXiv [2511.03586](https://arxiv.org/abs/2511.03586)
+论文链接或编号：DOI 10.1145/3712285.3759900；arXiv:2511.03586
+元数据核验来源：[ACM DOI](https://doi.org/10.1145/3712285.3759900)；[arXiv](https://arxiv.org/abs/2511.03586)
+代码/数据/工件：作者工件代码：[ETH SPCL GitLab](https://spclgitlab.ethz.ch/anivanov/codegen)；归档：[Zenodo 16758665](https://doi.org/10.5281/zenodo.16758665)。
 
 关键词：编译器优化、异构架构、机器学习内核、程序变换、强化学习、自动调优、RISC-V、GPU
 

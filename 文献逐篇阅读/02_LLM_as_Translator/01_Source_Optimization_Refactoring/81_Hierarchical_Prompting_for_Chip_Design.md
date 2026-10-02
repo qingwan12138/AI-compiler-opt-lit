@@ -1,11 +1,13 @@
 # 81. HDL Prompting 文献阅读总结
 
-论文题目：**Hierarchical Prompting for LLM-Based Chip Design**
-作者：Blocklove, J., Garg, S.,等人
+论文题目：**Rome was Not Built in a Single Step: Hierarchical Prompting for LLM-based Chip Design**
+作者：Andre Nakkab、Sai Qian Zhang、Ramesh Karri、Siddharth Garg
 发表时间：2024
-发表平台：arXiv
-论文链接或编号：arXiv:2410.00000 (推测)
+发表平台：arXiv 预印本
+论文链接或编号：[arXiv:2407.18276](https://arxiv.org/abs/2407.18276)
 关键词：层次化提示, 芯片设计, 模块分解, Verilog生成, 分治策略
+代码/数据/工件：作者公开代码：[ROME-LLM](https://github.com/ajn313/ROME-LLM)
+元数据核验来源：[arXiv 论文记录](https://arxiv.org/abs/2407.18276)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

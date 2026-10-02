@@ -6,9 +6,11 @@
 
 发表时间：2025
 
-发表平台：第 54 届 International Conference on Parallel Processing（ICPP ’25），ACM，2025 年 9 月 8–11 日
+发表平台：ICPP 2025
 
-论文链接或编号：DOI [10.1145/3754598.3754601](https://doi.org/10.1145/3754598.3754601)；arXiv：[2509.26253](https://arxiv.org/abs/2509.26253)；本地 PDF：[efficient-search-spaces-icpp2025.pdf](./efficient-search-spaces-icpp2025.pdf)
+论文链接或编号：DOI 10.1145/3754598.3754601；arXiv:2509.26253
+元数据核验来源：[ACM DOI](https://doi.org/10.1145/3754598.3754601)；[arXiv](https://arxiv.org/abs/2509.26253)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：约束满足问题（CSP）、自动调优、搜索空间、Kernel Tuner、GPU/HPC
 

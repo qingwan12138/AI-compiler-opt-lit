@@ -7,6 +7,8 @@
 发表时间：2025年
 
 发表平台：PLDI 2025，Proceedings of the ACM on Programming Languages，第9卷，Article 227
+元数据核验来源：[PLDI 2025 官方论文页](https://pldi25.sigplan.org/details/pldi-2025-papers/81/Guided-Tensor-Lifting)；[DOI](https://doi.org/10.1145/3729330)
+代码/数据/工件：作者公开项目仓库：[Guided-Tensor-Lifting](https://github.com/BugBugSurvival/Guided-Tensor-Lifting)
 
 论文链接或编号：DOI 10.1145/3729330；arXiv:2504.19705
 

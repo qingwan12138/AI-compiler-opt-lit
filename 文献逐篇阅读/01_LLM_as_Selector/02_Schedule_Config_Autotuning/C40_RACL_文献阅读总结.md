@@ -1,9 +1,11 @@
 # C40 RACL 文献阅读总结
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 论文题目：**Reductive Analysis with Compiler-Guided Large Language Models for Input-Centric Code Optimizations**
 作者：Xiangwei Wang、Xinning Hui、Chunhua Liao、Xipeng Shen
 发表时间：2025 年 6 月；本次阅读日期：2026-09-05
 发表平台：PLDI 2025 / PACMPL，第 9 卷，Article 179，25 页；DOI: 10.1145/3729282（PDF 版本）
+元数据核验来源：[PLDI 2025 作者/机构论文页](https://research.csc.ncsu.edu/picture/publications/papers/pldi2025)；[DOI](https://doi.org/10.1145/3729282)
 关键词：输入中心优化、编译器引导 LLM、归约分析、关键输入特征、MERIC、预测模型
 
 > 本文档为 Luna 阅读（2026-09-05）。事实依据为所给 25 页 PDF；论文事实、阅读分析和后续建议分开描述。

@@ -6,9 +6,11 @@
 
 发表时间：2025（arXiv v1 提交于 2025-08-05）
 
-发表平台：arXiv，cs.SE / cs.PL，5 页工具论文
+发表平台：ASE 2025 Tool Demonstration Track, pp.4017–4020
 
-论文链接或编号：[arXiv:2508.03603](https://arxiv.org/abs/2508.03603)；PDF：[arXiv PDF](https://arxiv.org/pdf/2508.03603)
+论文链接或编号：arXiv:2508.03603
+元数据核验来源：[ASE 正式论文页](https://conf.researchr.org/details/ase-2025/ase-2025-tool-demonstration-track/12/ReFuzzer-Feedback-Driven-Approach-to-Enhance-Validity-of-LLM-Generated-Test-Programs)；[KCL 作者机构记录](https://kclpure.kcl.ac.uk/portal/en/publications/refuzzer-feedback-driven-approach-to-enhance-validity-of-llm-gene-2/)；[arXiv](https://arxiv.org/abs/2508.03603)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：编译器模糊测试、Large Language Model（大语言模型，LLM）、测试程序生成、反馈驱动修复、静态有效性、动态有效性、LLVM/Clang、sanitizer
 

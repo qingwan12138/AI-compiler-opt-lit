@@ -6,9 +6,11 @@
 
 发表时间：2025
 
-发表平台：Proceedings of Machine Learning and Systems 7，MLSys 2025 Conference；论文首页注明为 Proceedings of the 8th MLSys Conference，Santa Clara, CA, USA。
+发表平台：MLSys 2025, Proceedings of Machine Learning and Systems 7
 
-论文链接或编号：[MLSys 官方论文页](https://proceedings.mlsys.org/paper_files/paper/2025/hash/8cb5b08f912600de3de07c6503599ba8-Abstract-Conference.html)；[官方 PDF](https://proceedings.mlsys.org/paper_files/paper/2025/file/8cb5b08f912600de3de07c6503599ba8-Paper-Conference.pdf)。PDF 和官方页面未明确给出 DOI 或 arXiv 编号。
+论文链接或编号：未见正式 DOI / arXiv 编号
+元数据核验来源：[MLSys 正式论文页](https://proceedings.mlsys.org/paper_files/paper/2025/hash/8cb5b08f912600de3de07c6503599ba8-Abstract-Conference.html)；[MLSys 官方 PDF](https://proceedings.mlsys.org/paper_files/paper/2025/file/8cb5b08f912600de3de07c6503599ba8-Paper-Conference.pdf)
+代码/数据/工件：论文确认开源的 xDecimate 硬件 RTL：[eml-eda/cv32e40x-decimate](https://github.com/eml-eda/cv32e40x-decimate)；这只确认硬件扩展部分，完整软件 kernel 与编译器代码仍未确认。
 
 关键词：N:M 半结构化稀疏、DNN 推理、RISC-V 微控制器、PULP、ISA 扩展、xDecimate、MATCH、TVM、边缘设备、代码生成
 

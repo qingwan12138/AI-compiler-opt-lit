@@ -1,10 +1,12 @@
 # C45 LOOPRAG 文献阅读总结
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 论文题目：**LOOPRAG: Enhancing Loop Transformation Optimization with Retrieval-Augmented Large Language Models**
 
 作者：Yijie Zhi、Yayu Cao、Jianhua Dai、Xiaoyang Han、Jingwen Pu、Qingran Wu、Sheng Cheng、Ming Cai。
 
 发表信息：首次公开于 2025 年（arXiv:2512.15766）；ASPLOS 2026 主会论文，DOI 10.1145/3779212.3790183。本文读取作者公开的 22 页 PDF。
+元数据核验来源：[ASPLOS 2026 官方议程](https://www.asplos-conference.org/asplos2026/program/index.html)；[arXiv:2512.15766](https://arxiv.org/abs/2512.15766)；[ACM DOI](https://doi.org/10.1145/3779212.3790183)
 
 来源：[ASPLOS 2026 官方议程](https://www.asplos-conference.org/asplos2026/program/index.html)、[arXiv 正文](https://arxiv.org/abs/2512.15766)、[DOI](https://doi.org/10.1145/3779212.3790183)。
 

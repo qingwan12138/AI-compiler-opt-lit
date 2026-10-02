@@ -1,11 +1,13 @@
 # 56. C-to-x86 文献阅读总结
 
-论文题目：**Learning C to x86 Translation: An Exploration of Neural Compilation**
-作者：Ankur Samanta, et al.
+论文题目：**Learning C to x86 Translation: An Experiment in Neural Compilation**
+作者：Jordi Armengol-Estapé、Michael F. P. O’Boyle
 发表时间：2021
-发表平台：arXiv
-论文链接或编号：arXiv:2108.07732
+发表平台：MLSH’21（Machine Learning for Software Hardware Co-Design Workshop）；arXiv 预印本
+论文链接或编号：[arXiv:2108.07639](https://arxiv.org/abs/2108.07639)
 关键词：C-to-x86, 神经编译, Seq2Seq, Transformer, 代码生成
+代码/数据/工件：作者公开代码：[neural-compilers](https://github.com/jordiae/neural-compilers)
+元数据核验来源：[arXiv 论文记录](https://arxiv.org/abs/2108.07639)；[MLSH’21 官方议程](https://commit.csail.mit.edu/mlsh/2021/)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

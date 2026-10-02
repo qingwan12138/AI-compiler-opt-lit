@@ -1,4 +1,5 @@
 # Multi-level RISC-V Backend 文献阅读总结
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 论文题目：**A Multi-level Compiler Backend for Accelerated Micro-kernels Targeting RISC-V ISA Extensions**
 
@@ -7,6 +8,7 @@
 发表时间：2025
 
 发表平台：CGO 2025；DOI: 10.1145/3696443.3708952；arXiv:2502.04063
+元数据核验来源：[ACM DOI](https://doi.org/10.1145/3696443.3708952)；[作者公开论文 PDF（含 Artifact Appendix）](https://www.pure.ed.ac.uk/ws/portalfiles/portal/558506860/LopoukhineEtalCGO25AMultiLevelCompilerBackendforAcceleratedMicrokernels.pdf)
 
 关键词：RISC-V、MLIR、xDSL、多层编译后端、渐进 lowering、Snitch、寄存器分配、微内核
 

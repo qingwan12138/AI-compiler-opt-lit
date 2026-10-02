@@ -4,7 +4,9 @@
 作者：作者信息待补充（源材料受限）
 发表时间：待确认（源材料受限）
 发表平台：OpenReview预印本（https://openreview.net/forum?id=qJVRXIVaVQ）
+元数据核验来源：[OpenReview 论文页](https://openreview.net/forum?id=qJVRXIVaVQ)
 论文链接或编号：OpenReview ID: qJVRXIVaVQ
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：LLM编译器优化、验证引导学习、形式化验证、编译器自动调优
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。

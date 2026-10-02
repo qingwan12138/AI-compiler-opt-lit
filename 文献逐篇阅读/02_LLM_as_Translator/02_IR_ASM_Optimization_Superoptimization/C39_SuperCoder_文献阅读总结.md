@@ -4,6 +4,8 @@
 作者：Anjiang Wei、Tarun Suresh、Huanmi Tan、Yinglun Xu、Gagandeep Singh、Ke Wang、Alex Aiken
 发表时间：首发 2025-05-16；本次阅读为 v4（2026-08-08）；PDF 首页注明 Published as a conference paper at COLM 2026
 发表平台：COLM 2026（PDF 首页标注 Published as a conference paper，且已由 COLM 2026 官方录用列表核验）；未见 DOI，不补写 DOI
+代码/数据/工件：作者公开仓库：[SuperCoder](https://github.com/Anjiang-Wei/SuperCoder)
+元数据核验来源：[arXiv:2505.11480](https://arxiv.org/abs/2505.11480)
 关键词：汇编超级优化、LLM、PPO/GRPO、端到端运行时间、测试正确性
 
 > 本文档为 Luna 阅读（2026-09-05），依据所给 v4 PDF 全文与附录。

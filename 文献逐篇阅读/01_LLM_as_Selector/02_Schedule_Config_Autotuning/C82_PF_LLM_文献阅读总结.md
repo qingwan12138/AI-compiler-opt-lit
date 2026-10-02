@@ -7,8 +7,10 @@
 发表时间：2026
 
 发表平台：ASPLOS ’26，Proceedings of the 31st ACM International Conference on Architectural Support for Programming Languages and Operating Systems, Volume 2，15 页；Best Paper Award 信息见作者正式论文页/ASPLOS awards 页面。
+元数据核验来源：[作者/实验室论文页](https://fact-lab.hkust.edu.hk/publications/conference-paper/2025/xu-2025-pf-llm/)；[ACM DOI](https://doi.org/10.1145/3779212.3790202)；[作者正式 PDF](https://fact-lab.hkust.edu.hk/publications/conference-paper/2025/xu-2025-pf-llm/3779212.3790202.pdf)
 
 论文链接或编号：[DOI 10.1145/3779212.3790202](https://doi.org/10.1145/3779212.3790202)；[作者正式 PDF](https://fact-lab.hkust.edu.hk/publications/conference-paper/2025/xu-2025-pf-llm/3779212.3790202.pdf)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：prefetching、hardware prefetcher、large language model、CPU microarchitecture、assembly context、hardware-software co-design
 

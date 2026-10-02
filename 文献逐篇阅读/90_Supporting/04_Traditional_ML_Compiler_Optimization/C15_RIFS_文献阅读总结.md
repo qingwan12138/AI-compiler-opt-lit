@@ -1,4 +1,5 @@
 # RIFS 文献阅读总结
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 论文题目：**RIFS: Run-Time Invariant Function Specialization**
 
@@ -7,6 +8,7 @@
 发表时间：2026
 
 发表平台：CC 2026；DOI: 10.1145/3771775.3786274
+元数据核验来源：[CC 2026 官方论文记录](https://conf.researchr.org/details/CC-2026/calls/7/RIFS-Run-time-Invariant-Function-Specialization)；[ACM DOI](https://doi.org/10.1145/3771775.3786274)
 
 关键词：LLVM IR、PGO、运行时不变量、函数特化、LightGBM、代价模型
 

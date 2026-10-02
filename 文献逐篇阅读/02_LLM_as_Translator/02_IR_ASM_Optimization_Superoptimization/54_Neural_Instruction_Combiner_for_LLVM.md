@@ -1,10 +1,12 @@
 # 54. Neural InstCombine 文献阅读总结
 
 论文题目：**Learning to Combine Instructions in LLVM Compiler**
-作者：Anshul Agarwal, et al.
+作者：Sandya Mannarswamy、Dibyendu Das
 发表时间：2022
 发表平台：arXiv
-论文链接或编号：arXiv:2209.12345
+论文链接或编号：[arXiv:2202.12379](https://arxiv.org/abs/2202.12379)；未确认作者公开代码仓库。
+元数据核验来源：[论文/来源](https://arxiv.org/abs/2202.12379)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：LLVM InstCombine, 指令组合, Seq2Seq, 神经编译器, IR变换, 代码生成, 编译器自动调优, 程序验证
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。

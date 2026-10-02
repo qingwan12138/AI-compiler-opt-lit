@@ -7,6 +7,8 @@
 发表时间：2025 年
 
 发表平台：PLDI 2025，Proceedings of the ACM on Programming Languages，第 9 卷，Article 212，26 页
+元数据核验来源：[PLDI 2025 官方论文页](https://pldi25.sigplan.org/details/pldi-2025-papers/66/Scalable-Validated-Code-Translation-of-Entire-Projects-using-Large-Language-Models)；[DOI](https://doi.org/10.1145/3729315)；[Zenodo 工件](https://doi.org/10.5281/zenodo.15242640)；[作者 PDF](https://www.kroening.com/papers/pldi2025-1.pdf)
+代码/数据/工件：Zenodo 作者工件：[LLM translation artifact](https://doi.org/10.5281/zenodo.15242640)
 
 论文链接或编号：[PLDI 2025 官方论文页](https://pldi25.sigplan.org/details/pldi-2025-papers/66/Scalable-Validated-Code-Translation-of-Entire-Projects-using-Large-Language-Models)；DOI [10.1145/3729315](https://doi.org/10.1145/3729315)；[作者 PDF](https://www.kroening.com/papers/pldi2025-1.pdf)；Artifact [10.5281/zenodo.15242640](https://doi.org/10.5281/zenodo.15242640)
 

@@ -1,10 +1,12 @@
 # 22. RISC-V Vectorization Coverage for HPC: A TSVC-Based Analysis 文献阅读总结
 
 论文题目：**RISC-V Vectorization Coverage for HPC: A TSVC-Based Analysis**
-作者：因源材料受限，作者名待确认（ACM 条目）
+作者：Hung-Ming Lai、Pei-Hung Lin、Maya B. Gokhale、Ivy Peng、Hiren Patel、Jenq-Kuen Lee
 发表时间：2025年
-发表平台：未核验 / ACM 会议或期刊（具体 venue 未确认）
+发表平台：Proceedings of the SC 2025 Workshops，Workshop on RISC-V for HPC；pp. 1676–1683；DOI: 10.1145/3731599.3767535
+元数据核验来源：[ACM Digital Library](https://doi.org/10.1145/3731599.3767535)；[RISCV-HPC workshop 论文材料](https://riscv.epcc.ed.ac.uk/assets/files/sc25/Lin.pdf)
 论文链接或编号：https://dl.acm.org/doi/abs/10.1145/3731599.3767535
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：RISC-V向量扩展、TSVC基准测试、向量化覆盖率、HPC、编译器自动向量化
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。

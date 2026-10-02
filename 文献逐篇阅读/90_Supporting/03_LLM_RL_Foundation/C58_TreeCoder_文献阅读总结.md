@@ -3,8 +3,10 @@
 论文题目：**TreeCoder: Systematic Exploration and Optimisation of Decoding and Constraints for LLM Code Generation**
 作者：Henrijs Princis、Arindam Sharma、Cristina David
 发表时间：2026
-发表平台：Proceedings of the ACM on Programming Languages, Volume 10, PLDI, Article 269，June 2026
-论文链接或编号：DOI [10.1145/3808347](https://doi.org/10.1145/3808347)；arXiv [2511.22277](https://arxiv.org/abs/2511.22277)
+发表平台：PLDI 2026 / PACMPL 10(PLDI), Article 269
+论文链接或编号：DOI 10.1145/3808347；arXiv:2511.22277
+元数据核验来源：[PLDI 官方论文页](https://pldi26.sigplan.org/details/pldi-2026-papers/104/TreeCoder-Systematic-Exploration-and-Optimisation-of-Decoding-and-Constraints-for-LL)；[ACM DOI](https://doi.org/10.1145/3808347)；[arXiv](https://arxiv.org/abs/2511.22277)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：LLM 代码生成、约束解码、树搜索、MCTS、SMC、Beam Search、推理时优化
 

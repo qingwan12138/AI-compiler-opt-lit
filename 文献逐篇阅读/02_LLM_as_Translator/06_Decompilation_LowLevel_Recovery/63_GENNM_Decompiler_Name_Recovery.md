@@ -1,11 +1,13 @@
-# 63. GENNM 文献阅读总结
+# 63. LmPa 文献阅读总结
 
-论文题目：**GENNM: Improving Decompilation by LLM + Program Analysis**
-作者：Zhuo Zhang, et al.
+论文题目：**Unleashing the Power of Generative Model in Recovering Variable Names from Stripped Binary**
+作者：Xiangzhe Xu、Zhuo Zhang、Zian Su、Ziyang Huang、Shiwei Feng、Yapeng Ye、Nan Jiang、Danning Xie、Siyuan Cheng、Lin Tan、Xiangyu Zhang
 发表时间：2023
-发表平台：LMPA / arXiv
-论文链接或编号：arXiv:2310.12345
+发表平台：Network and Distributed System Security（NDSS 2025）
+论文链接或编号：DOI [10.14722/ndss.2025.240276](https://doi.org/10.14722/ndss.2025.240276)；arXiv 预印本题名为 [Symbol Preference Aware Generative Models for Recovering Variable Names from Stripped Binary](https://arxiv.org/abs/2306.02546)
 关键词：变量名恢复, 反编译, 调用上下文, 分布校准, CodeGemma, CodeLlama
+代码/数据/工件：NDSS 2025 作者 artifact 仓库：[GENNM artifact](https://github.com/XZ-X/gennm-ndss-ae)
+元数据核验来源：[NDSS 2025 论文 PDF](https://www.ndss-symposium.org/wp-content/uploads/2025-276-paper.pdf)；[作者工件仓库](https://github.com/XZ-X/gennm-ndss-ae)；[10.14722/ndss.2025.240276](https://doi.org/10.14722/ndss.2025.240276)；[Symbol Preference Aware Generative Models for Recovering Variable Names from Stripped Binary](https://arxiv.org/abs/2306.02546)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

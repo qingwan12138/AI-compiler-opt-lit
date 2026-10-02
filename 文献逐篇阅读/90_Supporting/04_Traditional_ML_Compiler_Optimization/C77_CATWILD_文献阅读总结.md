@@ -7,8 +7,10 @@
 发表时间：2026 年
 
 发表平台：Proceedings of Machine Learning and Systems 8，MLSys 2026 Conference，Industry Track，第 1608–1625 页（论文 PDF 第 18 页）。
+元数据核验来源：[MLSys 2026 官方 proceedings 论文页](https://proceedings.mlsys.org/paper_files/paper/2026/hash/2093ed77c549eda95bd6f7212b735b43-Abstract-Conference.html)；[官方 PDF](https://proceedings.mlsys.org/paper_files/paper/2026/file/2093ed77c549eda95bd6f7212b735b43-Paper-Conference.pdf)
 
 论文链接或编号：[官方 proceedings 页面](https://proceedings.mlsys.org/paper_files/paper/2026/hash/2093ed77c549eda95bd6f7212b735b43-Abstract-Conference.html)；[官方 PDF](https://proceedings.mlsys.org/paper_files/paper/2026/file/2093ed77c549eda95bd6f7212b735b43-Paper-Conference.pdf)。官方页面未显示 DOI，论文正文也未明确给出 DOI。
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：编译器自动调优、XLA、TPU、搜索空间、代价模型、性能预测、反馈驱动优化、生产部署、多芯片训练、tile-size tuning。
 

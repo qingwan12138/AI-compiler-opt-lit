@@ -3,8 +3,10 @@
 论文题目：**Data-driven Test Generation for Fuzzing AI Compiler**  
 作者：Qingchao Shen  
 发表时间：2026 年  
-发表平台：ICSE-Companion ’26（2026 IEEE/ACM 48th International Conference on Software Engineering Companion）  
-论文链接或编号：DOI `10.1145/3774748.3787621`；arXiv `2601.17450`  
+发表平台：ICSE Companion 2026（3页）
+论文链接或编号：DOI 10.1145/3774748.3787621；arXiv:2601.17450
+元数据核验来源：[ACM DOI](https://doi.org/10.1145/3774748.3787621)；[arXiv](https://arxiv.org/abs/2601.17450)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 关键词：Compiler Testing、Fuzzing、Test Generation、AI Compiler、LLM、IR
 
 > 本文档依据本地完整 PDF 的正文阅读整理。论文为 3 页 companion paper；正文没有明确给出的模型、规模、版本和数值不作推断。

@@ -1,11 +1,13 @@
 # 74. Algorithmic LMs 文献阅读总结
 
 论文题目：**Algorithmic Language Models with Neurally Compiled Libraries**
-作者：Yushi Hu, et al.
-发表时间：2025
+作者：Lucas Saldyt、Subbarao Kambhampati
+发表时间：2024
 发表平台：arXiv
-论文链接或编号：arXiv:2501.12345
+论文链接或编号：[arXiv:2407.04899](https://arxiv.org/abs/2407.04899)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：神经编译, 可微算法库, Transformer推理, 模块化计算
+元数据核验来源：[arXiv 论文记录](https://arxiv.org/abs/2407.04899)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

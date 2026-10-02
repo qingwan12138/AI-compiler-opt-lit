@@ -1,9 +1,11 @@
 # SeGaBench 文献阅读总结
+元数据核验来源：[arXiv:2608.03983](https://arxiv.org/abs/2608.03983)
 
 论文题目：**Can Large Language Models Recover Semantic Optimization Opportunities That Compilers Miss?**
 作者：Hailong Jiang, Feng Yu, Emran Hossain, Jianfeng Zhu, Mengfei Ren, Qiang Guan, Chunwei Xia
 发表时间：2026-08-04；发表平台：arXiv 预印本（v1）
 论文链接或编号：[arXiv:2608.03983](https://arxiv.org/abs/2608.03983)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：语义优化机会、SeGaBench、正确性验证、性能评测、C/C++、LLM
 
 > 阅读模型：gpt-5.6-luna；本轮日期：2026-09-05；实际 PDF：arXiv 2608.03983v1（9 页）。以下事实均来自该 PDF 正文，页码按 PDF 页码标注。

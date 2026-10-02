@@ -1,4 +1,8 @@
 # C53 Parameterized Algorithms and Complexity for Function Merging with Branch Reordering 文献阅读总结
+发表平台：PLDI 2026 / PACMPL 10(PLDI), Article 204
+论文链接或编号：DOI 10.1145/3808282
+元数据核验来源：[PLDI 官方论文页](https://pldi26.sigplan.org/details/pldi-2026-papers/26/Parameterized-Algorithms-and-Complexity-for-Function-Merging-with-Branch-Reorder)；[ACM DOI](https://doi.org/10.1145/3808282)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 论文题目：**Parameterized Algorithms and Complexity for Function Merging with Branch Reordering**
 作者：Amir K. Goharshady、Kerim Kochekov、Tian Shu、Ahmed Khaled Zaher。

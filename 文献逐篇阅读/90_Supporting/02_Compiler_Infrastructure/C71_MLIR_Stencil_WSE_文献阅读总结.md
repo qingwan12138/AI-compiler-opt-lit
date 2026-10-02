@@ -7,8 +7,10 @@
 发表时间：2026
 
 发表平台：ASPLOS 2026，Proceedings of the 31st ACM International Conference on Architectural Support for Programming Languages and Operating Systems，Volume 2，pp. 94–109，16 页
+元数据核验来源：[ASPLOS 2026 ACM DOI](https://doi.org/10.1145/3779212.3790124)；[arXiv:2601.17754](https://arxiv.org/abs/2601.17754)
 
 论文链接或编号：DOI [10.1145/3779212.3790124](https://doi.org/10.1145/3779212.3790124)；arXiv [2601.17754](https://arxiv.org/abs/2601.17754)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 
 关键词：Cerebras WSE、MLIR、xDSL、stencil、领域特定语言、异步 actor 执行、代码生成、硬件感知编译
 

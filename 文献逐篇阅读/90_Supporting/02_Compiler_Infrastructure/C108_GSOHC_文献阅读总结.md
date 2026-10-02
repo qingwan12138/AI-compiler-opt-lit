@@ -6,10 +6,14 @@
 
 发表时间：2025
 
-发表平台：39th European Conference on Object-Oriented Programming（ECOOP 2025），LIPIcs Volume 333，Article 21，21:1–21:30
+发表平台：ECOOP 2025, LIPIcs 333, Article 21
 
-论文链接或编号：[DOI 10.4230/LIPIcs.ECOOP.2025.21](https://doi.org/10.4230/LIPIcs.ECOOP.2025.21)；一手 PDF：[Dagstuhl PDF](https://drops.dagstuhl.de/storage/00lipics/lipics-vol333-ecoop2025/LIPIcs.ECOOP.2025.21/LIPIcs.ECOOP.2025.21.pdf)
+论文链接或编号：DOI 10.4230/LIPIcs.ECOOP.2025.21
+元数据核验来源：[ECOOP 官方论文页](https://2025.ecoop.org/details/ecoop-2025-technical-papers/13/GSOHC-Global-Synchronization-Optimization-in-Heterogeneous-Computing)；[DARTS artifact](https://drops.dagstuhl.de/entities/document/10.4230/DARTS.11.2.17)；[Zenodo 工件](https://zenodo.org/records/15302892)
+代码/数据/工件：作者工件：[Zenodo 15302892](https://zenodo.org/records/15302892)；[DARTS artifact](https://drops.dagstuhl.de/entities/document/10.4230/DARTS.11.2.17)
 
+研究工件：[ECOOP 2025 Artifact（Zenodo）](https://zenodo.org/records/15302892)；[DARTS artifact 页面](https://drops.dagstuhl.de/entities/document/10.4230/DARTS.11.2.17)。
+来源：[ECOOP 2025 官方论文页](https://2025.ecoop.org/details/ecoop-2025-technical-papers/13/GSOHC-Global-Synchronization-Optimization-in-Heterogeneous-Computing)；[Dagstuhl artifact 记录](https://drops.dagstuhl.de/entities/document/10.4230/DARTS.11.2.17)。
 关键词：静态分析、编译器优化、LLVM/Clang、CUDA、CPU-GPU 异构计算、同步移动、过程间分析
 
 建议分类（仅供正式维护代理复核，不构成正式登记）：`SUPPORTING / B2_Compiler_Infrastructure`。论文是传统编译器分析与变换工作，最终输出不是 LLM 生成的 pass、规则或程序，因此不应归入 LLM 角色主类。

@@ -4,9 +4,9 @@
 
 作者：Wei Liu, Jiawei Xu, Yingru Li, Longtao Zheng, Tianjian Li, Qian Liu, Junxian He
 
-发表时间：2026；PDF 为 arXiv:2602.05885v1，作者主页标注 ICML 2026
+发表时间：2026；PDF 为 arXiv:2602.05885v1；HKUST 研究门户确认论文发表于 ICML 2026 / PMLR 306
 
-发表平台：ICML 2026（作者发表列表）；arXiv 预印本
+发表平台：ICML 2026，收录于 PMLR 第 306 卷；arXiv:2602.05885 为预印本版本
 
 论文链接或编号：[arXiv:2602.05885](https://arxiv.org/abs/2602.05885)
 

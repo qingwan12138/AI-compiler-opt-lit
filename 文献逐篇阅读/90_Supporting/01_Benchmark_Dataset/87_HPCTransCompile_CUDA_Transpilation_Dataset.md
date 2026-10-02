@@ -1,11 +1,13 @@
 # 87. HPCTransCompile 文献阅读总结
 
-论文题目：**HPCTransCompile: AI Compiler Dataset for CUDA Transpilation**
-作者：Chen, W.,等人
-发表时间：2024
+论文题目：**HPCTransCompile: An AI Compiler Generated Dataset for High-Performance CUDA Transpilation and LLM Preliminary Exploration**
+作者：Jiaqi Lv、Xufeng He、Yanchen Liu、Xu Dai、Yang Hu、Shouyi Yin
+发表时间：2025
 发表平台：arXiv
-论文链接或编号：暂无
+论文链接或编号：[arXiv:2506.10401](https://arxiv.org/abs/2506.10401)
 关键词：AI编译器数据集, CUDA转编译, TVM, 跨平台代码生成, 知识注入
+代码/数据/工件：作者公开代码：[HPCTransCompile](https://github.com/PJLAB-CHIP/HPCTransCompile)
+元数据核验来源：[arXiv 论文记录](https://arxiv.org/abs/2506.10401)
 
 > 本文档用于文献阅读、组会汇报和后续研究分析。
 

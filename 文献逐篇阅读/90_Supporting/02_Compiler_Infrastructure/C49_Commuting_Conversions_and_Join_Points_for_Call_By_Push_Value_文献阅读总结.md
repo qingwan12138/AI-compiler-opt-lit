@@ -5,6 +5,8 @@
 作者：Jonathan Chan、Madi Gudin、Annabel Levy、Stephanie Weirich。
 
 发表信息：Proceedings of the ACM on Programming Languages, Volume 10, Issue OOPSLA1, Article 102（2026）；页码 289–313；DOI 10.1145/3798210。OOPSLA 2026 正式论文。
+元数据核验来源：[ACM PACMPL DOI](https://doi.org/10.1145/3798210)；[Zenodo Lean artifact](https://doi.org/10.5281/zenodo.19288094)
+代码/数据/工件：Lean 形式化工件：[Zenodo](https://doi.org/10.5281/zenodo.19288094)
 
 来源：[OOPSLA 2026 论文页](https://2026.splashcon.org/details/oopsla-2026/11/Commuting-Conversions-and-Join-Points-for-Call-By-Push-Value)、[ACM DOI 记录](https://doi.org/10.1145/3798210)、[作者公开 PDF](https://ionathan.ch/assets/pdfs/ccnf.pdf)。
 

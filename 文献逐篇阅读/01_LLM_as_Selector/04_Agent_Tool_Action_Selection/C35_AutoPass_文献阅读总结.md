@@ -3,7 +3,9 @@
 论文题目：**AutoPass: Evidence-Guided LLM Agents for Compiler Performance Tuning**
 作者：Zepeng Li, Jie Ren, Zhanyong Tang, Jie Zheng, Zheng Wang
 发表时间：2026-06-18；发表平台：arXiv 预印本（v1；PDF 首页会议栏仍为占位文本）
-论文链接或编号：[arXiv:2606.20373](https://arxiv.org/abs/2606.20373)
+论文链接或编号：[arXiv:2606.20373](https://arxiv.org/abs/2606.20373)；论文 PDF 首页的会议信息仍为占位，暂记 arXiv 预印本；代码仓库未确认。
+元数据核验来源：[论文/来源](https://arxiv.org/abs/2606.20373)；[论文/来源](https://arxiv.org/abs/2606.20373v1)
+代码/数据/工件：尚未找到可确认的作者代码仓库或工件（本轮复核，状态保留“待核验”）
 关键词：LLVM、Pass 调优、多智能体、编译器证据、运行时反馈、免训练
 
 > 阅读模型：gpt-5.6-luna；本轮日期：2026-09-05；实际 PDF：arXiv 2606.20373v1（12 页）。发表会议正式信息在 PDF 中未明确说明。

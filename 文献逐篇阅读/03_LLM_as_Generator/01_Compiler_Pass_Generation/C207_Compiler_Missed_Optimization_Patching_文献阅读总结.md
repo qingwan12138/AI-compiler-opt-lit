@@ -6,9 +6,11 @@
 
 发表时间：2026（arXiv v1：2026-07-02；v2：2026-07-03）
 
-发表平台：arXiv，cs.SE/cs.AI；论文中未明确说明正式会议或期刊版本
+发表平台：arXiv 预印本（2026）
 
-论文链接或编号：arXiv:2607.02370；DOI：10.48550/arXiv.2607.02370
+论文链接或编号：arXiv:2607.02370
+元数据核验来源：[arXiv](https://arxiv.org/abs/2607.02370)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：LLVM；compiler missed optimization；coding agent；patch generation；optimization scope；RAG；knowledge distillation；Alive2；llvm-mca
 

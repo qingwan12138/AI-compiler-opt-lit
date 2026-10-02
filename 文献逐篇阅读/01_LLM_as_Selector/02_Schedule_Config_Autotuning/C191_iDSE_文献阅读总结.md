@@ -3,8 +3,10 @@
 论文题目：**iDSE: Navigating Design Space Exploration in High-Level Synthesis Using LLMs**  
 作者：Runkai Li，Jia Xiong，Xi Wang  
 发表时间：2025；本文使用的 PDF 为 arXiv:2505.22086v2（2025-05-31），正文标注为 preprint / under review。  
-发表平台：arXiv / CoRR 预印本  
-论文链接或编号：DOI 10.48550/arXiv.2505.22086；arXiv:2505.22086  
+发表平台：arXiv 预印本（v2；正文标注 preprint/under review）
+论文链接或编号：arXiv:2505.22086v2
+元数据核验来源：[arXiv](https://arxiv.org/abs/2505.22086)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 关键词：高层次综合（High-Level Synthesis, HLS）、设计空间探索（Design Space Exploration, DSE）、大语言模型（LLM）、优化指令、Pareto 前沿、QoR
 
 > 本笔记依据 staging 中的 iDSE PDF 正文生成。论文事实、阅读分析和后续建议分开记录；本笔记不代表正式入库。

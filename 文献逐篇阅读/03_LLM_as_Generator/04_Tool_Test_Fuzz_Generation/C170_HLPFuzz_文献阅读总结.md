@@ -6,9 +6,11 @@
 
 发表时间：2025
 
-发表平台：34th USENIX Security Symposium（USENIX Security 25），pp. 6299–6318
+发表平台：USENIX Security 2025, pp.6299–6318
 
-论文链接或编号：官方 PDF：https://www.usenix.org/system/files/usenixsecurity25-yang-yupeng.pdf；USENIX 论文页：https://www.usenix.org/conference/usenixsecurity25/presentation/yang-yupeng；DOI/arXiv：论文中未明确说明。
+论文链接或编号：USENIX Security 2025
+元数据核验来源：[USENIX 正式论文页](https://www.usenix.org/conference/usenixsecurity25/presentation/yang-yupeng)
+代码/数据/工件：论文 Open Science 声明提供 HLPFuzz 源码和运行示例：[Zenodo 15606060](https://doi.org/10.5281/zenodo.15606060)（归档工件）。
 
 关键词：语言处理器、编译器测试、灰盒 fuzzing、LLM 约束求解、控制流图中心性、迭代上下文构造
 

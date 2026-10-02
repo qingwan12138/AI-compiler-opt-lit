@@ -1,4 +1,8 @@
 # Feedback Loops and Code Perturbations in LLM-based Software Engineering：C-to-Rust 翻译系统
+发表平台：SANER 2026 Industrial Track, pp.367–376
+论文链接或编号：DOI 10.1109/SANER67736.2026.00047；arXiv:2512.02567
+元数据核验来源：[SANER 官方论文页](https://conf.researchr.org/details/saner-2026/saner-2026-industrial-track/6/Feedback-Loops-and-Code-Perturbations-in-LLM-based-Software-Engineering-A-Case-Study)；[IEEE DOI](https://doi.org/10.1109/SANER67736.2026.00047)；[arXiv](https://arxiv.org/abs/2512.02567)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 > 阶段2交付包；仅写入 A2 staging。事实均以本包 PDF 为正文依据，并在文中标注页码/表格；网页用于元数据核验。
 

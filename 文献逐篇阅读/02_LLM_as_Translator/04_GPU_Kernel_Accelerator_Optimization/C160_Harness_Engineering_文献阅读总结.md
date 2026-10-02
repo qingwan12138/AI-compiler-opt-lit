@@ -6,9 +6,11 @@
 
 发表时间：2026（arXiv v1，2026-07-20）
 
-发表平台：arXiv preprint（cs.LG）；论文报告 MLSys 2026 FlashInfer AI Kernel Generation Contest 中的系统实验
+发表平台：arXiv 预印本（2026）
 
-论文链接或编号：arXiv:2607.17979；https://arxiv.org/abs/2607.17979
+论文链接或编号：arXiv:2607.17979
+元数据核验来源：[arXiv](https://arxiv.org/abs/2607.17979)
+代码/数据/工件：未找到可确认的作者代码仓库或工件
 
 关键词：LLM-driven kernel generation、GPU kernel optimization、harness engineering、CUDA、Triton、CuTe/CUTLASS、profiling、FlashInfer
 
